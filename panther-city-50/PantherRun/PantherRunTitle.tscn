@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxm83yrjwjamq"]
+
+[ext_resource type="Script" path="res://PantherRun/panther_run_title.gd" id="1_3ypj4"]
+
+[node name="PantherRunTitle" type="Node2D"]
+script = ExtResource("1_3ypj4")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 272.0
+offset_top = 128.0
+offset_right = 369.0
+offset_bottom = 151.0
+text = "Panther Run"

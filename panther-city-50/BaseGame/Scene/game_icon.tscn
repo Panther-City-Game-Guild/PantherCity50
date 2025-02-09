@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpv30ys7cri18"]
+
+[ext_resource type="Script" path="res://BaseGame/Scene/game_icon.gd" id="1_kcomn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2swse"]
+bg_color = Color(0.167226, 0.567448, 0.472763, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.19, 0.1102, 0.1102, 1)
+
+[node name="GameIcon" type="PanelContainer"]
+custom_minimum_size = Vector2(32, 32)
+theme_override_styles/panel = SubResource("StyleBoxFlat_2swse")
+script = ExtResource("1_kcomn")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
