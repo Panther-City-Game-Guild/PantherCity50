@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0vtyibse6166"]
+
+[ext_resource type="Script" path="res://BaseGame/Scripts/scene_manager.gd" id="1_2pxw6"]
+[ext_resource type="PackedScene" uid="uid://dki3fjlqnltpg" path="res://BaseGame/Scenes/settings_manager.tscn" id="1_6aohf"]
+[ext_resource type="PackedScene" uid="uid://c3jgspcs6f2hh" path="res://BaseGame/Scenes/game_selection.tscn" id="2_0b68w"]
+
+[node name="SceneManager" type="Node"]
+script = ExtResource("1_2pxw6")
+
+[node name="SettingsManager" parent="." instance=ExtResource("1_6aohf")]
+visible = false
+z_index = 100
+
+[node name="GameSelection" parent="." instance=ExtResource("2_0b68w")]
