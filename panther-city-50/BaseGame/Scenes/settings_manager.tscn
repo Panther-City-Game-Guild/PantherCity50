@@ -1,0 +1,280 @@
+[gd_scene load_steps=7 format=3 uid="uid://dki3fjlqnltpg"]
+
+[ext_resource type="Script" path="res://BaseGame/Scripts/settings_manager.gd" id="1_3m01y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7cky1"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xav36"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6enmm"]
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+content_margin_bottom = 3.0
+bg_color = Color(0.529412, 0.415686, 0.188235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gsxea"]
+bg_color = Color(0, 0.466667, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_in6xm"]
+bg_color = Color(0, 0.466667, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="SettingsManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3m01y")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7cky1")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -114.5
+offset_right = 230.0
+offset_bottom = 114.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xav36")
+
+[node name="SettingsOuterVBox" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="TitleBar" type="HBoxContainer" parent="PanelContainer/SettingsOuterVBox"]
+layout_mode = 2
+
+[node name="SettingsLabel" type="Label" parent="PanelContainer/SettingsOuterVBox/TitleBar"]
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 30
+text = "Settings"
+
+[node name="Button" type="Button" parent="PanelContainer/SettingsOuterVBox/TitleBar"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_6enmm")
+text = "X"
+
+[node name="SettingsHBox" type="HBoxContainer" parent="PanelContainer/SettingsOuterVBox"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="VBoxLeft" type="VBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="MasterVBox" type="VBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft"]
+layout_mode = 2
+
+[node name="MasterHBox" type="HBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MasterVBox"]
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MasterVBox/MasterHBox"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "Master Volume"
+
+[node name="MasterVolLbl" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MasterVBox/MasterHBox"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/outline_size = 3
+text = "100"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MasterVBox"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_gsxea")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_in6xm")
+value = 70.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="MusicVBox" type="VBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft"]
+layout_mode = 2
+
+[node name="MusicHBox" type="HBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MusicVBox"]
+layout_mode = 2
+
+[node name="MusicLbl" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MusicVBox/MusicHBox"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "Music Volume"
+
+[node name="MusicVolLbl" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MusicVBox/MusicHBox"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/outline_size = 3
+text = "100"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MusicVBox"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_gsxea")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_in6xm")
+value = 20.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="FXVBox" type="VBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft"]
+layout_mode = 2
+
+[node name="FXHBox" type="HBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/FXVBox"]
+layout_mode = 2
+
+[node name="FXLabel" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/FXVBox/FXHBox"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "Sound FX Volume"
+
+[node name="FXVolLbl" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/FXVBox/FXHBox"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/outline_size = 3
+text = "100"
+
+[node name="FXVolumeSlider" type="HSlider" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/FXVBox"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_gsxea")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_in6xm")
+value = 70.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="VBoxRight" type="VBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="MasterVBox" type="VBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight"]
+layout_mode = 2
+
+[node name="MasterHBox" type="HBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/MasterVBox"]
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/MasterVBox/MasterHBox"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "Master Volume"
+
+[node name="MasterVolLbl" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/MasterVBox/MasterHBox"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/outline_size = 3
+text = "100"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/MasterVBox"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_gsxea")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_in6xm")
+value = 70.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="MusicVBox" type="VBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight"]
+layout_mode = 2
+
+[node name="MusicHBox" type="HBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/MusicVBox"]
+layout_mode = 2
+
+[node name="MusicLbl" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/MusicVBox/MusicHBox"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "Music Volume"
+
+[node name="MusicVolLbl" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/MusicVBox/MusicHBox"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/outline_size = 3
+text = "100"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/MusicVBox"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_gsxea")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_in6xm")
+value = 20.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="FXVBox" type="VBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight"]
+layout_mode = 2
+
+[node name="FXHBox" type="HBoxContainer" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/FXVBox"]
+layout_mode = 2
+
+[node name="FXLabel" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/FXVBox/FXHBox"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+text = "Sound FX Volume"
+
+[node name="FXVolLbl" type="Label" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/FXVBox/FXHBox"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/outline_size = 3
+text = "100"
+
+[node name="FXVolumeSlider" type="HSlider" parent="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxRight/FXVBox"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_gsxea")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_in6xm")
+value = 70.0
+tick_count = 10
+ticks_on_borders = true
+
+[connection signal="pressed" from="PanelContainer/SettingsOuterVBox/TitleBar/Button" to="." method="_on_button_pressed"]
+[connection signal="value_changed" from="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MasterVBox/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MusicVBox/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/FXVBox/FXVolumeSlider" to="." method="_on_fx_volume_slider_value_changed"]
