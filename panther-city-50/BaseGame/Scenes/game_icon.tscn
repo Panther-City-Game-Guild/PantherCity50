@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cpv30ys7cri18"]
 
-[ext_resource type="Script" path="res://BaseGame/Scene/game_icon.gd" id="1_kcomn"]
+[ext_resource type="Script" path="res://BaseGame/Scripts/game_icon.gd" id="1_kcomn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2swse"]
 bg_color = Color(0.167226, 0.567448, 0.472763, 1)
