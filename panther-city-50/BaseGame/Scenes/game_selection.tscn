@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://BaseGame/Scripts/game_selection.gd" id="1_o5o45"]
 [ext_resource type="PackedScene" uid="uid://cpv30ys7cri18" path="res://BaseGame/Scenes/game_icon.tscn" id="2_gmh68"]
 [ext_resource type="PackedScene" uid="uid://bxm83yrjwjamq" path="res://PantherRun/PantherRunTitle.tscn" id="3_dduoo"]
-[ext_resource type="PackedScene" uid="uid://bnah6d37dam5s" path="res://ZooEscape/Scene/PantherEscapeTitle.tscn" id="4_7204n"]
+[ext_resource type="PackedScene" uid="uid://bnah6d37dam5s" path="res://ZooEscape/Scene/ZooEscapeTitle.tscn" id="4_7204n"]
 
 [node name="GameSelection" type="Node2D"]
 script = ExtResource("1_o5o45")
