@@ -6,11 +6,9 @@ extends Node
 @onready var SettingsManager := "res://BaseGame/Scenes/settings_manager.tscn"
 @onready var GameSelection := "res://BaseGame/Scenes/game_selection.tscn"
 
-
-
-
 # Panther Run Scenss
 @onready var PantherRunTitle := "res://PantherRun/PantherRunTitle.tscn"
 
 # Panther Escape Scenes 
-@onready var PantherEscapeTitle := "res://PanterEscapeFromZoo/PantherEscapeTitle.tscn"
+@onready var ZETitle := "res://ZooEscape/Scene/ZooEscapeTitle.tscn"
+@onready var ZEDebug := "res://ZooEscape/Scene/debug.tscn"

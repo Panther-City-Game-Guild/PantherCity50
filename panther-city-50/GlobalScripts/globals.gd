@@ -2,6 +2,8 @@ extends Node
 
 #this file will store Global var that can be read from anywhere in the game
 
+@onready var ZETileSize := 16
+
 # Volume settings are included by default and changed by the SettingsManager
 	# Do not alter this variable within your game; use the SettingsManager
 var Current_Volume_Settings: Dictionary = {
