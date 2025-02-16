@@ -10,13 +10,13 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
-		get_tree().change_scene_to_file(Scenes.GameSelection)
+		SceneManager.GoToNewSceneString(self, Scenes.GameSelection)
 		
 	if Input.is_action_just_pressed("ui_accept"):
 		if selector.position == newGamePos:
-			get_tree().change_scene_to_file(Scenes.ZEDebug)
+			SceneManager.GoToNewSceneString(self, Scenes.ZEDebug)
 		elif selector.position == passwordPos:
 			pass # will make a password scean at some point
 			

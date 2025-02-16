@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Globals="*res://GlobalScripts/globals.gd"
 Scenes="*res://GlobalScripts/scenes.gd"
+SceneManager="*res://BaseGame/Scripts/scene_manager.gd"
 
 [display]
 

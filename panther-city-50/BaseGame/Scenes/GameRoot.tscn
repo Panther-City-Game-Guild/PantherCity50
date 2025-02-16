@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmc1g21t14fj8"]
+
+[ext_resource type="Script" path="res://BaseGame/Scripts/game_root.gd" id="1_bpbxc"]
+[ext_resource type="PackedScene" uid="uid://dki3fjlqnltpg" path="res://BaseGame/Scenes/settings_manager.tscn" id="2_6nrkx"]
+[ext_resource type="PackedScene" uid="uid://c3jgspcs6f2hh" path="res://BaseGame/Scenes/game_selection.tscn" id="3_3mcnx"]
+
+[node name="GameRoot" type="Node2D"]
+script = ExtResource("1_bpbxc")
+
+[node name="SettingsManager" parent="." instance=ExtResource("2_6nrkx")]
+visible = false
+z_index = 1000
+offset_left = 296.0
+offset_top = 160.0
+offset_right = 296.0
+offset_bottom = 160.0
+size_flags_horizontal = 4
+
+[node name="GameSelection" parent="." instance=ExtResource("3_3mcnx")]
