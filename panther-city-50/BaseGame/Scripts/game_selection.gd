@@ -11,5 +11,4 @@ func _process(_delta: float) -> void:
 
 
 func _on_game_icon_start_game(gameToStart: PackedScene) -> void:
-	#TODO: I dont like calling get_parent would prefer something like SceneManger
 	SceneManager.GoToNewScenePacked(self, gameToStart)
