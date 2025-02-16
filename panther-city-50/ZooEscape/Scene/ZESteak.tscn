@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cs2ar6co6wa5"]
 
 [ext_resource type="Texture2D" uid="uid://dyfcsjnea6ar7" path="res://ZooEscape/Assets/ZEStake.png" id="1_rh2m4"]
-[ext_resource type="Script" path="res://ZooEscape/Scripts/steak.gd" id="2_p8xwr"]
+[ext_resource type="Script" path="res://ZooEscape/Scripts/ZESteak.gd" id="2_p8xwr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rhvaa"]
 atlas = ExtResource("1_rh2m4")

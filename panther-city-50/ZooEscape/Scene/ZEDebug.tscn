@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=4 uid="uid://catmq3n8ijbp6"]
 
-[ext_resource type="Script" path="res://ZooEscape/Scene/ZELevelManager.gd" id="1_68k30"]
+[ext_resource type="Script" path="res://ZooEscape/Scripts/ZELevelManager.gd" id="1_68k30"]
 [ext_resource type="TileSet" uid="uid://hxah5dywgaym" path="res://ZooEscape/Scene/TileSets/ZETiles.tres" id="1_d2x4x"]
-[ext_resource type="Script" path="res://ZooEscape/Scene/steak_manager.gd" id="2_bxppo"]
-[ext_resource type="PackedScene" uid="uid://3ah88dbq7yi4" path="res://ZooEscape/Scene/Player.tscn" id="2_ykc06"]
-[ext_resource type="PackedScene" uid="uid://cs2ar6co6wa5" path="res://ZooEscape/Scene/steak.tscn" id="5_h7q7r"]
+[ext_resource type="Script" path="res://ZooEscape/Scripts/ZESteakManager.gd" id="2_bxppo"]
+[ext_resource type="PackedScene" uid="uid://3ah88dbq7yi4" path="res://ZooEscape/Scene/ZEPlayer.tscn" id="2_ykc06"]
+[ext_resource type="PackedScene" uid="uid://cs2ar6co6wa5" path="res://ZooEscape/Scene/ZESteak.tscn" id="5_h7q7r"]
 
 [node name="Debug" type="Node2D"]
 script = ExtResource("1_68k30")

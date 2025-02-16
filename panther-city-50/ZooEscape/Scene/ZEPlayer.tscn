@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://3ah88dbq7yi4"]
 
-[ext_resource type="Script" path="res://ZooEscape/Scripts/player.gd" id="1_wtpaa"]
+[ext_resource type="Script" path="res://ZooEscape/Scripts/ZEPlayer.gd" id="1_wtpaa"]
 [ext_resource type="Texture2D" uid="uid://cbcuw7wsx26tw" path="res://ZooEscape/Assets/CATSPRITESHEET_Gray.png" id="2_cu3mk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_44cu1"]

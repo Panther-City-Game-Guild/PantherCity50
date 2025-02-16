@@ -10,5 +10,5 @@ extends Node
 @onready var PantherRunTitle := "res://PantherRun/PantherRunTitle.tscn"
 
 # Panther Escape Scenes 
-@onready var ZETitle := "res://ZooEscape/Scene/ZooEscapeTitle.tscn"
-@onready var ZEDebug := "res://ZooEscape/Scene/debug.tscn"
+@onready var ZETitle := "res://ZooEscape/Scene/ZETitle.tscn"
+@onready var ZEDebug := "res://ZooEscape/Scene/ZEDebug.tscn"
