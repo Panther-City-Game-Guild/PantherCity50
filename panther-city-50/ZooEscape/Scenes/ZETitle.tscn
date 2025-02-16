@@ -1,15 +1,15 @@
 [gd_scene load_steps=7 format=3 uid="uid://bnah6d37dam5s"]
 
-[ext_resource type="Script" path="res://ZooEscape/Scripts/ZETitle.gd" id="1_dry3e"]
-[ext_resource type="Texture2D" uid="uid://dav381wq6ly4h" path="res://ZooEscape/Assets/Title.png" id="2_ktgnq"]
-[ext_resource type="Texture2D" uid="uid://peiaj3fth0w5" path="res://ZooEscape/Assets/selector.png" id="3_k3tte"]
+[ext_resource type="Script" path="res://ZooEscape/Scripts/ZETitle.gd" id="1_hbotl"]
+[ext_resource type="Texture2D" uid="uid://dav381wq6ly4h" path="res://ZooEscape/Assets/Title.png" id="2_e3eap"]
+[ext_resource type="Texture2D" uid="uid://peiaj3fth0w5" path="res://ZooEscape/Assets/selector.png" id="3_d42s3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_57t5j"]
-atlas = ExtResource("3_k3tte")
+atlas = ExtResource("3_d42s3")
 region = Rect2(0, 0, 8, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jfvms"]
-atlas = ExtResource("3_k3tte")
+atlas = ExtResource("3_d42s3")
 region = Rect2(8, 0, 8, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ry54r"]
@@ -27,10 +27,10 @@ animations = [{
 }]
 
 [node name="ZETitle" type="Node2D"]
-script = ExtResource("1_dry3e")
+script = ExtResource("1_hbotl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_ktgnq")
+texture = ExtResource("2_e3eap")
 centered = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
