@@ -33,10 +33,6 @@ window/stretch/mode="viewport"
 
 enabled=PackedStringArray("res://addons/script-ide/plugin.cfg")
 
-[global_group]
-
-Interactable="Objects players can interact with"
-
 [input]
 
 ActionButton={

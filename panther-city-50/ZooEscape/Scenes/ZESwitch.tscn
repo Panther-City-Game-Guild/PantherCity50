@@ -28,23 +28,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wmwe"]
 size = Vector2(16, 16)
 
-[node name="Switch" type="AnimatedSprite2D" groups=["Interactable"]]
+[node name="Switch" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_yogdv")
 script = ExtResource("1_miqxl")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["ZEInteractable"]]
 
-[node name="SwitchCollision" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_1wmwe")
-
-[node name="RayCast2D_1" type="RayCast2D" parent="Area2D"]
-target_position = Vector2(0, -16)
-
-[node name="RayCast2D_2" type="RayCast2D" parent="Area2D"]
-target_position = Vector2(16, 0)
-
-[node name="RayCast2D_3" type="RayCast2D" parent="Area2D"]
-target_position = Vector2(0, 16)
-
-[node name="RayCast2D_4" type="RayCast2D" parent="Area2D"]
-target_position = Vector2(-16, 0)

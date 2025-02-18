@@ -4,10 +4,7 @@ extends Node2D
 @export var SwitchName: String = "Switch"
 
 # Track the state of the switch: 0 = off, 1 = on
-@onready var SwitchState: int = 0
-
- # An array of Raycasts in NESW / (Top/Right/Bottom/Left) / (Up/Right/Down/Left) order
-@onready var RayCasts = [ $Area2D/RayCast2D_1, $Area2D/RayCast2D_2, $Area2D/RayCast2D_3, $Area2D/RayCast2D_4, ]
+@export var SwitchState: int = 0
 
 
 ### Signal ###
@@ -25,15 +22,14 @@ func _process(_delta: float) -> void:
 	pass
 
 
-# TODO: Detect FACING
-func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ActionButton"):
-		var collider: CharacterBody2D
-		for r in RayCasts:
-			if r.is_colliding():
-				collider = r.get_collider()
-	
-		if collider && collider.name == "Player":
-			SwitchState = !SwitchState
-			self.frame = SwitchState
-			Globals.set_switched_state.emit(SwitchName, SwitchState)
+# Called to change the state of this switch
+func set_switch_state(state: int = 0):
+		SwitchState = state
+		self.frame = SwitchState
+		Globals.set_switched_state.emit(SwitchName, SwitchState)
+		print(SwitchName, " toggled.  New state: ", SwitchState)
+
+
+# Called to retrieve the state of this switch
+func get_switch_state():
+	return SwitchState
