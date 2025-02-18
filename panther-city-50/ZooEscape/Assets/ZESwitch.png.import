@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyfcsjnea6ar7"
-path="res://.godot/imported/ZEStake.png-84f0f3392860b6be8812c94c3c25fda7.ctex"
+uid="uid://ca5necjstkbt8"
+path="res://.godot/imported/ZESwitch.png-74b69f2befb283a5a2ef83b26d0dbac1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ZooEscape/Assets/ZEStake.png"
-dest_files=["res://.godot/imported/ZEStake.png-84f0f3392860b6be8812c94c3c25fda7.ctex"]
+source_file="res://ZooEscape/Assets/ZESwitch.png"
+dest_files=["res://.godot/imported/ZESwitch.png-74b69f2befb283a5a2ef83b26d0dbac1.ctex"]
 
 [params]
 
