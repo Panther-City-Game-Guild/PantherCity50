@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=4 uid="uid://catmq3n8ijbp6"]
+[gd_scene load_steps=7 format=4 uid="uid://catmq3n8ijbp6"]
 
 [ext_resource type="Script" path="res://ZooEscape/Scripts/ZELevelManager.gd" id="1_68k30"]
 [ext_resource type="TileSet" uid="uid://hxah5dywgaym" path="res://ZooEscape/Scenes/TileSets/ZETiles.tres" id="1_d2x4x"]
 [ext_resource type="Script" path="res://ZooEscape/Scripts/ZESteakManager.gd" id="2_bxppo"]
 [ext_resource type="PackedScene" uid="uid://3ah88dbq7yi4" path="res://ZooEscape/Scenes/ZEPlayer.tscn" id="2_ykc06"]
 [ext_resource type="PackedScene" uid="uid://cs2ar6co6wa5" path="res://ZooEscape/Scenes/ZESteak.tscn" id="5_h7q7r"]
+[ext_resource type="PackedScene" uid="uid://b6fpe6cti8jrw" path="res://ZooEscape/Scenes/ZEExitTile.tscn" id="6_8xawi"]
 
 [node name="Debug" type="Node2D"]
 script = ExtResource("1_68k30")
@@ -38,5 +39,11 @@ position = Vector2(248, 152)
 [node name="Steak4" parent="SteakManager" instance=ExtResource("5_h7q7r")]
 position = Vector2(72, 88)
 
+[node name="ExitTile" parent="." instance=ExtResource("6_8xawi")]
+position = Vector2(232, 88)
+
 [node name="Player" parent="." instance=ExtResource("2_ykc06")]
 position = Vector2(56, 40)
+
+[connection signal="AllSteakCollected" from="SteakManager" to="." method="_on_steak_manager_all_steak_collected"]
+[connection signal="PlayerExits" from="ExitTile" to="." method="_on_exit_tile_player_exits"]
