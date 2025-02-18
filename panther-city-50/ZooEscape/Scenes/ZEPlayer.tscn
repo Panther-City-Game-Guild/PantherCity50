@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://3ah88dbq7yi4"]
 
-[ext_resource type="Script" path="res://ZooEscape/Scripts/player.gd" id="1_wtpaa"]
+[ext_resource type="Script" path="res://ZooEscape/Scripts/ZEPlayer.gd" id="1_wtpaa"]
 [ext_resource type="Texture2D" uid="uid://cbcuw7wsx26tw" path="res://ZooEscape/Assets/CATSPRITESHEET_Gray.png" id="2_cu3mk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_44cu1"]
@@ -141,7 +141,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_72fhx"]
 size = Vector2(16, 16)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["ZEPlayer"]]
 script = ExtResource("1_wtpaa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

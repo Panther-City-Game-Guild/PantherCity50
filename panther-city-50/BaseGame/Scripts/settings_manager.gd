@@ -74,7 +74,7 @@ func _ready() -> void:
 	updateVolumeLabels()	# Update volume labels to reflect values
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# When the SettingsManager is closed, save the settings
 	if Input.is_action_just_pressed("ui_cancel"):
 		hide()
