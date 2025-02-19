@@ -1,34 +1,54 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3jgspcs6f2hh"]
+[gd_scene load_steps=6 format=3 uid="uid://c3jgspcs6f2hh"]
 
 [ext_resource type="Script" path="res://BaseGame/Scripts/game_selection.gd" id="1_o5o45"]
 [ext_resource type="PackedScene" uid="uid://cpv30ys7cri18" path="res://BaseGame/Scenes/game_icon.tscn" id="2_gmh68"]
 [ext_resource type="PackedScene" uid="uid://bxm83yrjwjamq" path="res://PantherRun/Scenes/PantherRunTitle.tscn" id="3_dduoo"]
 [ext_resource type="PackedScene" uid="uid://bnah6d37dam5s" path="res://ZooEscape/Scenes/ZETitle.tscn" id="4_7204n"]
+[ext_resource type="PackedScene" uid="uid://cky1uw2nrbma4" path="res://Simon/Scenes/SimonTitle.tscn" id="5_luuiv"]
 
 [node name="GameSelection" type="Node2D"]
 script = ExtResource("1_o5o45")
 
-[node name="GameIcon" parent="." instance=ExtResource("2_gmh68")]
-offset_left = 128.0
-offset_top = 64.0
-offset_right = 160.0
-offset_bottom = 96.0
+[node name="Row1" type="HBoxContainer" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 620.0
+offset_bottom = 53.0
+theme_override_constants/separation = 10
+
+[node name="GameIcon" parent="Row1" instance=ExtResource("2_gmh68")]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
 GameTitleScene = ExtResource("3_dduoo")
 
-[node name="Label" type="Label" parent="GameIcon"]
+[node name="Label" type="Label" parent="Row1/GameIcon"]
 layout_mode = 2
-text = "Game 1"
+text = "Panther Run"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="GameIcon2" parent="." instance=ExtResource("2_gmh68")]
-offset_left = 256.0
-offset_top = 64.0
-offset_right = 323.0
-offset_bottom = 96.0
+[node name="GameIcon2" parent="Row1" instance=ExtResource("2_gmh68")]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
 GameTitleScene = ExtResource("4_7204n")
 
-[node name="Label" type="Label" parent="GameIcon2"]
+[node name="Label" type="Label" parent="Row1/GameIcon2"]
 layout_mode = 2
-text = "Game 2"
+text = "Zoo Escape"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[connection signal="startGame" from="GameIcon" to="." method="_on_game_icon_start_game"]
-[connection signal="startGame" from="GameIcon2" to="." method="_on_game_icon_start_game"]
+[node name="GameIcon3" parent="Row1" instance=ExtResource("2_gmh68")]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+GameTitleScene = ExtResource("5_luuiv")
+
+[node name="Label" type="Label" parent="Row1/GameIcon3"]
+layout_mode = 2
+text = "Simon"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="startGame" from="Row1/GameIcon" to="." method="_on_game_icon_start_game"]
+[connection signal="startGame" from="Row1/GameIcon2" to="." method="_on_game_icon_start_game"]
+[connection signal="startGame" from="Row1/GameIcon3" to="." method="_on_game_icon_start_game"]
