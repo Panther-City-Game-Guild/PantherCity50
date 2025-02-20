@@ -24,10 +24,14 @@ text = "New Game"
 
 [node name="ScoresBtn" type="Button" parent="Container"]
 layout_mode = 2
+disabled = true
 text = "High Scores"
 
-[node name="ExitBtn" type="Button" parent="Container"]
+[node name="QuitBtn" type="Button" parent="Container"]
 layout_mode = 2
 text = "Quit Game"
 
 [node name="HexBoard" parent="." instance=ExtResource("2_wp5dl")]
+
+[connection signal="button_up" from="Container/NewBtn" to="." method="_on_new_btn_button_up"]
+[connection signal="button_up" from="Container/QuitBtn" to="." method="_on_quit_btn_button_up"]
