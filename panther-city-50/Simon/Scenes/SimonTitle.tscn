@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://cky1uw2nrbma4"]
+
+[ext_resource type="Script" path="res://Simon/Scripts/simon_title.gd" id="1_msq48"]
+[ext_resource type="PackedScene" uid="uid://yn1d5or0rw1x" path="res://Simon/Scenes/HexBoard.tscn" id="2_wp5dl"]
+
+[node name="Simon" type="Node"]
+script = ExtResource("1_msq48")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 1
+color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+
+[node name="Container" type="VBoxContainer" parent="."]
+offset_left = 32.0
+offset_top = 129.0
+offset_right = 134.0
+offset_bottom = 231.0
+
+[node name="NewBtn" type="Button" parent="Container"]
+layout_mode = 2
+text = "New Game"
+
+[node name="ScoresBtn" type="Button" parent="Container"]
+layout_mode = 2
+disabled = true
+text = "High Scores"
+
+[node name="QuitBtn" type="Button" parent="Container"]
+layout_mode = 2
+text = "Quit Game"
+
+[node name="HexBoard" parent="." instance=ExtResource("2_wp5dl")]
+
+[connection signal="button_up" from="Container/NewBtn" to="." method="_on_new_btn_button_up"]
+[connection signal="button_up" from="Container/QuitBtn" to="." method="_on_quit_btn_button_up"]

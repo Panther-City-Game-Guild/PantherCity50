@@ -3,11 +3,15 @@
 [ext_resource type="Script" path="res://BaseGame/Scripts/game_icon.gd" id="1_kcomn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2swse"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
 bg_color = Color(0.167226, 0.567448, 0.472763, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color(0.19, 0.1102, 0.1102, 1)
 
 [node name="GameIcon" type="PanelContainer"]

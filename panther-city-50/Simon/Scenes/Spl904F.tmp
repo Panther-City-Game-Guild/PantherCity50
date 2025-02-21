@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://b23askbttu21x"]
+
+[ext_resource type="PackedScene" uid="uid://yn1d5or0rw1x" path="res://Simon/Scenes/HexBoard.tscn" id="1_cqm3e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ai2jg"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+
+[node name="Splash" type="Node2D"]
+
+[node name="PanelContainer" type="Panel" parent="."]
+custom_minimum_size = Vector2(640, 360)
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ai2jg")
+
+[node name="HexBoard" parent="." instance=ExtResource("1_cqm3e")]
+colors = null
+red = null
+yellow = null
+green = null
+purple = null
+blue = null
+orange = null
+lit_alpha = null
+dim_alpha = null
+dark_alpha = null
+pattern_length = null
+teach_time = null
+display_time = null
+recital_time = null
