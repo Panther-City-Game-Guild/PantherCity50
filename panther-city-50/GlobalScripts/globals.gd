@@ -23,9 +23,3 @@ var Current_Settings : Dictionary = { }
 	# 	Alternatively, use Globals.Game_Globals.get("varName") to retrieve the value
 	# TODO: Clean up when someone leaves a game (performed by the SceneManager)
 var Game_Globals: Dictionary = {}
-
-
-### Signals ###
-# In "child" nodes, use Globals.set_switched_state.connect() inside the _ready() function
-# Note: This is used in Zoo Escape currently!
-signal set_switched_state(switchName, switchState)
