@@ -3,11 +3,11 @@
 [ext_resource type="Script" path="res://ZooEscape/Scripts/ZESwitch.gd" id="1_miqxl"]
 [ext_resource type="Texture2D" uid="uid://ca5necjstkbt8" path="res://ZooEscape/Assets/ZESwitch.png" id="2_fx841"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q2tg5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fsxv"]
 atlas = ExtResource("2_fx841")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5qqwe"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5f87"]
 atlas = ExtResource("2_fx841")
 region = Rect2(0, 0, 16, 16)
 
@@ -15,10 +15,10 @@ region = Rect2(0, 0, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q2tg5")
+"texture": SubResource("AtlasTexture_3fsxv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5qqwe")
+"texture": SubResource("AtlasTexture_l5f87")
 }],
 "loop": true,
 "name": &"default",
@@ -32,7 +32,7 @@ size = Vector2(16, 16)
 sprite_frames = SubResource("SpriteFrames_yogdv")
 script = ExtResource("1_miqxl")
 
-[node name="Area2D" type="Area2D" parent="." groups=["ZEInteractable"]]
+[node name="SwitchArea" type="Area2D" parent="." groups=["ZEInteractable"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchArea"]
 shape = SubResource("RectangleShape2D_1wmwe")
