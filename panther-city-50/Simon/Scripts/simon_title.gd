@@ -1,6 +1,5 @@
 extends Node
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$HexBoard.play_demo = true
@@ -14,11 +13,9 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
 		SceneManager.GoToNewSceneString(self, Scenes.SimonTitle)
 
-
 # New Game Button UP
 func _on_new_btn_button_up() -> void:
 	$HexBoard.start_game()
-
 
 # Quit Game Button UP
  # Scene Tree checking for running this Scene as a standalone during development

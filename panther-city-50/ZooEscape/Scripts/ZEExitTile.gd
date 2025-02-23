@@ -1,8 +1,8 @@
 extends AnimatedSprite2D
 
-@export var NextLevel: PackedScene
+@export var NextLevelCode: String
 
-signal PlayerExits(LevelToGoTo: PackedScene)
+signal PlayerExits(LevelToGoTo: String)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,4 +19,4 @@ func ActavateExit() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if animation == "Active" && body.is_in_group("ZEPlayer"):
-		PlayerExits.emit(NextLevel)
+		PlayerExits.emit(NextLevelCode)

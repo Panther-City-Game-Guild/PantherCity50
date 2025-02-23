@@ -43,3 +43,7 @@ func toggle_children(state):
 # Called to retrieve the state of this switch
 func get_switch_state():
 	return SwitchState
+
+
+func _on_switch_area_switch_state() -> void:
+	set_switch_state(!SwitchState)

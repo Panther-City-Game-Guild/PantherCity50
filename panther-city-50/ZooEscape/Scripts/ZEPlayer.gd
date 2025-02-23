@@ -33,9 +33,8 @@ func _process(_delta: float) -> void:
 	
 		# Detect if "ray" is colliding with an object
 		# - If so, try to interact
-		var ray_collider = DetectRayCollider()
-		if ray_collider:
-			InteractWithRayCollider(ray_collider)
+		if ray.is_colliding():
+			InteractWithRayCollider(ray.get_collider())
 
 
 # Called to move the player
@@ -46,22 +45,11 @@ func MovePlayer(dir: Vector2, animation: String) -> void:
 	if !ray.is_colliding():
 		position += dir * Globals.ZETileSize
 
-
-# Called to detect and retrieve anything the "ray" is colliding with
-func DetectRayCollider():
-	if ray.is_colliding():
-		return ray.get_collider()
-
-
 # Called to attempt interaction with various objects when player is facing a collider
-func InteractWithRayCollider(obj):
+func InteractWithRayCollider(obj: Object) -> void:
 	# Is colliding object interactable?
 	# - This expects a collision body as a child of a different node, like a Sprite2D, CharacterBody2D, or Area2D
-	# - See the ZESwitch.tscn file for scene tree example
+	# - See the ZESwitch.tscn file for scene tree example	
 	if obj.is_in_group("ZEInteractable"):
-		var parent = obj.get_parent()
-	
-		# Is it a switch? If so, switch its state!
-		if parent.has_method("get_switch_state") && parent.has_method("set_switch_state"):
-			var cState = parent.call("get_switch_state")
-			parent.call("set_switch_state", !cState)
+		if obj is ZESwitch:
+			obj.ChangeState()

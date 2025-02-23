@@ -3,7 +3,7 @@ extends Area2D
 var color: String = "#141414"
 var dark_pct: float = 0.3
 var is_area_locked: bool = false
-var mouseEntered = false
+var mouseEntered: bool = false
 signal user_clicked_me
 
 # Called when the node enters the scene tree for the first time.
@@ -19,13 +19,13 @@ func _input(event: InputEvent) -> void:
 
 
 # Toggle the lock on this area
-func toggle_area_lock():
+func toggle_area_lock() -> void:
 	is_area_locked = !is_area_locked
 	update_area()
 
 
 # Update based on variables
-func update_area():
+func update_area() -> void:
 	$Polygon2D.color = Color(color).darkened(dark_pct)
 
 

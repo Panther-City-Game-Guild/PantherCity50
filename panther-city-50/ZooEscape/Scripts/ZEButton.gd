@@ -9,7 +9,6 @@ extends Node2D
 # Array to store handles to controlled children in
 var ControlledChildren = []
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.frame = ButtonState
