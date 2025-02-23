@@ -116,7 +116,7 @@ func _process(delta: float) -> void:
 
 
 # Begin a new game
-func start_game():
+func start_game() -> void:
 	# Disable the demo
 	play_demo = false
 	
@@ -134,7 +134,7 @@ func start_game():
 
 
 # Called to reset all game variables
-func reset_game():
+func reset_game() -> bool:
 	game_on = false
 	waiting_for_input = false
 	has_pattern_played = false
@@ -153,7 +153,7 @@ func reset_game():
 
 
 # Called to reset variables for the game's next level/round
-func level_up():
+func level_up() -> void:
 	# Reset many of the game's variables for the next level
 	waiting_for_input = false
 	has_pattern_played = false
@@ -175,8 +175,8 @@ func pause_loop() -> void:
 
 
 # Generate a rand_pattern to teach the player
-func make_pattern(length) -> void:
-	for i in length:
+func make_pattern(length: int) -> void:
+	for i: int in length:
 		increase_pattern_length()
 
 
@@ -221,14 +221,14 @@ func verify_input(input) -> void:
 
 
 # Calculate the player's bonus score
-func calc_bonus_score():
+func calc_bonus_score() -> void:
 	var bonus_points: int = int(pattern_length ** 2 * 100 + (100 * (recital_time - elapsed_time)))
 	if bonus_points > 0:
 		score += bonus_points
 		print("   Bonus points awarded: ", bonus_points, " | New total score: ", score)
 
 
-func calc_bonus_lives():
+func calc_bonus_lives() -> void:
 	if round_score > 10000:
 		lives += floor(round_score / 10000)
 		if lives > 9:
@@ -238,8 +238,8 @@ func calc_bonus_lives():
 
 # Assign values to Area variables
  # Used for HexBoard setup
-func assign_variables_to_areas():
-	var i = 0
+func assign_variables_to_areas() -> void:
+	var i := 0
 	for Area in Areas:
 		Area.get_parent().color = colors[i]
 		Area.get_parent().dark_pct = dark_pct
@@ -248,7 +248,7 @@ func assign_variables_to_areas():
 
 
 # Connect to Area signals
-func connect_area_signals():
+func connect_area_signals() -> void:
 	for Parent in AreaParents:
 		Parent.connect("user_clicked_me", verify_input)
 

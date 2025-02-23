@@ -20,7 +20,7 @@ const DEFAULT_VOLUME_SETTINGS: Dictionary =  {
 
 ### FUNCTIONS ###
 # Called to verify integer settings values
-func verifySettingInt(i, array):
+func verifySettingInt(i: int, array: Array) -> int:
 	# Check if i is an int and if it's within the correct range
 	if i is int && i >= array[0] && i <= array[1]:
 		return i
@@ -29,8 +29,8 @@ func verifySettingInt(i, array):
 
 # Called to load saved or default volume settings
 func loadVolumeSettings() -> void:
-	var config_file = ConfigFile.new()
-	var err = config_file.load(CONFIG_PATH)
+	var config_file := ConfigFile.new()
+	var err := config_file.load(CONFIG_PATH)
 	
 	# Exit function if error (e.g., when no file exists)
 	if err != OK:
@@ -46,22 +46,21 @@ func loadVolumeSettings() -> void:
 	Globals.Current_Volume_Settings.fx_volume = verifySettingInt(config_file.get_value(VOLUME_SECTION, "fx", DEFAULT_VOLUME_SETTINGS.fx_volume), VOLUME_RANGE)
 
 # Called when a volume setting is changed
-func saveVolumeSettings():
-	var config_file = ConfigFile.new()
+func saveVolumeSettings() -> void:
+	var config_file := ConfigFile.new()
 	config_file.set_value(VOLUME_SECTION, "master", int(Globals.Current_Volume_Settings.master_volume))
 	config_file.set_value(VOLUME_SECTION, "music", int(Globals.Current_Volume_Settings.music_volume))
 	config_file.set_value(VOLUME_SECTION, "fx", int(Globals.Current_Volume_Settings.fx_volume))
 	config_file.save(CONFIG_PATH)
-	return
 
 # Called to update various volume sliders
-func updateVolumeSliders():
+func updateVolumeSliders() -> void:
 	$PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MasterVBox/MasterVolumeSlider.value = Globals.Current_Volume_Settings.master_volume
 	$PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MusicVBox/MusicVolumeSlider.value = Globals.Current_Volume_Settings.music_volume
 	$PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/FXVBox/FXVolumeSlider.value = Globals.Current_Volume_Settings.fx_volume
 
 # Called to update the volume labels with associated sliders
-func updateVolumeLabels():
+func updateVolumeLabels() -> void:
 	$PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MasterVBox/MasterHBox/MasterVolLbl.text = str(Globals.Current_Volume_Settings.master_volume)
 	$PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/MusicVBox/MusicHBox/MusicVolLbl.text = str(Globals.Current_Volume_Settings.music_volume)
 	$PanelContainer/SettingsOuterVBox/SettingsHBox/VBoxLeft/FXVBox/FXHBox/FXVolLbl.text = str(Globals.Current_Volume_Settings.fx_volume)

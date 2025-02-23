@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://nxr8rseg5q8w"]
+[gd_scene load_steps=8 format=3 uid="uid://nxr8rseg5q8w"]
 
 [ext_resource type="Script" path="res://ZooEscape/Scripts/ZESwitch.gd" id="1_miqxl"]
 [ext_resource type="Texture2D" uid="uid://ca5necjstkbt8" path="res://ZooEscape/Assets/ZESwitch.png" id="2_fx841"]
+[ext_resource type="Script" path="res://ZooEscape/Scripts/ZESwitchArea.gd" id="3_7xl7m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3fsxv"]
 atlas = ExtResource("2_fx841")
@@ -33,6 +34,9 @@ sprite_frames = SubResource("SpriteFrames_yogdv")
 script = ExtResource("1_miqxl")
 
 [node name="SwitchArea" type="Area2D" parent="." groups=["ZEInteractable"]]
+script = ExtResource("3_7xl7m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchArea"]
 shape = SubResource("RectangleShape2D_1wmwe")
+
+[connection signal="SwitchState" from="SwitchArea" to="." method="_on_switch_area_switch_state"]
