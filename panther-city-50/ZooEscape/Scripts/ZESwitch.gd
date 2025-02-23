@@ -7,7 +7,7 @@ extends Node2D
 @export var SwitchState: int = 1
 
 # Array to store handles to controlled children in
-var ControlledChildren = []
+var ControlledChildren: Array = []
 
 
 # Called when the node enters the scene tree for the first time.
@@ -16,7 +16,6 @@ func _ready() -> void:
 	for child in self.get_children():
 		if child != $SwitchArea:
 			ControlledChildren.append(child)
-	print(SwitchName, "-controlled children:\n  ", ControlledChildren)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,23 +24,21 @@ func _process(_delta: float) -> void:
 
 
 # Called to change the state of this switch
-func set_switch_state(state):
+func set_switch_state(state: int) -> void:
 		SwitchState = state
 		self.frame = SwitchState
-		print(SwitchName, " toggled.  New state: ", SwitchState)
 		toggle_children(SwitchState)
 
 
-func toggle_children(state):
+func toggle_children(state: int) -> void:
 	if ControlledChildren:
-			for Child in ControlledChildren:
+			for Child: Node in ControlledChildren:
 				# Set some variable / property -- replace below as needed
-				print(" Toggling visibility on child nodes: ", state)
 				Child.visible = !Child.visible
 
 
 # Called to retrieve the state of this switch
-func get_switch_state():
+func get_switch_state() -> int:
 	return SwitchState
 
 

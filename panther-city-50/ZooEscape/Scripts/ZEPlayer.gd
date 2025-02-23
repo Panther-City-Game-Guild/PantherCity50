@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var currentDir: Vector2 = Vector2.DOWN
-@onready var sprite = $AnimatedSprite2D
+@onready var sprite := $AnimatedSprite2D
 @onready var ray := $RayCast2D
 
 # Called when the node enters the scene tree for the first time.
