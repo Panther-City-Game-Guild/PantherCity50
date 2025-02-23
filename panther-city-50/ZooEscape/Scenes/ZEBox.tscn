@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bp3g1byqokd3h"]
+
+[ext_resource type="Texture2D" uid="uid://bggw242jpq8vq" path="res://ZooEscape/Assets/ZEBox.png" id="1_6kiuv"]
+[ext_resource type="Script" path="res://ZooEscape/Scripts/ZEBox.gd" id="2_jnb56"]
+[ext_resource type="Script" path="res://ZooEscape/Scripts/ZEBoxArea.gd" id="3_u2n45"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jx2uq"]
+size = Vector2(16, 16)
+
+[node name="Box" type="Sprite2D"]
+texture = ExtResource("1_6kiuv")
+script = ExtResource("2_jnb56")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_u2n45")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_jx2uq")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 16)
+
+[connection signal="tryToMove" from="Area2D" to="." method="_on_area_2d_try_to_move"]
