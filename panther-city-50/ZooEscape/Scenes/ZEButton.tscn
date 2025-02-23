@@ -32,7 +32,7 @@ size = Vector2(14, 14)
 sprite_frames = SubResource("SpriteFrames_l1f6s")
 script = ExtResource("2_13oxr")
 
-[node name="ButtonArea" type="Area2D" parent="." groups=["ZEInteractable"]]
+[node name="ButtonArea" type="Area2D" parent="."]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonArea"]

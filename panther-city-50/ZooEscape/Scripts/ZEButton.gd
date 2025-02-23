@@ -7,8 +7,7 @@ extends Node2D
 @export var ButtonState: int = 1
 
 # Array to store handles to controlled children in
-var ControlledChildren = []
-
+var ControlledChildren: Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,8 +15,6 @@ func _ready() -> void:
 	for child in self.get_children():
 		if child != $ButtonArea:
 			ControlledChildren.append(child)
-	print("Controlled children:\n  ", ControlledChildren)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -27,7 +24,6 @@ func _process(_delta: float) -> void:
 func _on_area_2d_body_entered(_body: Node2D) -> void:
 		ButtonState = 0
 		self.frame = ButtonState
-		print(ButtonName, " actived!")
 		toggle_children(ButtonState)
 
 
@@ -35,13 +31,11 @@ func _on_area_2d_body_entered(_body: Node2D) -> void:
 func _on_area_2d_body_exited(_body: Node2D) -> void:
 		ButtonState = 1
 		self.frame = ButtonState
-		print(ButtonName, " de-actived!")
 		toggle_children(ButtonState)
 
 
-func toggle_children(state):
+func toggle_children(state: int) -> void:
 	if ControlledChildren:
-			for Child in ControlledChildren:
-				# Set some variable / property -- replace below as needed
-				print(" Toggling visibility on child nodes: ", state)
+			for Child: Node in ControlledChildren:
+				# TODO: Set some variable / property -- replace below as needed
 				Child.visible = !Child.visible

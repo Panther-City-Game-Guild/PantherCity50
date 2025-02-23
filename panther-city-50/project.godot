@@ -21,6 +21,10 @@ Globals="*res://GlobalScripts/globals.gd"
 Scenes="*res://GlobalScripts/scenes.gd"
 SceneManager="*res://GlobalScripts/scene_manager.gd"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/size/viewport_width=640
