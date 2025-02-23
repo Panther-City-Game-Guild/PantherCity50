@@ -12,6 +12,7 @@ extends Node
 # Panther Escape Scenes 
 @onready var ZETitle := "res://ZooEscape/Scenes/ZETitle.tscn"
 @onready var ZEDebug := "res://ZooEscape/Scenes/ZEDebug.tscn"
+@onready var ZEDebug2 := "res://ZooEscape/Scenes/ZEDebug2.tscn"
 
 # Simon Scenes
 @onready var SimonTitle := "res://Simon/Scenes/SimonTitle.tscn"

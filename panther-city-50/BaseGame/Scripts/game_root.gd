@@ -10,7 +10,6 @@ func _process(_delta: float) -> void:
 func GoToNextScene(OldScene, NewScene: PackedScene) -> void:
 	# TODO: Add a transition
 	
+	add_child(NewScene.instantiate())
 	
 	OldScene.queue_free()
-	
-	add_child(NewScene.instantiate())
