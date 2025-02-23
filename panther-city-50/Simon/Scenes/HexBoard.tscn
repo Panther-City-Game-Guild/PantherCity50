@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Simon/Scripts/hex_board.gd" id="1_2ukb6"]
 [ext_resource type="Script" path="res://Simon/Scripts/area.gd" id="2_82xq0"]
 [ext_resource type="Texture2D" uid="uid://cr1be47kvbjg2" path="res://Simon/Assets/SimonHexagon.png" id="2_h16d2"]
-[ext_resource type="Texture2D" uid="uid://bs3dtsu4hapu0" path="res://Simon/Assets/SimonHexagon-Dim.png" id="5_0dx74"]
+[ext_resource type="Texture2D" uid="uid://bjeo1x1jhh7i1" path="res://Simon/Assets/SimonHexagon-Dim.png" id="5_0dx74"]
 
 [node name="HexBoard" type="Node2D"]
 top_level = true

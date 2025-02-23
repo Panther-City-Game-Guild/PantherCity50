@@ -84,7 +84,7 @@ func _process(delta: float) -> void:
 			
 			# After the intermission time, show the pattern to the user
 			# TODO: Add a Round Start countdown timer to the UI
-			print(" Round begins in ", intermission_time, " seconds! --")
+			print(" Round begins in ", intermission_time, " seconds!")
 			print("   Pattern: ", rand_pattern)
 			await get_tree().create_timer(intermission_time).timeout
 			for i in rand_pattern:
