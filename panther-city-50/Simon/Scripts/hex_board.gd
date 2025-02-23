@@ -4,27 +4,27 @@ extends Node2D
 # TODO: Renumber Areas to start with 0
 # TODO: Refactor code to support this renaming
 @onready var AreaParents: Array[Area2D] = [
-	$Area_1, $Area_2, $Area_3,
-	$Area_4, $Area_5, $Area_6 ]
+	$BoardSprite/Area_0, $BoardSprite/Area_1, $BoardSprite/Area_2,
+	$BoardSprite/Area_3, $BoardSprite/Area_4, $BoardSprite/Area_5 ]
 
 ### Handles to Areas; grandchildren
 # TODO: Renumber Areas to start with 0
 # TODO: Refactor code to support this renaming
 @onready var Areas: Array[Polygon2D] = [
-	$Area_1/Polygon2D, $Area_2/Polygon2D,
-	$Area_3/Polygon2D, $Area_4/Polygon2D,
-	$Area_5/Polygon2D, $Area_6/Polygon2D ]
+	$BoardSprite/Area_0/Polygon2D, $BoardSprite/Area_1/Polygon2D,
+	$BoardSprite/Area_2/Polygon2D, $BoardSprite/Area_3/Polygon2D,
+	$BoardSprite/Area_4/Polygon2D, $BoardSprite/Area_5/Polygon2D ]
 
 ### Exported Variables
 # Color Settings
 @export_category("Color Settings")
 @export var colors: Array[String] = [ # Array of color codes for the clickable Areas
-	"#FF0000",	# 0 Red
-	"#FFFF00",	# 1 Yellow
-	"#00FF00",	# 2 Green
-	"#CC00CC",	# 3 Purple
-	"#3366FF",	# 4 Blue
-	"#FF9900" ]	# 5 Orange
+	"#FF0000",	# 0 Red		#660000 DIM
+	"#FFFF00",	# 1 Yellow	#666600 DIM
+	"#00FF00",	# 2 Green	#006600 DIM
+	"#CC00CC",	# 3 Purple	#520052 DIM
+	"#3366FF",	# 4 Blue	#142966 DIM
+	"#FF9900" ]	# 5 Orange	#663D00 DIM
 @export var dark_pct: float = 0.6 # Percent to darken the color
 # Timer Durations
 @export_category("Timer Settings")
@@ -61,6 +61,7 @@ func _ready() -> void:
 	
 	# Connect to signals emitted by the Areas
 	connect_area_signals() # Depends on AreaParents
+	pass
 
 
 ### Begin Game Loop
@@ -111,7 +112,6 @@ func _process(delta: float) -> void:
 			
 			# TODO: Make a screen with recap and button for leveling up!
 			level_up()
-			
 ### End Game Loop
 
 
@@ -205,12 +205,12 @@ func verify_input(input) -> void:
 	# Only process this if waiting for input and a rand_pattern exists
 	if waiting_for_input && rand_pattern:
 		# If the Area clicked matches the required area, store the input and update the score
-		if int(input) - 1 == rand_pattern[next_input]:
-			input_pattern.append(int(input) - 1)
+		if int(input) == rand_pattern[next_input]:
+			input_pattern.append(int(input))
 			input_length = input_pattern.size()
 			round_score += 500 * input_length
 			score += 500 * input_length
-			print("   Correct input: ", int(input)  - 1, " | Round score: ", round_score, " | Total score: ", score)
+			print("   Correct input: ", int(input), " | Round score: ", round_score, " | Total score: ", score)
 			
 			if next_input < pattern_length - 1:
 				next_input += 1
@@ -243,7 +243,7 @@ func assign_variables_to_areas() -> void:
 	for Area in Areas:
 		Area.get_parent().color = colors[i]
 		Area.get_parent().dark_pct = dark_pct
-		Area.get_parent().update_area()
+		Area.get_parent().dim_area()
 		i += 1
 
 
