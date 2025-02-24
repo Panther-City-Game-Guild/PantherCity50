@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3jgspcs6f2hh"]
+[gd_scene load_steps=7 format=3 uid="uid://c3jgspcs6f2hh"]
 
 [ext_resource type="Script" path="res://BaseGame/Scripts/game_selection.gd" id="1_o5o45"]
 [ext_resource type="PackedScene" uid="uid://cpv30ys7cri18" path="res://BaseGame/Scenes/game_icon.tscn" id="2_gmh68"]
 [ext_resource type="PackedScene" uid="uid://bxm83yrjwjamq" path="res://PantherRun/Scenes/PantherRunTitle.tscn" id="3_dduoo"]
 [ext_resource type="PackedScene" uid="uid://bnah6d37dam5s" path="res://ZooEscape/Scenes/ZETitle.tscn" id="4_7204n"]
 [ext_resource type="PackedScene" uid="uid://cky1uw2nrbma4" path="res://Simon/Scenes/SimonTitle.tscn" id="5_luuiv"]
+[ext_resource type="PackedScene" uid="uid://bweveps3ckfg3" path="res://Drifter/Scenes/Title.tscn" id="6_5w0xr"]
 
 [node name="GameSelection" type="Node2D"]
 script = ExtResource("1_o5o45")
@@ -49,6 +50,18 @@ text = "Simon"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="GameIconDrifter" parent="Row1" instance=ExtResource("2_gmh68")]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+GameTitleScene = ExtResource("6_5w0xr")
+
+[node name="Label" type="Label" parent="Row1/GameIconDrifter"]
+layout_mode = 2
+text = "Drifter"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="startGame" from="Row1/GameIcon" to="." method="_on_game_icon_start_game"]
 [connection signal="startGame" from="Row1/GameIcon2" to="." method="_on_game_icon_start_game"]
 [connection signal="startGame" from="Row1/GameIcon3" to="." method="_on_game_icon_start_game"]
+[connection signal="startGame" from="Row1/GameIconDrifter" to="." method="_on_game_icon_start_game"]
