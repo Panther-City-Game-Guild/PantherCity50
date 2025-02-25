@@ -16,6 +16,7 @@ func _input(_event: InputEvent) -> void:
 # New Game Button UP
 func _on_new_btn_button_up() -> void:
 	$TitlePanel.visible = false
+	$SimonHUD.visible = true
 	$HexBoard.start_game()
 
 # Quit Game Button UP
