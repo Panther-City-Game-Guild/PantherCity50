@@ -122,41 +122,32 @@ func _process(delta: float) -> void:
 
 ### Begin InputEvent Checks
 func _input(event: InputEvent) -> void:
-	# 1 or Q Key pressed
-	if (event is InputEventKey && event.pressed && (event.keycode == 49 || event.keycode == 81)):
-		if !are_areas_locked:
-			verify_input(0) # Area_0
-			$BoardSprite/Area_0.trigger_area()
+	if !are_areas_locked:
+		# Keyboard key was pressed
+		if (event is InputEventKey && event.pressed):
+			var i: int = -1
 			
-	# 2 or W Key pressed
-	if (event is InputEventKey && event.pressed && (event.keycode == 50 || event.keycode == 87)):
-		if !are_areas_locked:
-			verify_input(1) # Area_1
-			$BoardSprite/Area_1.trigger_area()
-	
-	# 3 or E Key pressed
-	if (event is InputEventKey && event.pressed && (event.keycode == 51 || event.keycode == 69)):
-		if !are_areas_locked:
-			verify_input(2) # Area_2
-			$BoardSprite/Area_2.trigger_area()
+			# 1 or Q Key pressed
+			if (event.keycode == 49 || event.keycode == 81): i = 0
 			
-	# 4 or A Key pressed
-	if (event is InputEventKey && event.pressed && (event.keycode == 52 || event.keycode == 65)):
-		if !are_areas_locked:
-			verify_input(3) # Area_3
-			$BoardSprite/Area_3.trigger_area()
+			# 2 or W Key pressed
+			if (event.keycode == 50 || event.keycode == 87): i = 1
 			
-	# 5 or S Key pressed
-	if (event is InputEventKey && event.pressed && (event.keycode == 53 || event.keycode == 83)):
-		if !are_areas_locked:
-			verify_input(4) # Area_4
-			$BoardSprite/Area_4.trigger_area()
+			# 3 or E Key pressed
+			if (event.keycode == 51 || event.keycode == 69): i = 2
 			
-	# 6 or D Key pressed
-	if (event is InputEventKey && event.pressed && (event.keycode == 54 || event.keycode == 68)):
-		if !are_areas_locked:
-			verify_input(5) # Area_5
-			$BoardSprite/Area_5.trigger_area()
+			# 4 or A Key pressed
+			if (event.keycode == 52 || event.keycode == 65): i = 3
+			
+			# 5 or S Key pressed
+			if (event.keycode == 53 || event.keycode == 83): i = 4
+			
+			# 6 or D Key pressed
+			if (event.keycode == 54 || event.keycode == 68): i = 5
+			
+			if i >= 0 && i <= 5:
+				verify_input(i)
+				AreaParents[i].trigger_area()
 ### End InputEvent Checks
 
 
