@@ -7,6 +7,7 @@ var mouseEntered: bool = false
 var amSelected: bool = false
 signal user_clicked_me
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	dim_area()
@@ -20,18 +21,26 @@ func _input(event: InputEvent) -> void:
 				# If mouse still in the area, light the area back up
 	
 	if (event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT):
-		print(event)
 		if mouseEntered:
-			user_clicked_me.emit(name.get_slice("_", 1))
+			user_clicked_me.emit(int(name.get_slice("_", 1)))
 			dim_area()
 			if mouseEntered:
-				await get_tree().create_timer(0.2).timeout
+				await get_tree().create_timer(0.1).timeout
 				light_area()
 
 
 # Toggle the lock on this area
 func toggle_area_lock() -> void:
 	is_area_locked = !is_area_locked
+	if is_area_locked:
+		dim_area()
+	if mouseEntered && !is_area_locked:
+		light_area()
+
+
+func trigger_area():
+	light_area()
+	await get_tree().create_timer(0.1).timeout
 	dim_area()
 
 
@@ -55,5 +64,4 @@ func _on_mouse_entered() -> void:
 # Mouse Exited Area
 func _on_mouse_exited() -> void:
 	mouseEntered = false
-	if !is_area_locked:
-		dim_area()
+	dim_area()

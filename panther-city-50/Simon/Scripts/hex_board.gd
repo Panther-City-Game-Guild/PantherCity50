@@ -79,14 +79,18 @@ func _process(delta: float) -> void:
 		if !has_pattern_played:
 			has_pattern_played = true
 			
-			# Lock the clickable color areas
-			toggle_area_locks()
-			
-			# After the intermission time, show the pattern to the user
+			# After the intermission time, teach the pattern to the user
 			# TODO: Add a Round Start countdown timer to the UI
 			print(" Round begins in ", intermission_time, " seconds!")
+			print("Pattern length: ", pattern_length, " | Recital time: ", recital_time)
 			print("   Pattern: ", rand_pattern)
-			await get_tree().create_timer(intermission_time).timeout
+			
+			# Lock the clickable color areas
+			await get_tree().create_timer(intermission_time / 2).timeout
+			toggle_area_locks()
+			
+			# Teach the pattern
+			await get_tree().create_timer(intermission_time / 2).timeout
 			for i in rand_pattern:
 				# Light up the Area
 				Areas[i].color = Color(colors[i])
@@ -99,13 +103,14 @@ func _process(delta: float) -> void:
 				await get_tree().create_timer(teach_time, false, false, false).timeout
 			
 			# Unlock the clickable color areas and wait for user input
+			await get_tree().create_timer(intermission_time / 2).timeout
 			toggle_area_locks()
 			waiting_for_input = true
 		
 		# If the user clicked enough correct colors
 		if input_length == pattern_length:
 			waiting_for_input = false
-			print("  Round completed in ", floor(elapsed_time), " seconds!")
+			print("  Round completed in ", floor(elapsed_time), " / ", recital_time, " seconds!")
 			in_intermission = true
 			calc_bonus_score()
 			calc_bonus_lives()
@@ -113,6 +118,46 @@ func _process(delta: float) -> void:
 			# TODO: Make a screen with recap and button for leveling up!
 			level_up()
 ### End Game Loop
+
+
+### Begin InputEvent Checks
+func _input(event: InputEvent) -> void:
+	# 1 or Q Key pressed
+	if (event is InputEventKey && event.pressed && (event.keycode == 49 || event.keycode == 81)):
+		if !are_areas_locked:
+			verify_input(0) # Area_0
+			$BoardSprite/Area_0.trigger_area()
+			
+	# 2 or W Key pressed
+	if (event is InputEventKey && event.pressed && (event.keycode == 50 || event.keycode == 87)):
+		if !are_areas_locked:
+			verify_input(1) # Area_1
+			$BoardSprite/Area_1.trigger_area()
+	
+	# 3 or E Key pressed
+	if (event is InputEventKey && event.pressed && (event.keycode == 51 || event.keycode == 69)):
+		if !are_areas_locked:
+			verify_input(2) # Area_2
+			$BoardSprite/Area_2.trigger_area()
+			
+	# 4 or A Key pressed
+	if (event is InputEventKey && event.pressed && (event.keycode == 52 || event.keycode == 65)):
+		if !are_areas_locked:
+			verify_input(3) # Area_3
+			$BoardSprite/Area_3.trigger_area()
+			
+	# 5 or S Key pressed
+	if (event is InputEventKey && event.pressed && (event.keycode == 53 || event.keycode == 83)):
+		if !are_areas_locked:
+			verify_input(4) # Area_4
+			$BoardSprite/Area_4.trigger_area()
+			
+	# 6 or D Key pressed
+	if (event is InputEventKey && event.pressed && (event.keycode == 54 || event.keycode == 68)):
+		if !are_areas_locked:
+			verify_input(5) # Area_5
+			$BoardSprite/Area_5.trigger_area()
+### End InputEvent Checks
 
 
 # Begin a new game
@@ -188,28 +233,29 @@ func increase_pattern_length() -> void:
 
 # Calculate time user has to recite pattern
 func calc_recital_time() -> void:
-	recital_time = roundi((teach_time + display_time) * pattern_length) + (teach_time * pattern_length)
-	# If shorter than 10 seconds, allow for 10 seconds
-	if recital_time < 10:
-		recital_time = 10
+	recital_time = round(((teach_time + display_time) * pattern_length) + (teach_time * pattern_length))
+	# If shorter than 8 seconds, allow for 8 seconds
+	if recital_time < 7:
+		recital_time = 7
 
 
 # Prevent mouse_entered and mouse_exited from changing area colors
 func toggle_area_locks() -> void:
+	are_areas_locked = !are_areas_locked
 	for i in AreaParents.size():
 		AreaParents[i].toggle_area_lock()
 
 
 # Verify the user input is correct
-func verify_input(input) -> void:
+func verify_input(input: int) -> void:
 	# Only process this if waiting for input and a rand_pattern exists
 	if waiting_for_input && rand_pattern:
 		# If the Area clicked matches the required area, store the input and update the score
 		if int(input) == rand_pattern[next_input]:
 			input_pattern.append(int(input))
 			input_length = input_pattern.size()
-			round_score += 500 * input_length
-			score += 500 * input_length
+			round_score += round(200 * input_length ** 1.1)
+			score += round(200 * input_length ** 1.1)
 			print("   Correct input: ", int(input), " | Round score: ", round_score, " | Total score: ", score)
 			
 			if next_input < pattern_length - 1:
@@ -230,6 +276,7 @@ func calc_bonus_score() -> void:
 
 func calc_bonus_lives() -> void:
 	if round_score > 10000:
+		@warning_ignore("integer_division")
 		lives += floor(round_score / 10000)
 		if lives > 9:
 			lives = 9
