@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bweveps3ckfg3"]
+
+[ext_resource type="Script" path="res://Drifter/Scripts/title_screen.gd" id="1_n4smd"]
+
+[node name="DriftTitle" type="Node2D"]
+script = ExtResource("1_n4smd")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.158472, 0.158472, 0.158472, 1)
+
+[node name="LabelQuit" type="RichTextLabel" parent="."]
+offset_left = 169.0
+offset_top = 191.0
+offset_right = 488.0
+offset_bottom = 241.0
+bbcode_enabled = true
+text = "[font_size=30][color=gray]Press [b][color=red]Escape[/color][/b] to quit![/color][/font_size]"
+
+[node name="LabelDrifterTitle" type="RichTextLabel" parent="."]
+offset_left = 16.0
+offset_top = 1.0
+offset_right = 653.0
+offset_bottom = 208.0
+bbcode_enabled = true
+text = "[font_size=150]DRIFTER[/font_size]"
