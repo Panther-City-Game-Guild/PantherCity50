@@ -38,7 +38,7 @@ func toggle_area_lock() -> void:
 		light_area()
 
 
-func trigger_area():
+func trigger_area() -> void:
 	light_area()
 	await get_tree().create_timer(0.1).timeout
 	dim_area()
