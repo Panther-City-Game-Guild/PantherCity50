@@ -12,3 +12,6 @@ func _input(_event: InputEvent) -> void:
 			SceneManager.GoToNewSceneString(self, Scenes.GameSelection)
 		else:
 			get_tree().quit()
+			
+	if Input.is_action_just_pressed("ui_accept"):
+		SceneManager.GoToNewSceneString(self, "res://Drifter/Scenes/PlayScreen.tscn")

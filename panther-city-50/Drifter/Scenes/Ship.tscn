@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxbk5bo7gbuil"]
+
+[ext_resource type="Script" path="res://Drifter/Scripts/ship.gd" id="1_36brd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ee61u"]
+size = Vector2(20, 28)
+
+[node name="Ship" type="Area2D"]
+position = Vector2(331, 157)
+script = ExtResource("1_36brd")
+metadata/_edit_group_ = true
+
+[node name="ShipShape" type="ColorRect" parent="."]
+offset_left = -11.0
+offset_top = -19.0
+offset_right = 11.0
+offset_bottom = 11.0
+color = Color(0.458405, 0.458405, 0.458405, 1)
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_ee61u")
+
+[node name="ExhaustLeft" type="Polygon2D" parent="."]
+color = Color(1, 0.788235, 0, 1)
+polygon = PackedVector2Array(-16, -8, -16, 2, -24, -3)
+
+[node name="ExhaustRight" type="Polygon2D" parent="."]
+scale = Vector2(-1, 1)
+color = Color(1, 0.788235, 0, 1)
+polygon = PackedVector2Array(-16, -8, -16, 2, -24, -3)
