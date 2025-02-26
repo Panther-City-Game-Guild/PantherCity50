@@ -16,3 +16,7 @@ extends Node
 
 # Simon Scenes
 @onready var SimonTitle := "res://Simon/Scenes/SimonTitle.tscn"
+
+# Drifter Scenes
+@onready var DrifterTitle := "res://Drifter/Scenes/TitleScreen.tscn"
+@onready var DrifterPlay := "res://Drifter/Scenes/PlayScreen.tscn"

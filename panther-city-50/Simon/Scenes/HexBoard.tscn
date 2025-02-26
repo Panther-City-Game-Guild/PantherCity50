@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bjeo1x1jhh7i1" path="res://Simon/Assets/SimonHexagon-Dim.png" id="5_0dx74"]
 
 [node name="HexBoard" type="Node2D"]
+process_mode = 1
 top_level = true
 script = ExtResource("1_2ukb6")
 
@@ -23,7 +24,6 @@ script = ExtResource("2_82xq0")
 color = "#FF0000"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_0"]
-visible = false
 polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
 
 [node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_0"]
@@ -38,7 +38,6 @@ script = ExtResource("2_82xq0")
 color = "#FFFF00"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_1"]
-visible = false
 polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
 
 [node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_1"]
@@ -52,7 +51,6 @@ script = ExtResource("2_82xq0")
 color = "#00FF00"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_2"]
-visible = false
 polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
 
 [node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_2"]
@@ -67,7 +65,6 @@ script = ExtResource("2_82xq0")
 color = "#CC00CC"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_3"]
-visible = false
 polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
 
 [node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_3"]
@@ -81,7 +78,6 @@ script = ExtResource("2_82xq0")
 color = "#3366FF"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_4"]
-visible = false
 polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
 
 [node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_4"]
@@ -96,7 +92,6 @@ script = ExtResource("2_82xq0")
 color = "#FF9900"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_5"]
-visible = false
 polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
 
 [node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_5"]

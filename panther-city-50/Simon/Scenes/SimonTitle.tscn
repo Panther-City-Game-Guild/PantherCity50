@@ -24,6 +24,7 @@ color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 position = Vector2(320, 180)
 
 [node name="TitlePanel" type="Panel" parent="."]
+process_mode = 3
 offset_left = 200.0
 offset_right = 440.0
 offset_bottom = 360.0
@@ -68,17 +69,16 @@ size_flags_horizontal = 4
 layout_mode = 2
 text = "New Game"
 
-[node name="ReturnBtn" type="Button" parent="TitlePanel/Container/MenuContainer"]
-layout_mode = 2
-disabled = true
-text = "Back to Game Selection"
-
 [node name="ScoresBtn" type="Button" parent="TitlePanel/Container/MenuContainer"]
 layout_mode = 2
 disabled = true
 text = "High Scores"
 
-[node name="QuitBtn" type="Button" parent="TitlePanel/Container/MenuContainer"]
+[node name="ReturnBtn" type="Button" parent="TitlePanel/Container/MenuContainer"]
+layout_mode = 2
+text = "Back to Game Selection"
+
+[node name="ExitBtn" type="Button" parent="TitlePanel/Container/MenuContainer"]
 layout_mode = 2
 text = "Exit"
 
@@ -137,5 +137,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 text = "00000000"
 
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="button_up" from="TitlePanel/Container/MenuContainer/NewBtn" to="." method="_on_new_btn_button_up"]
-[connection signal="button_up" from="TitlePanel/Container/MenuContainer/QuitBtn" to="." method="_on_quit_btn_button_up"]
+[connection signal="button_up" from="TitlePanel/Container/MenuContainer/ReturnBtn" to="." method="_on_return_btn_button_up"]
+[connection signal="button_up" from="TitlePanel/Container/MenuContainer/ExitBtn" to="." method="_on_exit_btn_button_up"]

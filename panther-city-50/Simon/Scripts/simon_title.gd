@@ -1,5 +1,6 @@
 extends Node
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$HexBoard.play_demo = true
@@ -8,22 +9,31 @@ func _ready() -> void:
 # Called when input events happen
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
-		_on_quit_btn_button_up()
+		_on_return_btn_button_up()
 		
 	if Input.is_action_just_pressed("ui_accept"):
 		SceneManager.GoToNewSceneString(self, Scenes.SimonTitle)
 
-# New Game Button UP
+
+# New Game Button UP -- Start a new game
 func _on_new_btn_button_up() -> void:
 	$TitlePanel.visible = false
 	$SimonHUD.visible = true
 	$HexBoard.start_game()
 
-# Quit Game Button UP
- # Scene Tree checking for running this Scene as a standalone during development
- # Can remove checking after development is complete
-func _on_quit_btn_button_up() -> void:
+
+# Return Button UP -- Returrn to Game Selection screen
+func _on_return_btn_button_up() -> void:
 	if get_parent().name == "GameRoot":
 		SceneManager.GoToNewSceneString(self, Scenes.GameSelection)
-	else:
-		get_tree().quit()
+
+
+# Exit Game Button UP -- Close the application
+func _on_exit_btn_button_up() -> void:
+	get_tree().quit()
+
+
+# Triggered when SimonTitle is being removed from the SceneTree
+# E.g., Triggered when returning to Game Selection
+func _on_tree_exiting() -> void:
+	print("SimonTitle exiting scene tree")
