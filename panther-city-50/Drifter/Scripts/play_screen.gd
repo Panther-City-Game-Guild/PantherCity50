@@ -6,25 +6,47 @@ const NUM_WALLS: int = 20
 const WALL_WIDTH: int = 200
 const WALL_HEIGHT: int = 25
 
-@onready var dynamic_walls: Array[Area2D] = []
+@onready var walls: Array[Area2D] = []
+@onready var ship_scene: PackedScene = load("res://Drifter/Scenes/Ship.tscn")
+@onready var ship: Area2D = null
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Instantiate the ship
+	ship = ship_scene.instantiate()
+	ship.position = Vector2(320, 280)
+	ship.start_position = ship.position
+	self.add_child(ship)
+	
+	# Instantiate the walls
 	for i in range(NUM_WALLS):
 		var dynamic_wall: Area2D = wall()
 		dynamic_wall.position = Vector2(sin(2 * PI * i / NUM_WALLS) * 100, i * 50)
-		dynamic_walls.append(dynamic_wall)
+		dynamic_wall.set_meta("start_position", dynamic_wall.position)
+		walls.append(dynamic_wall)
 		self.add_child(dynamic_wall)
 	for i in range(NUM_WALLS):
 		var dynamic_wall: Area2D = wall()
 		dynamic_wall.position = Vector2(600 + sin(2 * PI * i / NUM_WALLS) * 100, i * 50)
-		dynamic_walls.append(dynamic_wall)
+		dynamic_wall.set_meta("start_position", dynamic_wall.position)
+		walls.append(dynamic_wall)
 		self.add_child(dynamic_wall)
+		
+		
+func ship_crashed() -> void:
+	print("Ship crashed!")
+	reset()
+		
+		
+func reset() -> void:
+	ship.reset()
+	for _wall in walls:
+		_wall.position = _wall.get_meta("start_position")
 	
 	
 func _process(_delta: float) -> void:
-	for _wall in dynamic_walls:
+	for _wall in walls:
 		_wall.position += Vector2(0, DESCENT_SPEED * _delta)
 		if _wall.position.y - WALL_HEIGHT > 360:
 			_wall.position += Vector2(0, -WALL_HEIGHT * NUM_WALLS * 2)
