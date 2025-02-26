@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxbk5bo7gbuil"]
+[gd_scene load_steps=5 format=3 uid="uid://bxbk5bo7gbuil"]
 
 [ext_resource type="Script" path="res://Drifter/Scripts/ship.gd" id="1_36brd"]
+[ext_resource type="AudioStream" uid="uid://bwrtyba4srjff" path="res://Drifter/Audio/thrust.wav" id="2_oim0n"]
+[ext_resource type="AudioStream" uid="uid://b02hfoypq1haf" path="res://Drifter/Audio/crash.wav" id="3_axm1o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ee61u"]
 size = Vector2(20, 28)
@@ -29,3 +31,9 @@ polygon = PackedVector2Array(-16, -8, -16, 2, -24, -3)
 scale = Vector2(-1, 1)
 color = Color(1, 0.788235, 0, 1)
 polygon = PackedVector2Array(-16, -8, -16, 2, -24, -3)
+
+[node name="ThrustSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_oim0n")
+
+[node name="CrashSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_axm1o")
