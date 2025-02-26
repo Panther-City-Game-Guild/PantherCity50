@@ -52,6 +52,7 @@ var are_areas_locked: bool = false # Are the clickable Areas locked?
 var in_intermission: bool = false # Are we between rounds?
 var elapsed_time: float = 0.00 # How long the user has taken to give input
 var play_demo: bool = false # Should the Demo play?
+var area_triggered: int = -1 # Which area is triggered; 0-5, -1 for none
 
 
 # Called when the node enters the scene tree for the first time.
@@ -61,14 +62,13 @@ func _ready() -> void:
 	
 	# Connect to signals emitted by the Areas
 	connect_area_signals() # Depends on AreaParents
-	pass
 
 
 ### Begin Game Loop
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# Are we waiting for user input?
-	if waiting_for_input:
+	if waiting_for_input && !in_intermission:
 		# If so, increase the elapsed_time
 		elapsed_time += delta
 	
@@ -111,7 +111,7 @@ func _process(delta: float) -> void:
 		if input_length == pattern_length:
 			waiting_for_input = false
 			print("  Round completed in ", floor(elapsed_time), " / ", recital_time, " seconds!")
-			in_intermission = true
+			pause_loop()
 			calc_bonus_score()
 			calc_bonus_lives()
 			
@@ -122,32 +122,26 @@ func _process(delta: float) -> void:
 
 ### Begin InputEvent Checks
 func _input(event: InputEvent) -> void:
-	if !are_areas_locked:
-		# Keyboard key was pressed
-		if (event is InputEventKey && event.pressed):
-			var i: int = -1
-			
-			# 1 or Q Key pressed
-			if (event.keycode == 49 || event.keycode == 81): i = 0
-			
-			# 2 or W Key pressed
-			if (event.keycode == 50 || event.keycode == 87): i = 1
-			
-			# 3 or E Key pressed
-			if (event.keycode == 51 || event.keycode == 69): i = 2
-			
-			# 4 or A Key pressed
-			if (event.keycode == 52 || event.keycode == 65): i = 3
-			
-			# 5 or S Key pressed
-			if (event.keycode == 53 || event.keycode == 83): i = 4
-			
-			# 6 or D Key pressed
-			if (event.keycode == 54 || event.keycode == 68): i = 5
-			
-			if i >= 0 && i <= 5:
-				verify_input(i)
-				AreaParents[i].trigger_area()
+	# If a game is in progress and the areas are locked
+	if game_on && !are_areas_locked:
+		var i: int = -1
+		# If an Action was just pressed
+		# <1> pressed
+		if Input.is_action_just_pressed("trigger_ability_1"): i = 0
+		# <2> pressed
+		if Input.is_action_just_pressed("trigger_ability_2"): i = 1
+		# <3> pressed
+		if Input.is_action_just_pressed("trigger_ability_3"): i = 2
+		# <4> pressed
+		if Input.is_action_just_pressed("trigger_ability_4"): i = 3
+		# <5> pressed
+		if Input.is_action_just_pressed("trigger_ability_5"): i = 4
+		# <6> pressed
+		if Input.is_action_just_pressed("trigger_ability_6"): i = 5	
+		# If one of the above was true, trigger that area
+		if i >= 0 && i <= 5:
+			verify_input(i)
+			AreaParents[i].trigger_area()
 ### End InputEvent Checks
 
 
@@ -207,7 +201,7 @@ func level_up() -> void:
 
 # Called when showing scores between rounds
 func pause_loop() -> void:
-	in_intermission = true
+	in_intermission = !in_intermission
 
 
 # Generate a rand_pattern to teach the player

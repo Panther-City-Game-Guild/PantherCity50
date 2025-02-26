@@ -10,8 +10,8 @@ func _ready() -> void:
 	setLevelGlobals()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+# Called when an InputEvent is detected
+func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		#TODO: this will be go to setting manager at some point
 		Globals.Game_Globals.clear()
