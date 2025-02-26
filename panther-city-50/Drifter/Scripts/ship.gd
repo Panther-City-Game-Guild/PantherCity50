@@ -7,6 +7,10 @@ var velocity := 0.0
 var start_position := Vector2.ZERO
 const ACCELERATION := 400.0	# pixels/sec^2
 const MAX_VELOCITY := 225.0	# pixels/sec
+const KEYMAP := {
+	"left": [ KEY_J, KEY_A, KEY_LEFT ],
+	"right": [ KEY_K, KEY_D, KEY_RIGHT ],
+}
 
 @onready var exhaust_left: Polygon2D = $ExhaustLeft
 @onready var exhaust_right: Polygon2D = $ExhaustRight
@@ -55,8 +59,15 @@ func _process(_delta: float) -> void:
 
 	
 func _input(_event: InputEvent) -> void:
-	thrusting_left = Input.is_key_pressed(KEY_J)
-	thrusting_right = Input.is_key_pressed(KEY_K)
+	thrusting_left = false
+	for key in KEYMAP["left"]:
+		if Input.is_key_pressed(key):
+			thrusting_left = true
+		
+	thrusting_right = false
+	for key in KEYMAP["right"]:
+		if Input.is_key_pressed(key):
+			thrusting_right = true
 		
 	exhaust_left.visible = thrusting_right
 	exhaust_right.visible = thrusting_left
