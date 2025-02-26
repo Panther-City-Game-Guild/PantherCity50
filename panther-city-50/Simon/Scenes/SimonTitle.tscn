@@ -28,6 +28,7 @@ process_mode = 3
 offset_left = 200.0
 offset_right = 440.0
 offset_bottom = 360.0
+size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ufuux")
 metadata/_edit_group_ = true

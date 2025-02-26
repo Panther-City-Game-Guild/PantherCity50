@@ -121,7 +121,7 @@ func _process(delta: float) -> void:
 
 
 ### Begin InputEvent Checks
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	# If a game is in progress and the areas are locked
 	if game_on && !are_areas_locked:
 		var i: int = -1
