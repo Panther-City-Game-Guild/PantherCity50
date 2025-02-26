@@ -1,14 +1,15 @@
 extends Node2D
 
-
 const DESCENT_SPEED: int = 100
 const NUM_WALLS: int = 20
 const WALL_WIDTH: int = 200
 const WALL_HEIGHT: int = 25
 
-@onready var walls: Array[Area2D] = []
 @onready var ship_scene: PackedScene = load("res://Drifter/Scenes/Ship.tscn")
+@onready var wall_script: GDScript = load("res://Drifter/Scripts/wall.gd")
+
 @onready var ship: Area2D = null
+@onready var walls: Array[Area2D] = []
 
 
 # Called when the node enters the scene tree for the first time.
@@ -21,17 +22,22 @@ func _ready() -> void:
 	
 	# Instantiate the walls
 	for i in range(NUM_WALLS):
-		var dynamic_wall: Area2D = wall()
-		dynamic_wall.position = Vector2(sin(2 * PI * i / NUM_WALLS) * 100, i * 50)
-		dynamic_wall.set_meta("start_position", dynamic_wall.position)
-		walls.append(dynamic_wall)
-		self.add_child(dynamic_wall)
+		var wall: Area2D = wall_script.new()
+		var position_:= Vector2(sin(2 * PI * i / NUM_WALLS) * 100, i * 50)
+		var extents := Vector2(WALL_WIDTH, WALL_HEIGHT)
+		var color := Color(0.19, 0.277, 0.351)
+		wall.init_(position_, extents, color)
+		self.add_child(wall)
+		walls.append(wall)
+		
 	for i in range(NUM_WALLS):
-		var dynamic_wall: Area2D = wall()
-		dynamic_wall.position = Vector2(600 + sin(2 * PI * i / NUM_WALLS) * 100, i * 50)
-		dynamic_wall.set_meta("start_position", dynamic_wall.position)
-		walls.append(dynamic_wall)
-		self.add_child(dynamic_wall)
+		var wall: Area2D = wall_script.new()
+		var position_:= Vector2(600 + sin(2 * PI * i / NUM_WALLS) * 100, i * 50)
+		var extents := Vector2(WALL_WIDTH, WALL_HEIGHT)
+		var color := Color(0.19, 0.277, 0.351)
+		wall.init_(position_, extents, color)
+		self.add_child(wall)
+		walls.append(wall)
 		
 		
 func ship_crashed() -> void:
@@ -42,7 +48,7 @@ func ship_crashed() -> void:
 func reset() -> void:
 	ship.reset()
 	for _wall in walls:
-		_wall.position = _wall.get_meta("start_position")
+		_wall.position = _wall.start_position
 	
 	
 func _process(_delta: float) -> void:
@@ -57,24 +63,3 @@ func _input(_event: InputEvent) -> void:
 		SceneManager.GoToNewSceneString(self, "res://Drifter/Scenes/TitleScreen.tscn")
 	if Input.is_key_pressed(KEY_Q):
 		get_tree().quit()
-
-		
-func wall() -> Area2D:
-	var _wall: Area2D = Area2D.new()
-	
-	var wall_shape: RectangleShape2D = RectangleShape2D.new()
-	wall_shape.extents = Vector2(WALL_WIDTH, WALL_HEIGHT)
-	
-	var wall_collider: CollisionShape2D = CollisionShape2D.new()
-	wall_collider.shape = wall_shape
-	
-	var wall_color: ColorRect = ColorRect.new()
-	wall_color.color = Color(0.19, 0.277, 0.351)
-	wall_color.size = wall_shape.extents * 2
-	wall_color.position = -wall_shape.extents
-	
-	_wall.add_child(wall_collider)
-	_wall.add_child(wall_color)
-	_wall.add_to_group("walls")
-	
-	return _wall
