@@ -27,6 +27,7 @@ func _ready() -> void:
 	
 func reset() -> void:
 	position = start_position
+	visible = true
 	velocity = 0.0
 	thrusting_left = false
 	thrusting_right = false

@@ -23,7 +23,7 @@ func _ready() -> void:
 	# Instantiate the walls
 	for i in range(NUM_WALLS):
 		var wall: Area2D = wall_script.new()
-		var position_:= Vector2(sin(2 * PI * i / NUM_WALLS) * 100, i * 50)
+		var position_:= Vector2(sin(2 * PI * i / NUM_WALLS) * 100, -i * 50)
 		var extents := Vector2(WALL_WIDTH, WALL_HEIGHT)
 		var color := Color(0.19, 0.277, 0.351)
 		wall.init_(position_, extents, color)
@@ -32,7 +32,7 @@ func _ready() -> void:
 		
 	for i in range(NUM_WALLS):
 		var wall: Area2D = wall_script.new()
-		var position_:= Vector2(600 + sin(2 * PI * i / NUM_WALLS) * 100, i * 50)
+		var position_:= Vector2(600 + sin(2 * PI * i / NUM_WALLS) * 100, -i * 50)
 		var extents := Vector2(WALL_WIDTH, WALL_HEIGHT)
 		var color := Color(0.19, 0.277, 0.351)
 		wall.init_(position_, extents, color)
@@ -42,6 +42,8 @@ func _ready() -> void:
 		
 func ship_crashed() -> void:
 	print("Ship crashed!")
+	ship.position = Vector2(1000, 1000)
+	await get_tree().create_timer(1.0).timeout
 	reset()
 		
 		
