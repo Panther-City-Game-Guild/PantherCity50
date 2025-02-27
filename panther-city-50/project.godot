@@ -42,6 +42,7 @@ enabled=PackedStringArray("res://addons/script-ide/plugin.cfg")
 
 folder_colors={
 "res://BaseGame/": "red",
+"res://Drifter/": "green",
 "res://GlobalScripts/": "purple",
 "res://Simon/": "orange"
 }

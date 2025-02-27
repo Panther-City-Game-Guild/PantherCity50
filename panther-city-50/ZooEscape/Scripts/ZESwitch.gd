@@ -1,4 +1,4 @@
-extends Node2D
+extends AnimatedSprite2D
 
 # If you have multiple switches, use this to identify the switch
 @export var SwitchName: String = "Switch"
@@ -12,8 +12,8 @@ var ControlledChildren: Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	self.frame = SwitchState
-	for child in self.get_children():
+	frame = SwitchState
+	for child in get_children():
 		if child != $SwitchArea:
 			ControlledChildren.append(child)
 
@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 # Called to change the state of this switch
 func set_switch_state(state: int) -> void:
 		SwitchState = state
-		self.frame = SwitchState
+		frame = SwitchState
 		toggle_children(SwitchState)
 
 
