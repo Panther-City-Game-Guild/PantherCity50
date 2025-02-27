@@ -16,12 +16,15 @@ offset_top = 191.0
 offset_right = 488.0
 offset_bottom = 241.0
 bbcode_enabled = true
-text = "[font_size=30][color=gray]Press [b][color=red]Escape[/color][/b] to quit![/color][/font_size]"
+text = "[center][color=green]Enter  -  Start Game
+Arrows,  W/A,   J/K  -  Navigate
+Escape  -  Exit[/color][/center]"
+fit_content = true
 
 [node name="LabelDrifterTitle" type="RichTextLabel" parent="."]
 offset_left = 16.0
-offset_top = 1.0
+offset_top = -27.0
 offset_right = 653.0
-offset_bottom = 208.0
+offset_bottom = 174.0
 bbcode_enabled = true
-text = "[font_size=150]DRIFTER[/font_size]"
+text = "[font_size=150][color=blue]DRIFTER[/color][/font_size]"
