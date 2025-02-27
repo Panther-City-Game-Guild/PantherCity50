@@ -21,7 +21,7 @@ func _input(event: InputEvent) -> void:
 				# If mouse still in the area, light the area back up
 	
 	if (event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT):
-		if mouseEntered:
+		if mouseEntered && !is_area_locked:
 			user_clicked_me.emit(int(name.get_slice("_", 1)))
 			dim_area()
 			if mouseEntered:
@@ -64,4 +64,5 @@ func _on_mouse_entered() -> void:
 # Mouse Exited Area
 func _on_mouse_exited() -> void:
 	mouseEntered = false
-	dim_area()
+	if !is_area_locked:
+		dim_area()
