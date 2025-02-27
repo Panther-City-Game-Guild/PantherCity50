@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://nxr8rseg5q8w" path="res://ZooEscape/Scenes/ZESwitch.tscn" id="6_1fw5v"]
 [ext_resource type="PackedScene" uid="uid://64cp455l5y64" path="res://ZooEscape/Scenes/ZEButton.tscn" id="7_ekvyi"]
 [ext_resource type="PackedScene" uid="uid://b6fpe6cti8jrw" path="res://ZooEscape/Scenes/ZEExitTile.tscn" id="8_4t86c"]
-[ext_resource type="PackedScene" uid="uid://bp3g1byqokd3h" path="res://ZooEscape/Scenes/ZEBox.tscn" id="9_lbuof"]
+[ext_resource type="PackedScene" uid="uid://cxubfhy8y0hcg" path="res://ZooEscape/Scenes/ZEBox.tscn" id="9_lbuof"]
 
 [node name="Debug" type="Node2D"]
 script = ExtResource("1_68k30")

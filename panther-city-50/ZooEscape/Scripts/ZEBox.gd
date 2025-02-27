@@ -1,4 +1,4 @@
-extends Sprite2D
+class_name ZEBoxArea extends Area2D
 
 enum states {
 	Movable,
@@ -8,21 +8,12 @@ enum states {
 @onready var currentState := states.Movable
 @onready var ray := $RayCast2D
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-func Move(dir: Vector2):
+func Move(dir: Vector2) -> bool:
 	ray.target_position = dir * Globals.ZETileSize
+	ray.force_raycast_update()
 	
 	if currentState == states.Movable && !ray.is_colliding():
 		position += dir * Globals.ZETileSize
-
-
-func _on_area_2d_try_to_move(dir: Vector2) -> void:
-	Move(dir)
+		return true
+	else:
+		return false
