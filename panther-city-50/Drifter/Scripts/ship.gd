@@ -1,10 +1,10 @@
 extends Area2D
 
-
 var thrusting_left := false
 var thrusting_right := false
 var velocity := 0.0
 var start_position := Vector2.ZERO
+var dead := false
 const ACCELERATION := 400.0	# pixels/sec^2
 const MAX_VELOCITY := 225.0	# pixels/sec
 const KEYMAP := {
@@ -21,13 +21,12 @@ const KEYMAP := {
 
 	
 func _ready() -> void:
-	# Connect the signal from the Area2D node (the ship) to check for entering another area.
 	connect("area_entered", Callable(self, "_on_area_entered"))
 	
 	
 func reset() -> void:
 	position = start_position
-	visible = true
+	dead = false
 	velocity = 0.0
 	thrusting_left = false
 	thrusting_right = false
@@ -35,13 +34,20 @@ func reset() -> void:
 	
 func _on_area_entered(area: Area2D) -> void:
 	# Check if the collided area belongs to the group 'wall'
-	if area.is_in_group("walls"):
+	if not dead and area.is_in_group("walls"):
+		dead = true
+		thrusting_left = false
+		thrusting_right = false
+		thrust_sound.stop()
 		crash_sound.play()
 		get_parent().ship_crashed()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	visible = not dead
+	if dead:
+		return
 	var delta_v := ACCELERATION * _delta
 	if thrusting_left:
 		velocity -= delta_v
@@ -61,12 +67,12 @@ func _process(_delta: float) -> void:
 	
 func _input(_event: InputEvent) -> void:
 	thrusting_left = false
-	for key in KEYMAP["left"]:
+	for key: Key in KEYMAP["left"]:
 		if Input.is_key_pressed(key):
 			thrusting_left = true
 		
 	thrusting_right = false
-	for key in KEYMAP["right"]:
+	for key: Key in KEYMAP["right"]:
 		if Input.is_key_pressed(key):
 			thrusting_right = true
 		
