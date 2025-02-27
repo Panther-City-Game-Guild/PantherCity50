@@ -11,7 +11,7 @@ func _ready() -> void:
 
 
 # Called when an InputEvent is detected
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		#TODO: this will be go to setting manager at some point
 		Globals.Game_Globals.clear()

@@ -30,7 +30,7 @@ extends Node2D
 @export_category("Timer Settings")
 @export var teach_time: float = 0.5 # Number of seconds between lighting different Areas during teaching
 @export var display_time: float = 0.5 # Number of seconds to keep an area lit during teaching
-@export var recital_time: float = 10 # Number of seconds user has to recite the pattern (before being penalized)
+@export var recital_time: float = 7 # Number of seconds user has to recite the pattern (before being penalized)
 @export var intermission_time: float = 5 # Number of seconds before round begins
 # Pattern Settings
 @export_category("Pattern Length")
@@ -53,6 +53,11 @@ var in_intermission: bool = false # Are we between rounds?
 var elapsed_time: float = 0.00 # How long the user has taken to give input
 var play_demo: bool = false # Should the Demo play?
 var area_triggered: int = -1 # Which area is triggered; 0-5, -1 for none
+
+### Signals used to update SimonHUD
+#signal update_lives(lives: int)
+#signal update_timer(recital_time: float, elapsed_time: float)
+#signal update_score(score: int, round_score: int)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -121,8 +126,8 @@ func _process(delta: float) -> void:
 
 
 ### Begin InputEvent Checks
-func _input(event: InputEvent) -> void:
-	# If a game is in progress and the areas are locked
+func _input(_event: InputEvent) -> void:
+	# If a game is in progress and the areas are not locked
 	if game_on && !are_areas_locked:
 		var i: int = -1
 		# If an Action was just pressed
@@ -195,8 +200,9 @@ func level_up() -> void:
 	round_score = 0
 	input_pattern.clear()
 	
-	# Increase the pattern by 1 color
+	# Increase the pattern by 1 color & update the recital time
 	increase_pattern_length()
+	calc_recital_time()
 
 
 # Called when showing scores between rounds
@@ -283,16 +289,3 @@ func assign_variables_to_areas() -> void:
 func connect_area_signals() -> void:
 	for Parent in AreaParents:
 		Parent.connect("user_clicked_me", verify_input)
-
-
-# Play a Demo for the user
-#func demo():
-	#print("-- Begin Demo")
-	#reset_pattern()
-	#print(" - Make Pattern")
-	#make_pattern(3)
-	#calculate_recital_time()
-	#print(" - Play Pattern")
-	#play_pattern()
-	#print(" - Time until next demo: ", recital_time)
-	#get_tree().create_timer(30).connect("timeout", demo)

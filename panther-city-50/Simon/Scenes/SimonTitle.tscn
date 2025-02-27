@@ -2,142 +2,26 @@
 
 [ext_resource type="Script" path="res://Simon/Scripts/simon_title.gd" id="1_msq48"]
 [ext_resource type="PackedScene" uid="uid://yn1d5or0rw1x" path="res://Simon/Scenes/HexBoard.tscn" id="2_wp5dl"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufuux"]
-bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_68k5q"]
-content_margin_left = 5.0
-content_margin_right = 5.0
-bg_color = Color(0, 0, 0, 0)
+[ext_resource type="PackedScene" uid="uid://dv5ce46e4gdq7" path="res://Simon/Scenes/simon_menu.tscn" id="3_kcjoo"]
+[ext_resource type="PackedScene" uid="uid://dtuk3xi0s4h4w" path="res://Simon/Scenes/simon_hud.tscn" id="4_m2ajy"]
 
 [node name="Simon" type="Node"]
 script = ExtResource("1_msq48")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="BGColor" type="ColorRect" parent="."]
 offset_right = 640.0
 offset_bottom = 360.0
 mouse_filter = 1
 color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 
+[node name="SimonMenu" parent="." instance=ExtResource("3_kcjoo")]
+z_index = 10
+
+[node name="SimonHUD" parent="." instance=ExtResource("4_m2ajy")]
+z_index = 5
+
 [node name="HexBoard" parent="." instance=ExtResource("2_wp5dl")]
-position = Vector2(320, 180)
-
-[node name="TitlePanel" type="Panel" parent="."]
-process_mode = 3
-offset_left = 200.0
-offset_right = 440.0
-offset_bottom = 360.0
-size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ufuux")
-metadata/_edit_group_ = true
-
-[node name="Container" type="VBoxContainer" parent="TitlePanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/separation = 50
-
-[node name="TitleContainer" type="VBoxContainer" parent="TitlePanel/Container"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="SimonLabel" type="Label" parent="TitlePanel/Container/TitleContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 50
-text = "Simon"
-
-[node name="CommLabel" type="Label" parent="TitlePanel/Container/TitleContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 14
-text = "Communication through color"
-horizontal_alignment = 1
-
-[node name="MenuContainer" type="VBoxContainer" parent="TitlePanel/Container"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="NewBtn" type="Button" parent="TitlePanel/Container/MenuContainer"]
-layout_mode = 2
-text = "New Game"
-
-[node name="ScoresBtn" type="Button" parent="TitlePanel/Container/MenuContainer"]
-layout_mode = 2
-disabled = true
-text = "High Scores"
-
-[node name="ReturnBtn" type="Button" parent="TitlePanel/Container/MenuContainer"]
-layout_mode = 2
-text = "Back to Game Selection"
-
-[node name="ExitBtn" type="Button" parent="TitlePanel/Container/MenuContainer"]
-layout_mode = 2
-text = "Exit"
-
-[node name="SimonHUD" type="Control" parent="."]
-visible = false
-custom_minimum_size = Vector2(640, 30)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 640.0
-metadata/_edit_group_ = true
-
-[node name="PanelContainer" type="PanelContainer" parent="SimonHUD"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_68k5q")
-
-[node name="LivesHBox" type="HBoxContainer" parent="SimonHUD/PanelContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="LivesLbl" type="Label" parent="SimonHUD/PanelContainer/LivesHBox"]
-layout_mode = 2
-text = "Lives:"
-
-[node name="LivesLbl2" type="Label" parent="SimonHUD/PanelContainer/LivesHBox"]
-layout_mode = 2
-text = "3"
-
-[node name="TimeHBox" type="HBoxContainer" parent="SimonHUD/PanelContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="TimeLbl" type="Label" parent="SimonHUD/PanelContainer/TimeHBox"]
-layout_mode = 2
-text = "Time:"
-
-[node name="TimeLbl2" type="Label" parent="SimonHUD/PanelContainer/TimeHBox"]
-layout_mode = 2
-text = "00:00"
-
-[node name="ScoreHBox" type="HBoxContainer" parent="SimonHUD/PanelContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-
-[node name="ScoreLbl" type="Label" parent="SimonHUD/PanelContainer/ScoreHBox"]
-layout_mode = 2
-size_flags_horizontal = 10
-text = "Score:"
-
-[node name="ScoreData" type="Label" parent="SimonHUD/PanelContainer/ScoreHBox"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "00000000"
+position = Vector2(320, 190)
+scale = Vector2(1.25, 1.25)
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
-[connection signal="button_up" from="TitlePanel/Container/MenuContainer/NewBtn" to="." method="_on_new_btn_button_up"]
-[connection signal="button_up" from="TitlePanel/Container/MenuContainer/ReturnBtn" to="." method="_on_return_btn_button_up"]
-[connection signal="button_up" from="TitlePanel/Container/MenuContainer/ExitBtn" to="." method="_on_exit_btn_button_up"]
