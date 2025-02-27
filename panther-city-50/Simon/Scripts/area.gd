@@ -15,6 +15,8 @@ func _ready() -> void:
 
 # Called when Input events are detected
 func _input(event: InputEvent) -> void:
+	# TODO: Move logic here to check for "trigger_ability_x" input actions
+	# TODO: Or move click detection logic to HexBoard***
 	# CHECK FOR MOUSE INPUT
 		# CHECK FOR "mouseEntered" to select the correct area and the event was left mouse button click
 			# Dim area for a time
@@ -42,6 +44,9 @@ func trigger_area() -> void:
 	light_area()
 	await get_tree().create_timer(0.1).timeout
 	dim_area()
+	if mouseEntered:
+		await get_tree().create_timer(0.1).timeout
+		light_area()
 
 
 # Lighten the Area

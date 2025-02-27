@@ -6,11 +6,11 @@ extends Node
 @onready var HexBoard := $HexBoard
 
 var game_on: bool = false
+var is_game_paused: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	PauseNode.game_unpaused.connect(_resume_game)
-	SimonMenu.connect("resume_game", _resume_game)
+	SimonMenu.connect("resume_game", _unpause_game)
 	SimonMenu.connect("new_game", _new_game)
 	SimonMenu.connect("back_to_selection", _return_to_game_selection)
 	SimonMenu.connect("exit", _exit_app)
@@ -18,21 +18,14 @@ func _ready() -> void:
 
 # Called when input events happen
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
-		# TODO Include the "pause_game" as a way to pause and unpause Simon
-	#if Input.is_action_just_pressed("ui_cancel") || Input.is_action_just_pressed("pause_game"):
+	# TODO Include "pause_game" as a way to pause and unpause Simon	
+	if Input.is_action_just_pressed("ui_cancel") || Input.is_action_just_pressed("pause_game"):
 		get_viewport().set_input_as_handled()
-		if game_on: SimonMenu.set_visibility(true, true)
-		else: SimonMenu.set_visibility(true, false)
-		
-		if game_on && !get_tree().paused:
-			print("pausing game")
-			get_tree().paused = true
-
-
-func _resume_game() -> void:
-	if game_on:
-		_unpause_game()
+		if game_on && !is_game_paused:
+			_pause_game()
+			
+		elif game_on && is_game_paused:
+			_unpause_game()
 
 
 func _new_game() -> void:
@@ -42,15 +35,25 @@ func _new_game() -> void:
 	HexBoard.start_game()
 
 
-# Return Button UP -- Returrn to Game Selection screen
 func _return_to_game_selection() -> void:
 	if get_parent().name == "GameRoot":
 		SceneManager.GoToNewSceneString(self, Scenes.GameSelection)
 
 
+func _pause_game() -> void:
+	if game_on:
+		is_game_paused = true
+		SimonMenu.set_visibility(true, true)
+		get_tree().paused = true
+		print("Simon paused")
+
+
 func _unpause_game() -> void:
-	SimonMenu.set_visibility(false, true)
-	get_tree().paused = false
+	if game_on:
+		is_game_paused = false
+		SimonMenu.set_visibility(false, true)
+		get_tree().paused = false
+		print("Simon unpaused")
 
 
 func _exit_app() -> void:

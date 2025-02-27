@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Globals="*res://GlobalScripts/globals.gd"
-PauseNode="*res://GlobalScripts/pause_node.gd"
 Scenes="*res://GlobalScripts/scenes.gd"
 SceneManager="*res://GlobalScripts/scene_manager.gd"
 
