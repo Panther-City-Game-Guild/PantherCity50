@@ -1,117 +1,112 @@
-[gd_scene load_steps=4 format=3 uid="uid://yn1d5or0rw1x"]
+[gd_scene load_steps=5 format=3 uid="uid://yn1d5or0rw1x"]
 
 [ext_resource type="Script" path="res://Simon/Scripts/hex_board.gd" id="1_2ukb6"]
 [ext_resource type="Script" path="res://Simon/Scripts/area.gd" id="2_82xq0"]
-[ext_resource type="Texture2D" uid="uid://cliivmwkdlkll" path="res://Simon/Assets/SimonHexagon.png" id="2_h16d2"]
+[ext_resource type="Texture2D" uid="uid://cr1be47kvbjg2" path="res://Simon/Assets/SimonHexagon.png" id="2_h16d2"]
+[ext_resource type="Texture2D" uid="uid://bjeo1x1jhh7i1" path="res://Simon/Assets/SimonHexagon-Dim.png" id="5_0dx74"]
 
 [node name="HexBoard" type="Node2D"]
+process_mode = 1
 top_level = true
 script = ExtResource("1_2ukb6")
 
-[node name="Area_1" type="Area2D" parent="."]
-position = Vector2(320, 180)
-scale = Vector2(3, 3)
-script = ExtResource("2_82xq0")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area_1"]
+[node name="PlaceholderArt" type="Sprite2D" parent="."]
 visible = false
-polygon = PackedVector2Array(-20, -32, -21, -31, -35, -3, -35, -1, -3, -1, -3, -3, -17, -31, -18, -32)
+texture = ExtResource("5_0dx74")
 
-[node name="Polygon2D" type="Polygon2D" parent="Area_1"]
-color = Color(1, 0, 0, 0.501961)
-polygon = PackedVector2Array(-20, -32, -20, -31, -21, -31, -21, -29, -22, -29, -22, -27, -23, -27, -23, -25, -24, -25, -24, -23, -25, -23, -25, -21, -26, -21, -26, -19, -27, -19, -27, -17, -28, -17, -28, -15, -29, -15, -29, -13, -30, -13, -30, -11, -31, -11, -31, -9, -32, -9, -32, -7, -33, -7, -33, -5, -34, -5, -34, -3, -35, -3, -35, -1, -3, -1, -3, -3, -4, -3, -4, -5, -5, -5, -5, -7, -6, -7, -6, -9, -7, -9, -7, -11, -8, -11, -8, -13, -9, -13, -9, -15, -10, -15, -10, -17, -11, -17, -11, -19, -12, -19, -12, -21, -13, -21, -13, -23, -14, -23, -14, -25, -15, -25, -15, -27, -16, -27, -16, -29, -17, -29, -17, -31, -18, -31, -18, -32)
-
-[node name="Area_2" type="Area2D" parent="."]
-position = Vector2(356, 180)
-scale = Vector2(3, 3)
-script = ExtResource("2_82xq0")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area_2"]
-visible = false
-position = Vector2(-31, -34)
-rotation = 3.14159
-polygon = PackedVector2Array(-18, -32, -20, -32, -21, -31, -35, -3, -35, -1, -3, -1, -3, -3, -17, -31)
-
-[node name="Polygon2D" type="Polygon2D" parent="Area_2"]
-position = Vector2(-137.667, -94)
-scale = Vector2(0.333333, 0.333333)
-color = Color(1, 1, 0, 0.501961)
-polygon = PackedVector2Array(380, 276, 380, 273, 383, 273, 383, 267, 386, 267, 386, 261, 389, 261, 389, 255, 392, 255, 392, 249, 395, 249, 395, 243, 398, 243, 398, 237, 401, 237, 401, 231, 404, 231, 404, 225, 407, 225, 407, 219, 410, 219, 410, 213, 413, 213, 413, 207, 416, 207, 416, 201, 419, 201, 419, 195, 422, 195, 422, 189, 425, 189, 425, 183, 329, 183, 329, 189, 332, 189, 332, 195, 335, 195, 335, 201, 338, 201, 338, 207, 341, 207, 341, 213, 344, 213, 344, 219, 347, 219, 347, 225, 350, 225, 350, 231, 353, 231, 353, 237, 356, 237, 356, 243, 359, 243, 359, 249, 362, 249, 362, 255, 365, 255, 365, 261, 368, 261, 368, 267, 371, 267, 371, 273, 374, 273, 374, 276)
-
-[node name="Area_3" type="Area2D" parent="."]
-position = Vector2(434, 180)
-scale = Vector2(3, 3)
-script = ExtResource("2_82xq0")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area_3"]
-visible = false
-polygon = PackedVector2Array(-20, -32, -21, -31, -35, -3, -35, -1, -3, -1, -3, -3, -17, -31, -18, -32)
-
-[node name="Polygon2D" type="Polygon2D" parent="Area_3"]
-color = Color(0, 1, 0, 0.501961)
-polygon = PackedVector2Array(-20, -32, -20, -31, -21, -31, -21, -29, -22, -29, -22, -27, -23, -27, -23, -25, -24, -25, -24, -23, -25, -23, -25, -21, -26, -21, -26, -19, -27, -19, -27, -17, -28, -17, -28, -15, -29, -15, -29, -13, -30, -13, -30, -11, -31, -11, -31, -9, -32, -9, -32, -7, -33, -7, -33, -5, -34, -5, -34, -3, -35, -3, -35, -1, -3, -1, -3, -3, -4, -3, -4, -5, -5, -5, -5, -7, -6, -7, -6, -9, -7, -9, -7, -11, -8, -11, -8, -13, -9, -13, -9, -15, -10, -15, -10, -17, -11, -17, -11, -19, -12, -19, -12, -21, -13, -21, -13, -23, -14, -23, -14, -25, -15, -25, -15, -27, -16, -27, -16, -29, -17, -29, -17, -31, -18, -31, -18, -32)
-
-[node name="Area_4" type="Area2D" parent="."]
-position = Vector2(320, 282)
-scale = Vector2(3, 3)
-script = ExtResource("2_82xq0")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area_4"]
-visible = false
-position = Vector2(-38, -34)
-rotation = 3.14159
-polygon = PackedVector2Array(-18, -32, -20, -32, -21, -31, -35, -3, -35, -1, -3, -1, -3, -3, -17, -31)
-
-[node name="Polygon2D" type="Polygon2D" parent="Area_4"]
-position = Vector2(-144.667, -94)
-scale = Vector2(0.333333, 0.333333)
-color = Color(0.8, 0, 0.8, 0.501961)
-polygon = PackedVector2Array(380, 276, 380, 273, 383, 273, 383, 267, 386, 267, 386, 261, 389, 261, 389, 255, 392, 255, 392, 249, 395, 249, 395, 243, 398, 243, 398, 237, 401, 237, 401, 231, 404, 231, 404, 225, 407, 225, 407, 219, 410, 219, 410, 213, 413, 213, 413, 207, 416, 207, 416, 201, 419, 201, 419, 195, 422, 195, 422, 189, 425, 189, 425, 183, 329, 183, 329, 189, 332, 189, 332, 195, 335, 195, 335, 201, 338, 201, 338, 207, 341, 207, 341, 213, 344, 213, 344, 219, 347, 219, 347, 225, 350, 225, 350, 231, 353, 231, 353, 237, 356, 237, 356, 243, 359, 243, 359, 249, 362, 249, 362, 255, 365, 255, 365, 261, 368, 261, 368, 267, 371, 267, 371, 273, 374, 273, 374, 276)
-
-[node name="Area_5" type="Area2D" parent="."]
-position = Vector2(377, 282)
-scale = Vector2(3, 3)
-script = ExtResource("2_82xq0")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area_5"]
-visible = false
-polygon = PackedVector2Array(-20, -32, -21, -31, -35, -3, -35, -1, -3, -1, -3, -3, -17, -31, -18, -32)
-
-[node name="Polygon2D" type="Polygon2D" parent="Area_5"]
-color = Color(0, 0, 1, 0.501961)
-polygon = PackedVector2Array(-20, -32, -20, -31, -21, -31, -21, -29, -22, -29, -22, -27, -23, -27, -23, -25, -24, -25, -24, -23, -25, -23, -25, -21, -26, -21, -26, -19, -27, -19, -27, -17, -28, -17, -28, -15, -29, -15, -29, -13, -30, -13, -30, -11, -31, -11, -31, -9, -32, -9, -32, -7, -33, -7, -33, -5, -34, -5, -34, -3, -35, -3, -35, -1, -3, -1, -3, -3, -4, -3, -4, -5, -5, -5, -5, -7, -6, -7, -6, -9, -7, -9, -7, -11, -8, -11, -8, -13, -9, -13, -9, -15, -10, -15, -10, -17, -11, -17, -11, -19, -12, -19, -12, -21, -13, -21, -13, -23, -14, -23, -14, -25, -15, -25, -15, -27, -16, -27, -16, -29, -17, -29, -17, -31, -18, -31, -18, -32)
-
-[node name="Area_6" type="Area2D" parent="."]
-position = Vector2(431, 282)
-scale = Vector2(3, 3)
-script = ExtResource("2_82xq0")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area_6"]
-visible = false
-position = Vector2(-37, -34)
-rotation = 3.14159
-polygon = PackedVector2Array(-18, -32, -20, -32, -21, -31, -35, -3, -35, -1, -3, -1, -3, -3, -17, -31)
-
-[node name="Polygon2D" type="Polygon2D" parent="Area_6"]
-position = Vector2(-143.667, -94)
-scale = Vector2(0.333333, 0.333333)
-color = Color(1, 0.6, 0, 0.501961)
-polygon = PackedVector2Array(380, 276, 380, 273, 383, 273, 383, 267, 386, 267, 386, 261, 389, 261, 389, 255, 392, 255, 392, 249, 395, 249, 395, 243, 398, 243, 398, 237, 401, 237, 401, 231, 404, 231, 404, 225, 407, 225, 407, 219, 410, 219, 410, 213, 413, 213, 413, 207, 416, 207, 416, 201, 419, 201, 419, 195, 422, 195, 422, 189, 425, 189, 425, 183, 329, 183, 329, 189, 332, 189, 332, 195, 335, 195, 335, 201, 338, 201, 338, 207, 341, 207, 341, 213, 344, 213, 344, 219, 347, 219, 347, 225, 350, 225, 350, 231, 353, 231, 353, 237, 356, 237, 356, 243, 359, 243, 359, 249, 362, 249, 362, 255, 365, 255, 365, 261, 368, 261, 368, 267, 371, 267, 371, 273, 374, 273, 374, 276)
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(320, 180)
-scale = Vector2(3, 3)
+[node name="BoardSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_h16d2")
 
-[connection signal="mouse_entered" from="Area_1" to="Area_1" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Area_1" to="Area_1" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="Area_2" to="Area_2" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Area_2" to="Area_2" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="Area_3" to="Area_3" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Area_3" to="Area_3" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="Area_4" to="Area_4" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Area_4" to="Area_4" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="Area_5" to="Area_5" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Area_5" to="Area_5" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="Area_6" to="Area_6" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Area_6" to="Area_6" method="_on_mouse_exited"]
+[node name="Area_0" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(-57, -40)
+script = ExtResource("2_82xq0")
+color = "#FF0000"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_0"]
+polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_0"]
+color = Color(0.156863, 0.156863, 0.156863, 1)
+polygon = PackedVector2Array(-47, 35, -2, -55, 2, -55, 47, 35)
+
+[node name="Area_1" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(0, -62)
+rotation = 3.14159
+script = ExtResource("2_82xq0")
+color = "#FFFF00"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_1"]
+polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_1"]
+color = Color(0.156863, 0.156863, 0.156863, 1)
+polygon = PackedVector2Array(-47, 35, -2, -55, 2, -55, 47, 35)
+
+[node name="Area_2" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(57, -40)
+script = ExtResource("2_82xq0")
+color = "#00FF00"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_2"]
+polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_2"]
+color = Color(0.156863, 0.156863, 0.156863, 1)
+polygon = PackedVector2Array(-47, 35, -2, -55, 2, -55, 47, 35)
+
+[node name="Area_3" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(-57, 40)
+rotation = 3.14159
+script = ExtResource("2_82xq0")
+color = "#CC00CC"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_3"]
+polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_3"]
+color = Color(0.156863, 0.156863, 0.156863, 1)
+polygon = PackedVector2Array(-47, 35, -2, -55, 2, -55, 47, 35)
+
+[node name="Area_4" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(0, 62)
+script = ExtResource("2_82xq0")
+color = "#3366FF"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_4"]
+polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_4"]
+color = Color(0.156863, 0.156863, 0.156863, 1)
+polygon = PackedVector2Array(-47, 35, -2, -55, 2, -55, 47, 35)
+
+[node name="Area_5" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(57, 40)
+rotation = 3.14159
+script = ExtResource("2_82xq0")
+color = "#FF9900"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_5"]
+polygon = PackedVector2Array(3, -56, 6, -53, 48, 31, 48, 37, -48, 37, -48, 31, -6, -53, -3, -56)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_5"]
+color = Color(0.156863, 0.156863, 0.156863, 1)
+polygon = PackedVector2Array(-47, 35, -2, -55, 2, -55, 47, 35)
+
+[connection signal="mouse_entered" from="BoardSprite/Area_0" to="BoardSprite/Area_0" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_0" to="BoardSprite/Area_0" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="BoardSprite/Area_1" to="BoardSprite/Area_1" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_1" to="BoardSprite/Area_1" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="BoardSprite/Area_2" to="BoardSprite/Area_2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_2" to="BoardSprite/Area_2" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="BoardSprite/Area_3" to="BoardSprite/Area_3" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_3" to="BoardSprite/Area_3" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="BoardSprite/Area_4" to="BoardSprite/Area_4" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_4" to="BoardSprite/Area_4" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="BoardSprite/Area_5" to="BoardSprite/Area_5" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_5" to="BoardSprite/Area_5" method="_on_mouse_exited"]

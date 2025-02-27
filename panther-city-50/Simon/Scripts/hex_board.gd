@@ -4,27 +4,27 @@ extends Node2D
 # TODO: Renumber Areas to start with 0
 # TODO: Refactor code to support this renaming
 @onready var AreaParents: Array[Area2D] = [
-	$Area_1, $Area_2, $Area_3,
-	$Area_4, $Area_5, $Area_6 ]
+	$BoardSprite/Area_0, $BoardSprite/Area_1, $BoardSprite/Area_2,
+	$BoardSprite/Area_3, $BoardSprite/Area_4, $BoardSprite/Area_5 ]
 
 ### Handles to Areas; grandchildren
 # TODO: Renumber Areas to start with 0
 # TODO: Refactor code to support this renaming
 @onready var Areas: Array[Polygon2D] = [
-	$Area_1/Polygon2D, $Area_2/Polygon2D,
-	$Area_3/Polygon2D, $Area_4/Polygon2D,
-	$Area_5/Polygon2D, $Area_6/Polygon2D ]
+	$BoardSprite/Area_0/Polygon2D, $BoardSprite/Area_1/Polygon2D,
+	$BoardSprite/Area_2/Polygon2D, $BoardSprite/Area_3/Polygon2D,
+	$BoardSprite/Area_4/Polygon2D, $BoardSprite/Area_5/Polygon2D ]
 
 ### Exported Variables
 # Color Settings
 @export_category("Color Settings")
 @export var colors: Array[String] = [ # Array of color codes for the clickable Areas
-	"#FF0000",	# 0 Red
-	"#FFFF00",	# 1 Yellow
-	"#00FF00",	# 2 Green
-	"#CC00CC",	# 3 Purple
-	"#3366FF",	# 4 Blue
-	"#FF9900" ]	# 5 Orange
+	"#FF0000",	# 0 Red		#660000 DIM
+	"#FFFF00",	# 1 Yellow	#666600 DIM
+	"#00FF00",	# 2 Green	#006600 DIM
+	"#CC00CC",	# 3 Purple	#520052 DIM
+	"#3366FF",	# 4 Blue	#142966 DIM
+	"#FF9900" ]	# 5 Orange	#663D00 DIM
 @export var dark_pct: float = 0.6 # Percent to darken the color
 # Timer Durations
 @export_category("Timer Settings")
@@ -52,6 +52,7 @@ var are_areas_locked: bool = false # Are the clickable Areas locked?
 var in_intermission: bool = false # Are we between rounds?
 var elapsed_time: float = 0.00 # How long the user has taken to give input
 var play_demo: bool = false # Should the Demo play?
+var area_triggered: int = -1 # Which area is triggered; 0-5, -1 for none
 
 
 # Called when the node enters the scene tree for the first time.
@@ -67,7 +68,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# Are we waiting for user input?
-	if waiting_for_input:
+	if waiting_for_input && !in_intermission:
 		# If so, increase the elapsed_time
 		elapsed_time += delta
 	
@@ -78,14 +79,18 @@ func _process(delta: float) -> void:
 		if !has_pattern_played:
 			has_pattern_played = true
 			
+			# After the intermission time, teach the pattern to the user
+			# TODO: Add a Round Start countdown timer to the UI
+			print(" Round begins in ", intermission_time, " seconds!")
+			print("Pattern length: ", pattern_length, " | Recital time: ", recital_time)
+			print("   Pattern: ", rand_pattern)
+			
 			# Lock the clickable color areas
+			await get_tree().create_timer(intermission_time / 2).timeout
 			toggle_area_locks()
 			
-			# After the intermission time, show the pattern to the user
-			# TODO: Add a Round Start countdown timer to the UI
-			print(" Round begins in ", intermission_time, " seconds! --")
-			print("   Pattern: ", rand_pattern)
-			await get_tree().create_timer(intermission_time).timeout
+			# Teach the pattern
+			await get_tree().create_timer(intermission_time / 2).timeout
 			for i in rand_pattern:
 				# Light up the Area
 				Areas[i].color = Color(colors[i])
@@ -98,21 +103,46 @@ func _process(delta: float) -> void:
 				await get_tree().create_timer(teach_time, false, false, false).timeout
 			
 			# Unlock the clickable color areas and wait for user input
+			await get_tree().create_timer(intermission_time / 2).timeout
 			toggle_area_locks()
 			waiting_for_input = true
 		
 		# If the user clicked enough correct colors
 		if input_length == pattern_length:
 			waiting_for_input = false
-			print("  Round completed in ", floor(elapsed_time), " seconds!")
-			in_intermission = true
+			print("  Round completed in ", floor(elapsed_time), " / ", recital_time, " seconds!")
+			pause_loop()
 			calc_bonus_score()
 			calc_bonus_lives()
 			
 			# TODO: Make a screen with recap and button for leveling up!
 			level_up()
-			
 ### End Game Loop
+
+
+### Begin InputEvent Checks
+func _input(event: InputEvent) -> void:
+	# If a game is in progress and the areas are locked
+	if game_on && !are_areas_locked:
+		var i: int = -1
+		# If an Action was just pressed
+		# <1> pressed
+		if Input.is_action_just_pressed("trigger_ability_1"): i = 0
+		# <2> pressed
+		if Input.is_action_just_pressed("trigger_ability_2"): i = 1
+		# <3> pressed
+		if Input.is_action_just_pressed("trigger_ability_3"): i = 2
+		# <4> pressed
+		if Input.is_action_just_pressed("trigger_ability_4"): i = 3
+		# <5> pressed
+		if Input.is_action_just_pressed("trigger_ability_5"): i = 4
+		# <6> pressed
+		if Input.is_action_just_pressed("trigger_ability_6"): i = 5	
+		# If one of the above was true, trigger that area
+		if i >= 0 && i <= 5:
+			verify_input(i)
+			AreaParents[i].trigger_area()
+### End InputEvent Checks
 
 
 # Begin a new game
@@ -171,7 +201,7 @@ func level_up() -> void:
 
 # Called when showing scores between rounds
 func pause_loop() -> void:
-	in_intermission = true
+	in_intermission = !in_intermission
 
 
 # Generate a rand_pattern to teach the player
@@ -188,29 +218,30 @@ func increase_pattern_length() -> void:
 
 # Calculate time user has to recite pattern
 func calc_recital_time() -> void:
-	recital_time = roundi((teach_time + display_time) * pattern_length) + (teach_time * pattern_length)
-	# If shorter than 10 seconds, allow for 10 seconds
-	if recital_time < 10:
-		recital_time = 10
+	recital_time = round(((teach_time + display_time) * pattern_length) + (teach_time * pattern_length))
+	# If shorter than 8 seconds, allow for 8 seconds
+	if recital_time < 7:
+		recital_time = 7
 
 
 # Prevent mouse_entered and mouse_exited from changing area colors
 func toggle_area_locks() -> void:
+	are_areas_locked = !are_areas_locked
 	for i in AreaParents.size():
 		AreaParents[i].toggle_area_lock()
 
 
 # Verify the user input is correct
-func verify_input(input) -> void:
+func verify_input(input: int) -> void:
 	# Only process this if waiting for input and a rand_pattern exists
 	if waiting_for_input && rand_pattern:
 		# If the Area clicked matches the required area, store the input and update the score
-		if int(input) - 1 == rand_pattern[next_input]:
-			input_pattern.append(int(input) - 1)
+		if int(input) == rand_pattern[next_input]:
+			input_pattern.append(int(input))
 			input_length = input_pattern.size()
-			round_score += 500 * input_length
-			score += 500 * input_length
-			print("   Correct input: ", int(input)  - 1, " | Round score: ", round_score, " | Total score: ", score)
+			round_score += round(200 * input_length ** 1.1)
+			score += round(200 * input_length ** 1.1)
+			print("   Correct input: ", int(input), " | Round score: ", round_score, " | Total score: ", score)
 			
 			if next_input < pattern_length - 1:
 				next_input += 1
@@ -230,6 +261,7 @@ func calc_bonus_score() -> void:
 
 func calc_bonus_lives() -> void:
 	if round_score > 10000:
+		@warning_ignore("integer_division")
 		lives += floor(round_score / 10000)
 		if lives > 9:
 			lives = 9
@@ -243,7 +275,7 @@ func assign_variables_to_areas() -> void:
 	for Area in Areas:
 		Area.get_parent().color = colors[i]
 		Area.get_parent().dark_pct = dark_pct
-		Area.get_parent().update_area()
+		Area.get_parent().dim_area()
 		i += 1
 
 
