@@ -4,6 +4,7 @@ extends Area2D
 var thrusting_left := false
 var thrusting_right := false
 var velocity := 0.0
+var start_position := Vector2.ZERO
 const ACCELERATION := 400.0	# pixels/sec^2
 const MAX_VELOCITY := 225.0	# pixels/sec
 
@@ -16,13 +17,20 @@ const MAX_VELOCITY := 225.0	# pixels/sec
 func _ready() -> void:
 	# Connect the signal from the Area2D node (the ship) to check for entering another area.
 	connect("area_entered", Callable(self, "_on_area_entered"))
-	print("Here we go!")
+	
+	
+func reset() -> void:
+	position = start_position
+	velocity = 0.0
+	thrusting_left = false
+	thrusting_right = false
 	
 	
 func _on_area_entered(area: Area2D) -> void:
 	# Check if the collided area belongs to the group 'wall'
 	if area.is_in_group("walls"):
 		print("Ship collided with wall!")
+		get_parent().ship_crashed()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

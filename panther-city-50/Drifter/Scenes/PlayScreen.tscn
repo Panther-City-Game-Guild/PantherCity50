@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1lw4afirq7qn"]
+[gd_scene load_steps=2 format=3 uid="uid://c1lw4afirq7qn"]
 
 [ext_resource type="Script" path="res://Drifter/Scripts/play_screen.gd" id="1_xmw7o"]
-[ext_resource type="PackedScene" uid="uid://bxbk5bo7gbuil" path="res://Drifter/Scenes/Ship.tscn" id="2_47oil"]
 
 [node name="PlayScreen" type="Node2D"]
 script = ExtResource("1_xmw7o")
@@ -10,6 +9,3 @@ script = ExtResource("1_xmw7o")
 offset_right = 640.0
 offset_bottom = 360.0
 color = Color(0.122252, 0.122252, 0.122252, 1)
-
-[node name="Ship" parent="." instance=ExtResource("2_47oil")]
-position = Vector2(320, 303)
