@@ -22,3 +22,6 @@ func _on_steak_manager_all_steak_collected() -> void:
 
 func restartRoom() -> void:
 	SceneManager.call_deferred("GoToNewSceneString",self, Globals.Game_Globals[LevelCode])
+
+func _on_player_in_water() -> void:
+	restartRoom()

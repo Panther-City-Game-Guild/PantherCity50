@@ -17,3 +17,12 @@ func Move(dir: Vector2) -> bool:
 		return true
 	else:
 		return false
+
+
+func _on_water_check_body_entered(body: Node2D) -> void:
+	currentState = states.InWater
+	
+	# TODO: set to water frame
+	
+	# removes the 
+	collision_layer = 0
