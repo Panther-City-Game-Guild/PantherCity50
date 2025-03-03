@@ -28,10 +28,10 @@ extends Node2D
 @export var dark_pct: float = 0.6 # Percent to darken the color
 # Timer Durations
 @export_category("Timer Settings")
-@export var teach_time: float = 0.5 # Number of seconds between lighting different Areas during teaching
-@export var display_time: float = 0.5 # Number of seconds to keep an area lit during teaching
-@export var recital_time: float = 7 # Number of seconds user has to recite the pattern (before being penalized)
-@export var intermission_time: float = 5 # Number of seconds before round begins
+@export var teach_time: float = 0.2 # Number of seconds between lighting different Areas during teaching
+@export var display_time: float = 0.3 # Number of seconds to keep an area lit during teaching
+@export var recital_time: float = 5 # Number of seconds user has to recite the pattern (before being penalized)
+@export var intermission_time: float = 2 # Number of seconds before round begins
 # Pattern Settings
 @export_category("Pattern Length")
 @export var pattern_length: int = 3 # Default number of colors in the rand_pattern
