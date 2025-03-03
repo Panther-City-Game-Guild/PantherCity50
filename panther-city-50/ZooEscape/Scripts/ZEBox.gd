@@ -20,9 +20,16 @@ func Move(dir: Vector2) -> bool:
 
 
 func _on_water_check_body_entered(body: Node2D) -> void:
-	currentState = states.InWater
+	if body is TileMapLayer:
 	
-	# TODO: set to water frame
+		var tileData: TileData = body.get_used_cells(body.local_to_map(position))
+		
+		# removes the water property from the tile
+		tileData.remove_collision_polygon(1, 0)
+		
+		currentState = states.InWater
 	
-	# removes the 
-	collision_layer = 0
+		# TODO: set to water frame
+		
+		# removes the collision of the box
+		collision_layer = 0
