@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bxbk5bo7gbuil"]
 
-[ext_resource type="Script" path="res://Drifter/Scripts/ship.gd" id="1_36brd"]
+[ext_resource type="Script" uid="uid://tltxw74hqshh" path="res://Drifter/Scripts/ship.gd" id="1_36brd"]
 [ext_resource type="AudioStream" uid="uid://bwrtyba4srjff" path="res://Drifter/Audio/thrust.wav" id="2_oim0n"]
 [ext_resource type="AudioStream" uid="uid://b02hfoypq1haf" path="res://Drifter/Audio/crash.wav" id="3_axm1o"]
 

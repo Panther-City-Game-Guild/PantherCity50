@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c3jgspcs6f2hh"]
 
-[ext_resource type="Script" path="res://BaseGame/Scripts/game_selection.gd" id="1_o5o45"]
+[ext_resource type="Script" uid="uid://bo8xddnd2hg2j" path="res://BaseGame/Scripts/game_selection.gd" id="1_o5o45"]
 [ext_resource type="PackedScene" uid="uid://cpv30ys7cri18" path="res://BaseGame/Scenes/game_icon.tscn" id="2_gmh68"]
 [ext_resource type="PackedScene" uid="uid://bxm83yrjwjamq" path="res://PantherRun/Scenes/PantherRunTitle.tscn" id="3_dduoo"]
 [ext_resource type="PackedScene" uid="uid://bnah6d37dam5s" path="res://ZooEscape/Scenes/ZETitle.tscn" id="4_7204n"]
