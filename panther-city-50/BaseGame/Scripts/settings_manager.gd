@@ -5,14 +5,14 @@ extends Control
 const CONFIG_PATH = "user://config.ini"
 
 # Define various sections in the Config File
-const VOLUME_SECTION = "Volume Settings"
-const GLOBAL_SECTION = "Global Settings"
+const VOLUME_SECTION: String = "Volume Settings"
+const GLOBAL_SECTION: String = "Global Settings"
 
 # Volume min and Volume max
 const VOLUME_RANGE = [ 0, 100 ]
 
 # Default volume settings; used on first load or corrupted config file
-const DEFAULT_VOLUME_SETTINGS: Dictionary =  {
+const DEFAULT_VOLUME_SETTINGS: Dictionary[String, int] =  {
 	"master_volume": 70,		# 0-100
 	"music_volume": 10,			# 0-100
 	"fx_volume": 70,			# 0-100

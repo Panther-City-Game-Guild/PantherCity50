@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cky1uw2nrbma4"]
 
-[ext_resource type="Script" path="res://Simon/Scripts/simon_title.gd" id="1_msq48"]
+[ext_resource type="Script" uid="uid://c0d1p10y15agv" path="res://Simon/Scripts/simon_title.gd" id="1_msq48"]
 [ext_resource type="PackedScene" uid="uid://yn1d5or0rw1x" path="res://Simon/Scenes/HexBoard.tscn" id="2_wp5dl"]
 [ext_resource type="PackedScene" uid="uid://dv5ce46e4gdq7" path="res://Simon/Scenes/simon_menu.tscn" id="3_kcjoo"]
 [ext_resource type="PackedScene" uid="uid://dtuk3xi0s4h4w" path="res://Simon/Scenes/simon_hud.tscn" id="4_m2ajy"]

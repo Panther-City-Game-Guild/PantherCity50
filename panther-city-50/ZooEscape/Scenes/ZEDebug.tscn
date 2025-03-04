@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=4 uid="uid://catmq3n8ijbp6"]
 
-[ext_resource type="Script" path="res://ZooEscape/Scripts/ZELevelManager.gd" id="1_68k30"]
+[ext_resource type="Script" uid="uid://cwbkf1i0hdmbw" path="res://ZooEscape/Scripts/ZELevelManager.gd" id="1_68k30"]
 [ext_resource type="TileSet" uid="uid://hxah5dywgaym" path="res://ZooEscape/Scenes/TileSets/ZETiles.tres" id="1_d2x4x"]
-[ext_resource type="Script" path="res://ZooEscape/Scripts/ZESteakManager.gd" id="2_bxppo"]
+[ext_resource type="Script" uid="uid://df1x4rvmwyow8" path="res://ZooEscape/Scripts/ZESteakManager.gd" id="2_bxppo"]
 [ext_resource type="PackedScene" uid="uid://3ah88dbq7yi4" path="res://ZooEscape/Scenes/ZEPlayer.tscn" id="2_ykc06"]
 [ext_resource type="PackedScene" uid="uid://cs2ar6co6wa5" path="res://ZooEscape/Scenes/ZESteak.tscn" id="5_h7q7r"]
 [ext_resource type="PackedScene" uid="uid://nxr8rseg5q8w" path="res://ZooEscape/Scenes/ZESwitch.tscn" id="6_1fw5v"]
