@@ -18,14 +18,8 @@ func Move(dir: Vector2) -> bool:
 	else:
 		return false
 
-
-func _on_water_check_body_entered(body: Node2D) -> void:
-	if body is TileMapLayer:
-	
-		var tileData: TileData = body.get_used_cells(body.local_to_map(position))
-		
-		# removes the water property from the tile
-		tileData.remove_collision_polygon(1, 0)
+func _on_water_check_area_entered(area: Area2D) -> void:
+		area.queue_free()
 		
 		currentState = states.InWater
 	

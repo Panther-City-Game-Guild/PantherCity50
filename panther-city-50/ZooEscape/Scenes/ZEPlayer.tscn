@@ -169,4 +169,5 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_dmbf3")
 debug_color = Color(0.981801, 0, 0.367869, 0.42)
 
+[connection signal="area_entered" from="WaterCheck" to="." method="_on_water_check_area_entered"]
 [connection signal="body_entered" from="WaterCheck" to="." method="_on_water_check_body_entered"]
