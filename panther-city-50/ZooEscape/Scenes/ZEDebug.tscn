@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://catmq3n8ijbp6"]
+[gd_scene load_steps=11 format=4 uid="uid://catmq3n8ijbp6"]
 
 [ext_resource type="Script" uid="uid://cwbkf1i0hdmbw" path="res://ZooEscape/Scripts/ZELevelManager.gd" id="1_68k30"]
 [ext_resource type="TileSet" uid="uid://hxah5dywgaym" path="res://ZooEscape/Scenes/TileSets/ZETiles.tres" id="1_d2x4x"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://3ah88dbq7yi4" path="res://ZooEscape/Scenes/ZEPlayer.tscn" id="2_ykc06"]
 [ext_resource type="PackedScene" uid="uid://cs2ar6co6wa5" path="res://ZooEscape/Scenes/ZESteak.tscn" id="5_h7q7r"]
 [ext_resource type="PackedScene" uid="uid://nxr8rseg5q8w" path="res://ZooEscape/Scenes/ZESwitch.tscn" id="6_1fw5v"]
+[ext_resource type="PackedScene" uid="uid://cof8b4w0jjx7r" path="res://ZooEscape/Scenes/ZEWaterArea.tscn" id="6_j0vsf"]
 [ext_resource type="PackedScene" uid="uid://64cp455l5y64" path="res://ZooEscape/Scenes/ZEButton.tscn" id="7_ekvyi"]
 [ext_resource type="PackedScene" uid="uid://b6fpe6cti8jrw" path="res://ZooEscape/Scenes/ZEExitTile.tscn" id="8_4t86c"]
 [ext_resource type="PackedScene" uid="uid://cxubfhy8y0hcg" path="res://ZooEscape/Scenes/ZEBox.tscn" id="9_lbuof"]
@@ -47,6 +48,86 @@ position = Vector2(248, 152)
 [node name="Steak4" parent="SteakManager" instance=ExtResource("5_h7q7r")]
 position = Vector2(72, 88)
 
+[node name="WaterManger" type="Node2D" parent="."]
+
+[node name="WaterArea" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(152, 72)
+
+[node name="WaterArea2" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(168, 72)
+
+[node name="WaterArea3" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(184, 72)
+
+[node name="WaterArea4" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(200, 72)
+
+[node name="WaterArea5" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(200, 88)
+
+[node name="WaterArea6" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(184, 88)
+
+[node name="WaterArea7" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(152, 88)
+
+[node name="WaterArea8" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(136, 88)
+
+[node name="WaterArea9" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(136, 104)
+
+[node name="WaterArea10" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(152, 104)
+
+[node name="WaterArea11" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(168, 104)
+
+[node name="WaterArea12" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(184, 104)
+
+[node name="WaterArea13" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(200, 104)
+
+[node name="WaterArea14" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(216, 104)
+
+[node name="WaterArea15" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(216, 120)
+
+[node name="WaterArea16" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(200, 120)
+
+[node name="WaterArea17" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(184, 120)
+
+[node name="WaterArea18" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(168, 120)
+
+[node name="WaterArea19" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(152, 120)
+
+[node name="WaterArea20" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(136, 120)
+
+[node name="WaterArea21" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(136, 136)
+
+[node name="WaterArea22" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(152, 136)
+
+[node name="WaterArea23" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(168, 136)
+
+[node name="WaterArea24" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(184, 136)
+
+[node name="WaterArea25" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(200, 136)
+
+[node name="WaterArea26" parent="WaterManger" instance=ExtResource("6_j0vsf")]
+position = Vector2(216, 136)
+
 [node name="Switch" parent="." instance=ExtResource("6_1fw5v")]
 position = Vector2(88, 56)
 
@@ -71,11 +152,12 @@ position = Vector2(0, 48)
 [node name="Steak3" parent="Button" instance=ExtResource("5_h7q7r")]
 position = Vector2(16, 48)
 
-[node name="Player" parent="." instance=ExtResource("2_ykc06")]
-position = Vector2(56, 40)
-
 [node name="Box" parent="." instance=ExtResource("9_lbuof")]
 position = Vector2(104, 88)
 
+[node name="Player" parent="." instance=ExtResource("2_ykc06")]
+position = Vector2(56, 40)
+
 [connection signal="PlayerExits" from="ExitTile" to="." method="_on_exit_tile_player_exits"]
 [connection signal="AllSteakCollected" from="SteakManager" to="." method="_on_steak_manager_all_steak_collected"]
+[connection signal="InWater" from="Player" to="." method="_on_player_in_water"]

@@ -17,3 +17,13 @@ func Move(dir: Vector2) -> bool:
 		return true
 	else:
 		return false
+
+func _on_water_check_area_entered(area: Area2D) -> void:
+		area.queue_free()
+		
+		currentState = states.InWater
+	
+		# TODO: set to water frame
+		
+		# removes the collision of the box
+		collision_layer = 0

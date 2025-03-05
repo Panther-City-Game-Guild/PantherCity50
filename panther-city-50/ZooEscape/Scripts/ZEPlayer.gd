@@ -4,6 +4,8 @@ extends CharacterBody2D
 @onready var sprite := $AnimatedSprite2D
 @onready var ray := $RayCast2D
 
+signal InWater
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -42,6 +44,7 @@ func MovePlayer(dir: Vector2, animation: String) -> void:
 	sprite.play(animation)
 	ray.target_position = dir * Globals.ZETileSize
 	ray.force_raycast_update()
+	
 	if ray.is_colliding():
 		var collidingObj: Object = ray.get_collider()
 		if collidingObj is ZEBoxArea:
@@ -58,3 +61,9 @@ func InteractWithRayCollider(obj: Object) -> void:
 	if obj.is_in_group("ZEInteractable"):
 		if obj is ZESwitch:
 			obj.ChangeState()
+
+func _on_water_check_area_entered(area: Area2D) -> void:
+	# TODO: play drown animaiton
+	
+	# tell the level to restart
+	InWater.emit()

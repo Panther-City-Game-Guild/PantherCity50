@@ -30,7 +30,7 @@ func set_switch_state(state: int) -> void:
 		toggle_children(SwitchState)
 
 
-func toggle_children(state: int) -> void:
+func toggle_children(_state: int) -> void:
 	if ControlledChildren:
 			for Child: Node in ControlledChildren:
 				# Set some variable / property -- replace below as needed
