@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://catmq3n8ijbp6"]
+[gd_scene load_steps=12 format=4 uid="uid://catmq3n8ijbp6"]
 
 [ext_resource type="Script" uid="uid://cwbkf1i0hdmbw" path="res://ZooEscape/Scripts/ZELevelManager.gd" id="1_68k30"]
 [ext_resource type="TileSet" uid="uid://hxah5dywgaym" path="res://ZooEscape/Scenes/TileSets/ZETiles.tres" id="1_d2x4x"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cof8b4w0jjx7r" path="res://ZooEscape/Scenes/ZEWaterArea.tscn" id="6_j0vsf"]
 [ext_resource type="PackedScene" uid="uid://64cp455l5y64" path="res://ZooEscape/Scenes/ZEButton.tscn" id="7_ekvyi"]
 [ext_resource type="PackedScene" uid="uid://b6fpe6cti8jrw" path="res://ZooEscape/Scenes/ZEExitTile.tscn" id="8_4t86c"]
+[ext_resource type="PackedScene" uid="uid://dvj8b6tkhitto" path="res://ZooEscape/Scenes/ZEGate.tscn" id="9_gasfj"]
 [ext_resource type="PackedScene" uid="uid://cxubfhy8y0hcg" path="res://ZooEscape/Scenes/ZEBox.tscn" id="9_lbuof"]
 
 [node name="Debug" type="Node2D"]
@@ -143,14 +144,8 @@ position = Vector2(32, -48)
 [node name="Button" parent="." instance=ExtResource("7_ekvyi")]
 position = Vector2(152, 152)
 
-[node name="Steak" parent="Button" instance=ExtResource("5_h7q7r")]
-position = Vector2(-16, 48)
-
-[node name="Steak2" parent="Button" instance=ExtResource("5_h7q7r")]
-position = Vector2(0, 48)
-
-[node name="Steak3" parent="Button" instance=ExtResource("5_h7q7r")]
-position = Vector2(16, 48)
+[node name="Gate" parent="Button" groups=["ZESwitchable"] instance=ExtResource("9_gasfj")]
+position = Vector2(32, 0)
 
 [node name="Box" parent="." instance=ExtResource("9_lbuof")]
 position = Vector2(104, 88)

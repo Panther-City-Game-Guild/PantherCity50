@@ -39,5 +39,4 @@ func toggle_children(state: ButtonState) -> void:
 	frame = state
 	if ControlledChildren:
 		for Child: Node in ControlledChildren:
-			# TODO: Set some variable / property -- replace below as needed
-			Child.visible = !Child.visible
+			Child.SetState(state)
