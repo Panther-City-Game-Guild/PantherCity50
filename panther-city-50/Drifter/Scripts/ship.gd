@@ -1,16 +1,17 @@
 extends Area2D
 
+const ACCELERATION := 400.0  # pixels/sec^2
+const MAX_VELOCITY := 225.0  # pixels/sec
+const KEYMAP := {
+	"left": [KEY_J, KEY_A, KEY_LEFT],
+	"right": [KEY_K, KEY_D, KEY_RIGHT],
+}
+
 var thrusting_left := false
 var thrusting_right := false
 var velocity := 0.0
 var start_position := Vector2.ZERO
 var dead := false
-const ACCELERATION := 400.0	# pixels/sec^2
-const MAX_VELOCITY := 225.0	# pixels/sec
-const KEYMAP := {
-	"left": [ KEY_J, KEY_A, KEY_LEFT ],
-	"right": [ KEY_K, KEY_D, KEY_RIGHT ],
-}
 
 @onready var exhaust_left: Polygon2D = $ExhaustLeft
 @onready var exhaust_right: Polygon2D = $ExhaustRight
@@ -19,19 +20,19 @@ const KEYMAP := {
 @onready var thrust_sound: AudioStreamPlayer = $ThrustSound
 @onready var crash_sound: AudioStreamPlayer = $CrashSound
 
-	
+
 func _ready() -> void:
 	connect("area_entered", Callable(self, "_on_area_entered"))
-	
-	
+
+
 func reset() -> void:
 	position = start_position
 	dead = false
 	velocity = 0.0
 	thrusting_left = false
 	thrusting_right = false
-	
-	
+
+
 func _on_area_entered(area: Area2D) -> void:
 	# Check if the collided area belongs to the group 'wall'
 	if not dead and area.is_in_group("walls"):
@@ -55,7 +56,7 @@ func _process(_delta: float) -> void:
 		velocity += delta_v
 	velocity = clamp(velocity, -MAX_VELOCITY, MAX_VELOCITY)
 	position += Vector2(velocity * _delta, 0)
-	
+
 	# Play thrust sound while ship is thrusting
 	if thrusting_left or thrusting_right:
 		if not thrust_sound.playing:
@@ -64,17 +65,17 @@ func _process(_delta: float) -> void:
 		if thrust_sound.playing:
 			thrust_sound.stop()
 
-	
+
 func _input(_event: InputEvent) -> void:
 	thrusting_left = false
 	for key: Key in KEYMAP["left"]:
 		if Input.is_key_pressed(key):
 			thrusting_left = true
-		
+
 	thrusting_right = false
 	for key: Key in KEYMAP["right"]:
 		if Input.is_key_pressed(key):
 			thrusting_right = true
-		
+
 	exhaust_left.visible = thrusting_right
 	exhaust_right.visible = thrusting_left
