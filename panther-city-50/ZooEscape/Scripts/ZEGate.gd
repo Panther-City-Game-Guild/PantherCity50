@@ -10,7 +10,7 @@ enum state {
 func _ready() -> void:
 	$Sprite2D.frame = currentState
 
-func SetState(newState: int):
+func SetState(newState: int) -> void:
 	currentState = newState
 	
 	if currentState == state.open:
