@@ -19,7 +19,7 @@ func _input(_event: InputEvent) -> void:
 		
 	if Input.is_action_just_pressed("ui_accept"):
 		if selector.position == newGamePos:
-			SceneManager.GoToNewSceneString(self, Scenes.ZEDebug)
+			SceneManager.GoToNewSceneString(self, Scenes.ZETutorial1)
 		elif selector.position == passwordPos:
 			pass # will make a password scean at some point
 			
@@ -42,7 +42,7 @@ func setLevelGlobals() -> void:
 	# Real Levels
 	Globals.Game_Globals["0001"] = Scenes.ZETutorial1
 	
-	# Globals.Game_Globals["0387"] = 
+	Globals.Game_Globals["0387"] = Scenes.ZELevel1
 	# Globals.Game_Globals["9102"] = 
 	# Globals.Game_Globals["1476"] = 
 	# Globals.Game_Globals["5829"] = 

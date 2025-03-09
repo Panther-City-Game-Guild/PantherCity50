@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://ce5kde7d343lq"]
+[gd_scene load_steps=11 format=4 uid="uid://ce5kde7d343lq"]
 
 [ext_resource type="Script" uid="uid://cwbkf1i0hdmbw" path="res://ZooEscape/Scripts/ZELevelManager.gd" id="1_x1u7g"]
 [ext_resource type="TileSet" uid="uid://hxah5dywgaym" path="res://ZooEscape/Scenes/TileSets/ZETiles.tres" id="2_3a3vc"]
@@ -7,11 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://cxubfhy8y0hcg" path="res://ZooEscape/Scenes/ZEBox.tscn" id="5_bnk20"]
 [ext_resource type="Script" uid="uid://df1x4rvmwyow8" path="res://ZooEscape/Scripts/ZESteakManager.gd" id="6_5bs81"]
 [ext_resource type="PackedScene" uid="uid://cs2ar6co6wa5" path="res://ZooEscape/Scenes/ZESteak.tscn" id="7_0mdn8"]
+[ext_resource type="PackedScene" uid="uid://cof8b4w0jjx7r" path="res://ZooEscape/Scenes/ZEWaterArea.tscn" id="7_bnk20"]
 [ext_resource type="PackedScene" uid="uid://3ah88dbq7yi4" path="res://ZooEscape/Scenes/ZEPlayer.tscn" id="8_ykhfs"]
 [ext_resource type="PackedScene" uid="uid://b6fpe6cti8jrw" path="res://ZooEscape/Scenes/ZEExitTile.tscn" id="9_p1kfa"]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_x1u7g")
+LevelCode = "0387"
 metadata/_custom_type_script = "uid://cwbkf1i0hdmbw"
 
 [node name="Ground" type="TileMapLayer" parent="."]
@@ -65,14 +67,93 @@ position = Vector2(264, 200)
 [node name="Steak11" parent="SteakManager" instance=ExtResource("7_0mdn8")]
 position = Vector2(328, 152)
 
+[node name="WaterManger" type="Node2D" parent="."]
+
+[node name="WaterArea" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(312, 104)
+
+[node name="WaterArea2" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(328, 104)
+
+[node name="WaterArea3" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(344, 104)
+
+[node name="WaterArea4" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(360, 104)
+
+[node name="WaterArea5" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(376, 104)
+
+[node name="WaterArea6" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(392, 104)
+
+[node name="WaterArea7" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(408, 104)
+
+[node name="WaterArea8" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(408, 120)
+
+[node name="WaterArea9" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(408, 136)
+
+[node name="WaterArea10" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(408, 152)
+
+[node name="WaterArea11" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(408, 168)
+
+[node name="WaterArea12" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(408, 184)
+
+[node name="WaterArea13" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(408, 200)
+
+[node name="WaterArea14" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(392, 200)
+
+[node name="WaterArea15" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(376, 200)
+
+[node name="WaterArea16" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(360, 200)
+
+[node name="WaterArea17" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(344, 200)
+
+[node name="WaterArea18" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(328, 200)
+
+[node name="WaterArea19" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(312, 200)
+
+[node name="WaterArea20" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(312, 184)
+
+[node name="WaterArea21" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(312, 168)
+
+[node name="WaterArea22" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(312, 152)
+
+[node name="WaterArea23" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(312, 136)
+
+[node name="WaterArea24" parent="WaterManger" instance=ExtResource("7_bnk20")]
+position = Vector2(312, 120)
+
 [node name="Box" parent="." instance=ExtResource("5_bnk20")]
 position = Vector2(248, 184)
 
 [node name="Box2" parent="." instance=ExtResource("5_bnk20")]
 position = Vector2(360, 152)
 
+[node name="ExitTile" parent="." instance=ExtResource("9_p1kfa")]
+position = Vector2(360, 280)
+NextLevelCode = "TL01"
+
 [node name="Player" parent="." instance=ExtResource("8_ykhfs")]
 position = Vector2(392, 120)
 
-[node name="ExitTile" parent="Player" instance=ExtResource("9_p1kfa")]
-position = Vector2(-32, 160)
+[connection signal="AllSteakCollected" from="SteakManager" to="." method="_on_steak_manager_all_steak_collected"]
+[connection signal="PlayerExits" from="ExitTile" to="." method="_on_exit_tile_player_exits"]
+[connection signal="InWater" from="Player" to="." method="_on_player_in_water"]
