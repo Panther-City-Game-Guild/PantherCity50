@@ -62,7 +62,7 @@ func InteractWithRayCollider(obj: Object) -> void:
 		if obj is ZESwitch:
 			obj.ChangeState()
 
-func _on_water_check_area_entered(area: Area2D) -> void:
+func _on_water_check_area_entered(_area: Area2D) -> void:
 	# TODO: play drown animaiton
 	
 	# tell the level to restart

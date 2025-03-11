@@ -1,4 +1,4 @@
-extends Node2D
+class_name ZELevelManager extends Node2D
 
 @export var LevelCode: String = ""
 
