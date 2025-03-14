@@ -17,7 +17,7 @@ func _input(_event: InputEvent) -> void:
 		Globals.Game_Globals.clear()
 		SceneManager.GoToNewSceneString(self, Scenes.GameSelection)
 		
-	if Input.is_action_just_pressed("ui_accept"):
+	if _event.is_action_pressed("ActionButton"):
 		if selector.position == newGamePos:
 			SceneManager.GoToNewSceneString(self, Scenes.ZETutorial1)
 		elif selector.position == passwordPos:
