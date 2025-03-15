@@ -22,24 +22,24 @@ func _ready() -> void:
 	ship.position = Vector2(320, 280)
 	ship.start_position = ship.position
 	self.add_child(ship)
-	
+
 	# Instantiate the cave
 	cave = cave_script.new()
 	self.add_child(cave)
-	
-		
+
+
 func ship_crashed() -> void:
 	print("Ship crashed!")
 	ship.position = Vector2(32000, 280)
 	await get_tree().create_timer(1.0).timeout
 	reset()
-		
-		
+
+
 func reset() -> void:
 	cave.reset()
 	ship.reset()
-	
-	
+
+
 func _process(delta: float) -> void:
 	cave.move(DESCENT_SPEED * delta)
 

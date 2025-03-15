@@ -1,47 +1,49 @@
 extends CharacterBody2D
 
+enum PlayerState {
+	Idle,
+	InWater,
+	OnExit
+}
+
 @onready var currentDir: Vector2 = Vector2.DOWN
 @onready var sprite := $AnimatedSprite2D
 @onready var ray := $RayCast2D
+@onready var currentState: PlayerState = PlayerState.Idle
+
+signal InWater
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
+func _input(event: InputEvent) -> void:
+	if currentState == PlayerState.Idle:
+		if event.is_action_pressed("DigitalUp"):
+			MovePlayer(Vector2.UP, "IdleUp")
+		elif event.is_action_pressed("DigitalRight"):
+			MovePlayer(Vector2.RIGHT, "IdleRight")
+		elif event.is_action_pressed("DigitalDown"):
+			MovePlayer(Vector2.DOWN, "IdleDown")
+		elif event.is_action_pressed("DigitalLeft"):
+			MovePlayer(Vector2.LEFT, "IdleLeft")
+		
+		if event.is_action_pressed("ActionButton"):
+			# Detect if "ray" is colliding with an object
+			# - If so, try to interact
+			if ray.is_colliding():
+				InteractWithRayCollider(ray.get_collider())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	# Move player UP
-	if Input.is_action_just_pressed("ui_up"):
-		MovePlayer(Vector2.UP, "IdleUp")
-		
-	# Move player RIGHT
-	if Input.is_action_just_pressed("ui_right"):
-		MovePlayer(Vector2.RIGHT, "IdleRight")
-	
-	# Move player DOWN
-	if Input.is_action_just_pressed("ui_down"):
-		MovePlayer(Vector2.DOWN, "IdleDown")
-	
-	# Move player LEFT
-	if Input.is_action_just_pressed("ui_left"):
-		MovePlayer(Vector2.LEFT, "IdleLeft")
-	
-	# Action button pressed - do a thing!
-	if Input.is_action_just_pressed("ActionButton"):
-		print("Action!")
-	
-		# Detect if "ray" is colliding with an object
-		# - If so, try to interact
-		if ray.is_colliding():
-			InteractWithRayCollider(ray.get_collider())
-
+	pass
 
 # Called to move the player
 func MovePlayer(dir: Vector2, animation: String) -> void:
 	sprite.play(animation)
 	ray.target_position = dir * Globals.ZETileSize
 	ray.force_raycast_update()
+	
 	if ray.is_colliding():
 		var collidingObj: Object = ray.get_collider()
 		if collidingObj is ZEBoxArea:
@@ -58,3 +60,10 @@ func InteractWithRayCollider(obj: Object) -> void:
 	if obj.is_in_group("ZEInteractable"):
 		if obj is ZESwitch:
 			obj.ChangeState()
+
+func _on_water_check_area_entered(_area: Area2D) -> void:
+	# TODO: play drown animaiton
+	currentState = PlayerState.InWater
+	
+	# tell the level to restart
+	InWater.emit()

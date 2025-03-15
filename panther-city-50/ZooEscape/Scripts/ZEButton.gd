@@ -28,16 +28,15 @@ func _on_area_2d_body_exited(_body: Node2D) -> void:
 		toggle_children(ButtonState.off)
 
 # for areas like box enter
-func _on_button_area_area_entered(area: Area2D) -> void:
+func _on_button_area_area_entered(_area: Area2D) -> void:
 	toggle_children(ButtonState.on)
 
 # for areas like box exit
-func _on_button_area_area_exited(area: Area2D) -> void:
+func _on_button_area_area_exited(_area: Area2D) -> void:
 	toggle_children(ButtonState.off)
 
 func toggle_children(state: ButtonState) -> void:
 	frame = state
 	if ControlledChildren:
 		for Child: Node in ControlledChildren:
-			# TODO: Set some variable / property -- replace below as needed
-			Child.visible = !Child.visible
+			Child.SetState(state)

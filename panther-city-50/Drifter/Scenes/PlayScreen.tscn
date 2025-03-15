@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c1lw4afirq7qn"]
 
-[ext_resource type="Script" path="res://Drifter/Scripts/play_screen.gd" id="1_xmw7o"]
+[ext_resource type="Script" uid="uid://h5s1ydvwhcdd" path="res://Drifter/Scripts/play_screen.gd" id="1_xmw7o"]
 
 [node name="PlayScreen" type="Node2D"]
 script = ExtResource("1_xmw7o")

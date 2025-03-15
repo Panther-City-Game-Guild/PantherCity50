@@ -1,4 +1,4 @@
-extends Node2D
+class_name SteakManager extends Node2D
 
 @onready var SteakTotal := 0
 @onready var AllStaakCollecte := false
