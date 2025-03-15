@@ -1,19 +1,24 @@
 extends Node
 
-@onready var hBoard := preload("res://Simon/Scenes/HexBoard.tscn")
 @onready var SimonMenu := $SimonMenu
 @onready var SimonHUD := $SimonHUD
 @onready var HexBoard := $HexBoard
-
+const hBoard := preload("res://Simon/Scenes/HexBoard.tscn")
 var game_on: bool = false
 var is_game_paused: bool = false
 
+signal new_game
+signal unpause_game
+signal back_to_selection
+signal exit
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	SimonMenu.connect("resume_game", _unpause_game)
-	SimonMenu.connect("new_game", _new_game)
-	SimonMenu.connect("back_to_selection", _return_to_game_selection)
-	SimonMenu.connect("exit", _exit_app)
+	new_game.connect(_new_game)
+	unpause_game.connect(_unpause_game)
+	back_to_selection.connect(_return_to_game_selection)
+	exit.connect(_exit_app)
 
 
 # Called when input events happen
