@@ -1,6 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dtuk3xi0s4h4w"]
 
 [ext_resource type="Script" uid="uid://dhx7ankg0ylpq" path="res://Simon/Scripts/simon_hud.gd" id="1_j82se"]
+[ext_resource type="Script" uid="uid://b1pp2hn6c60ma" path="res://Simon/Scenes/time_manager.gd" id="1_j82se"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_68k5q"]
 content_margin_left = 5.0
@@ -63,6 +64,7 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
+script = ExtResource("1_j82se")
 
 [node name="TimeLbl" type="Label" parent="PanelContainer/Rows/Row1/TimeHBox"]
 layout_mode = 2
@@ -85,6 +87,13 @@ offset_bottom = 11.5
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 8
+
+[node name="Timer" type="Timer" parent="PanelContainer/TimeHBox"]
+autostart = true
+
+[node name="ScoreHBox" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
 
 [node name="ScoreLbl" type="Label" parent="PanelContainer/Rows/Row1/ScoreHBox"]
 layout_mode = 2
@@ -114,3 +123,4 @@ meta_underlined = false
 hint_underlined = false
 deselect_on_focus_loss_enabled = false
 drag_and_drop_selection_enabled = false
+[connection signal="timeout" from="PanelContainer/TimeHBox/Timer" to="PanelContainer/TimeHBox" method="_on_timer_timeout"]
