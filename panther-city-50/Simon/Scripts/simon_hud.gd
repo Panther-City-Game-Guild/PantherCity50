@@ -3,8 +3,8 @@ extends Control
 # Called every render frame
 func _process(_delta: float) -> void:
 	pass
-	#if owner.game_on && owner.GameClock:
-	#	update_timer()
+	if owner.game_on && owner.GameClock:
+		update_timer()
 
 # Called to update lives counter display
 func update_lives() -> void:

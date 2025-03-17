@@ -1,12 +1,19 @@
 extends Node
 
+### TODO:
+# - Move most of the generic Game functionality to this script or a generic Game controller node
+# - HexBoard.gd should only control its child nodes and signal back to this node or generic Game controller
+# - SimonHUD, HexBoard, and GameClock should be children of this or the Game controller
+# - This would allow for the possibility of other game board shapes for "easy, normal, and hard" modes
+# - E.g., Easy = Triangle with 3 Areas; Normal = Circle with 4 Areas; Hard = Hexagon with 6 Areas
+
 @onready var SimonMenu := $SimonMenu
 @onready var SimonHUD := $SimonHUD
 @onready var HexBoard := $HexBoard
 @onready var GameClock := $GameClock
 var game_on: bool = false
 var is_game_paused: bool = false
-var subject_name: String = "subject_"
+var subject_name: String = "_"
 var prompt_texts: Dictionary[String, String]
 var prompt_text: String
 var lives: int = 3
@@ -54,10 +61,12 @@ func _new_game() -> void:
 	_unpause_game()
 	SimonHUD.update_prompt()
 	HexBoard.start_game()
+	# TODO: Refactor this script so recital_timee is the countdown timer
+	GameClock.start(300)
 
 
 func _return_to_game_selection() -> void:
-	if get_parent().name == "GameRoot":
+	if find_parent("GameRoot"):
 		SceneManager.GoToNewSceneString(self, Scenes.GameSelection)
 	else: _exit_app()
 
@@ -80,11 +89,11 @@ func _unpause_game() -> void:
 
 func generate_subject_name() -> String:
 	var alphabet: String = "1ABC2DE3FGH4IJ5KLM6NO7PQR8ST9UVW0XYZ"
-	var str: String = ""
+	var strg: String = ""
 	for i in 4:
-		str += alphabet.substr(randi_range(0, alphabet.length() - 1), 1)
-	print("str: ", str)
-	return ("test_subject_" + str)
+		strg += alphabet.substr(randi_range(0, alphabet.length() - 1), 1)
+	print("str: ", strg)
+	return ("_" + strg)
 
 func initialize_prompt_texts() -> void:
 	prompt_texts = {
