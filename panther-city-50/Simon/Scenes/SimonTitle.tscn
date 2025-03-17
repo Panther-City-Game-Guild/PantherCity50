@@ -24,4 +24,6 @@ z_index = 5
 position = Vector2(320, 190)
 scale = Vector2(1.25, 1.25)
 
+[node name="GameClock" type="Timer" parent="."]
+
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
