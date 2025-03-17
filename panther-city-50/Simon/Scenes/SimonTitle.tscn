@@ -16,10 +16,10 @@ mouse_filter = 1
 color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 
 [node name="SimonMenu" parent="." instance=ExtResource("3_kcjoo")]
-visible = false
 z_index = 10
 
 [node name="Closed" parent="." instance=ExtResource("6_72lpm")]
+visible = false
 z_index = 100
 anchors_preset = 15
 anchor_right = 1.0
