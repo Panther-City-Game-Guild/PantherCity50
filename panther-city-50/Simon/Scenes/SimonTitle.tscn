@@ -16,10 +16,10 @@ mouse_filter = 1
 color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 
 [node name="SimonMenu" parent="." instance=ExtResource("3_kcjoo")]
+visible = false
 z_index = 10
 
 [node name="Closed" parent="." instance=ExtResource("6_72lpm")]
-visible = false
 z_index = 100
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,9 +32,11 @@ size_flags_horizontal = 2
 size_flags_vertical = 2
 
 [node name="SimonHUD" parent="." instance=ExtResource("4_m2ajy")]
+visible = false
 z_index = 5
 
 [node name="HexBoard" parent="." instance=ExtResource("2_wp5dl")]
+visible = false
 position = Vector2(320, 190)
 scale = Vector2(1.25, 1.25)
 

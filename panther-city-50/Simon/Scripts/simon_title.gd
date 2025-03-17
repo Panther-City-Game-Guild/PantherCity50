@@ -38,7 +38,7 @@ func _ready() -> void:
 	initialize_prompt_texts()
 	
 	# Clock-related setup
-	start_game_clock.connect(func(secs: float): GameClock.start(secs))
+	start_game_clock.connect(func(secs: float) -> void: GameClock.start(secs))
 	GameClock.one_shot = true
 	GameClock.autostart = false
 
