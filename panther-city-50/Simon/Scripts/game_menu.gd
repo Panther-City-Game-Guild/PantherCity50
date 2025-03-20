@@ -4,16 +4,21 @@ extends Panel
 @onready var resumeBtn := $Container/MenuContainer/ResumeBtn
 @onready var newBtn := $Container/MenuContainer/NewBtn
 
-signal view_scores
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 		newBtn.grab_focus()
 
-func set_visibility(menu: bool = false, rBtn: bool = false) -> void:
-	self.visible = menu
-	resumeBtn.visible = rBtn
-	if rBtn:
+
+# Toggle the GameMenu's visibility
+func toggle_game_menu(b: bool) -> void:
+	self.visible = b
+
+
+# Toggle the GameMenu's Resume Button's visibility
+func toggle_resume_button(b: bool) -> void:
+	resumeBtn.visible = b
+	if b:
 		resumeBtn.grab_focus()
 
 
@@ -40,7 +45,8 @@ func _on_scores_btn_gui_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_accept") || \
 	Input.is_action_just_pressed("ActionButton") || \
 	(event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT):
-		view_scores.emit()
+		if owner.has_signal("view_scores"):
+			owner.view_scores.emit()
 
 
 # Game Selection Button -- Emit signal to return to game selection menu
@@ -59,3 +65,11 @@ func _on_exit_btn_gui_input(event: InputEvent) -> void:
 	(event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT):
 		if owner.has_signal("exit"):
 			owner.exit.emit()
+
+
+# TODO: Make this detect which button received the gui input and do code based on that, to eliminate the repetitive code above
+func _on_button_gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept") || \
+	event.is_action_pressed("ActionButton") || \
+	(event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT):
+		pass

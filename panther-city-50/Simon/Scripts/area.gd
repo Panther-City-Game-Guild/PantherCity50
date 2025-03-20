@@ -15,20 +15,16 @@ func _ready() -> void:
 
 # Called when Input events are detected
 func _input(event: InputEvent) -> void:
-	# TODO: Move logic here to check for "trigger_ability_x" input actions
-	# TODO: Or move click detection logic to HexBoard***
-	# CHECK FOR MOUSE INPUT
-		# CHECK FOR "mouseEntered" to select the correct area and the event was left mouse button click
-			# Dim area for a time
-				# If mouse still in the area, light the area back up
-	
-	if (event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT):
-		if mouseEntered && !is_area_locked:
+	# If Mouse is hovering the Area and the InputEvent was a LEFT MouseButton
+	if (mouseEntered && event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT):
+	# If left mouse button was released
+		if !event.pressed:
+			light_area()
+		
+		# If left mouse button was pressed and area is not locked
+		if event.pressed && !is_area_locked:
 			user_clicked_me.emit(int(name.get_slice("_", 1)))
 			dim_area()
-			if mouseEntered:
-				await get_tree().create_timer(0.1).timeout
-				light_area()
 
 
 # Toggle the lock on this area
@@ -40,6 +36,7 @@ func toggle_area_lock() -> void:
 		light_area()
 
 
+# Trigger the area
 func trigger_area() -> void:
 	light_area()
 	await get_tree().create_timer(0.1).timeout

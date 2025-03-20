@@ -1,17 +1,13 @@
 extends Node
 
 ### TODO:
-# - Move most of the generic Game functionality to this script or a generic Game controller node
-# - HexBoard.gd should only control its child nodes and signal back to this node or generic Game controller
-# - SimonHUD, HexBoard, and GameClock should be children of this or the Game controller
-# - This would allow for the possibility of other game board shapes for "easy, normal, and hard" modes
-# - E.g., Easy = Triangle with 3 Areas; Normal = Circle with 4 Areas; Hard = Hexagon with 6 Areas
+# - Move most of the generic Game functionality to a generic Game controller node
+# - HexBoard.gd should only control its child nodes and signal back to Game controller
+# - GameHUD, HexBoard, and GameClock should be children of the Game controller
+# - This would allow for the possibility of other game board shapes for more dynamic gameplay
 
-@onready var SimonMenu := $SimonMenu
-@onready var SimonHUD := $SimonHUD
-@onready var HexBoard := $HexBoard
-@onready var GameClock := $GameClock
-var game_on: bool = false
+@onready var GameMenu: Panel = $GameMenu
+@onready var Game: Node = $Game
 var is_game_paused: bool = false
 var subject_name: String = "_"
 var prompt_texts: Dictionary[String, String]
@@ -22,9 +18,9 @@ var elapsed_time: float = 0
 
 signal new_game
 signal unpause_game
+signal view_scores
 signal back_to_selection
 signal exit
-signal start_game_clock(secs: float)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -36,11 +32,6 @@ func _ready() -> void:
 	
 	subject_name = generate_subject_name()
 	initialize_prompt_texts()
-	
-	# Clock-related setup
-	start_game_clock.connect(func(secs: float) -> void: GameClock.start(secs))
-	GameClock.one_shot = true
-	GameClock.autostart = false
 
 
 # Called when input events happen
@@ -48,21 +39,18 @@ func _input(event: InputEvent) -> void:
 	# TODO Include "pause_game" as a way to pause and unpause Simon	
 	if event.is_action_pressed("ui_cancel") || event.is_action_pressed("pause_game"):
 		get_viewport().set_input_as_handled()
-		if game_on && !is_game_paused:
+		if Game.is_game_running && !is_game_paused:
 			_pause_game()
 			
-		elif game_on && is_game_paused:
+		elif Game.is_game_running && is_game_paused:
 			_unpause_game()
 
 
 func _new_game() -> void:
-	game_on = true
-	SimonMenu.set_visibility(false, true)
+	GameMenu.toggle_game_menu(false)
+	GameMenu.toggle_resume_button(true)
 	_unpause_game()
-	SimonHUD.update_prompt()
-	HexBoard.start_game()
-	# TODO: Refactor this script so recital_timee is the countdown timer
-	GameClock.start(300)
+	Game.start_game()
 
 
 func _return_to_game_selection() -> void:
@@ -72,19 +60,23 @@ func _return_to_game_selection() -> void:
 
 
 func _pause_game() -> void:
-	if game_on:
+	# TODO: Refactor to use Game controller's variables
+	if Game.is_game_running:
 		is_game_paused = true
-		SimonMenu.set_visibility(true, true)
+		GameMenu.toggle_game_menu(true)
+		GameMenu.toggle_resume_button(true)
 		get_tree().paused = true
-		print("Simon paused")
+		print("Game paused")
 
 
 func _unpause_game() -> void:
-	if game_on:
+	# TODO: Refactor to use Game controller's variables
+	if Game.is_game_running:
 		is_game_paused = false
-		SimonMenu.set_visibility(false, true)
+		GameMenu.toggle_game_menu(false)
+		GameMenu.toggle_resume_button(true)
 		get_tree().paused = false
-		print("Simon unpaused")
+		print("Game unpaused")
 
 
 func generate_subject_name() -> String:
@@ -94,6 +86,7 @@ func generate_subject_name() -> String:
 		strg += alphabet.substr(randi_range(0, alphabet.length() - 1), 1)
 	print("str: ", strg)
 	return ("_" + strg)
+
 
 func initialize_prompt_texts() -> void:
 	prompt_texts = {
@@ -119,4 +112,4 @@ func _exit_app() -> void:
 # Triggered when SimonTitle is being removed from the SceneTree
 # E.g., Triggered when returning to Game Selection
 func _on_tree_exiting() -> void:
-	print("SimonTitle exiting scene tree")
+	print(name + " exiting scene tree")

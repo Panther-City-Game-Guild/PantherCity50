@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cky1uw2nrbma4"]
+[gd_scene load_steps=5 format=3 uid="uid://cky1uw2nrbma4"]
 
-[ext_resource type="Script" uid="uid://c0d1p10y15agv" path="res://Simon/Scripts/simon_title.gd" id="1_msq48"]
-[ext_resource type="PackedScene" uid="uid://yn1d5or0rw1x" path="res://Simon/Scenes/HexBoard.tscn" id="2_wp5dl"]
-[ext_resource type="PackedScene" uid="uid://dv5ce46e4gdq7" path="res://Simon/Scenes/simon_menu.tscn" id="3_kcjoo"]
-[ext_resource type="PackedScene" uid="uid://dtuk3xi0s4h4w" path="res://Simon/Scenes/simon_hud.tscn" id="4_m2ajy"]
+[ext_resource type="Script" uid="uid://c0d1p10y15agv" path="res://Simon/Scripts/game_title.gd" id="1_msq48"]
+[ext_resource type="PackedScene" uid="uid://dv5ce46e4gdq7" path="res://Simon/Scenes/GameMenu.tscn" id="3_kcjoo"]
+[ext_resource type="PackedScene" uid="uid://b41vh0chb8yry" path="res://Simon/Scenes/Game.tscn" id="4_npryv"]
 [ext_resource type="PackedScene" uid="uid://dll68vj1e6gs1" path="res://Simon/Scenes/ClosedForDev.tscn" id="6_72lpm"]
 
 [node name="Simon" type="Node"]
@@ -15,11 +14,20 @@ offset_bottom = 360.0
 mouse_filter = 1
 color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 
-[node name="SimonMenu" parent="." instance=ExtResource("3_kcjoo")]
-visible = false
+[node name="GameMenu" parent="." instance=ExtResource("3_kcjoo")]
 z_index = 10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 
 [node name="Closed" parent="." instance=ExtResource("6_72lpm")]
+visible = false
 z_index = 100
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,15 +39,6 @@ grow_vertical = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
-[node name="SimonHUD" parent="." instance=ExtResource("4_m2ajy")]
-visible = false
-z_index = 5
-
-[node name="HexBoard" parent="." instance=ExtResource("2_wp5dl")]
-visible = false
-position = Vector2(320, 190)
-scale = Vector2(1.25, 1.25)
-
-[node name="GameClock" type="Timer" parent="."]
+[node name="Game" parent="." instance=ExtResource("4_npryv")]
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
