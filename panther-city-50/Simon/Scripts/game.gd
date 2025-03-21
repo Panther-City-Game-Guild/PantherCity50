@@ -30,7 +30,7 @@ extends Node
 @onready var GameClock: Timer = $GameClock
 @onready var active_board: Node2D = GameBoards[0] # Which board is currently being used
 # Other Variables
-var max_areas: int = 4 # How many areas does the active_board have
+var max_areas: int = 6 # How many areas does the active_board have
 var rand_pattern: Array[int] = [] # Store the randomly generated color pattern
 var input_pattern: Array[int] = [] # Store the user's recited pattern
 var input_length: int = 0 # Length of the user's input pattern
@@ -50,6 +50,7 @@ var area_triggered: int = -1 # Which area is triggered; 0-5, -1 for none
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# TODO: Make the Game preload GameBoards but not add them to the scene tree until a new game has begun
 	GameHUD.visible = false
 	for Board in GameBoards:
 		Board.visible = false
@@ -79,10 +80,10 @@ func _input(event: InputEvent) -> void:
 ### End InputEvent Checks
 
 
-
 ### Begin Game Loop
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
 	# Are we waiting for user input?
 	if waiting_for_input && !in_intermission:
 		# If so, increase the elapsed_time
@@ -151,6 +152,7 @@ func set_active_board() -> void:
 	if selected_board == 3:
 		active_board = GameBoards[selected_board] # Triangle
 		max_areas = 3
+	print("Max Areas: ", max_areas)
 
 
 # Begin a new game
@@ -166,8 +168,13 @@ func start_game() -> void:
 		# Calculate time user has to recite pattern
 		calc_recital_time() # Depends on teach_time, display_time, and pattern_length
 		
+		# Use settings to determine which board is needed
+		set_active_board()
+		
+		# Display the GameHUD and Board
 		GameHUD.visible = true
 		active_board.visible = true
+		
 		# Start the game
 		print("Starting a new game")
 		is_game_running = true
@@ -180,7 +187,7 @@ func reset_game() -> bool:
 	has_pattern_played = false
 	are_areas_locked = false
 	in_intermission = false
-	pattern_length = 3
+	pattern_length = 1
 	input_length = 0
 	next_input = 0
 	elapsed_time = 0
@@ -238,23 +245,21 @@ func toggle_area_locks() -> void:
 func verify_input(input: int) -> bool:
 	# Only process this if waiting for input and a rand_pattern exists
 	if waiting_for_input && rand_pattern:
-		# If the Area clicked matches the required area, store the input and update the score
+		# If the input was correct, store the input and update the score
 		if int(input) == rand_pattern[next_input]:
 			input_pattern.append(int(input))
 			input_length = input_pattern.size()
-			
-			# TODO: Move scoring logic to its own function
-			round_score += round(200 * input_length ** 1.1)
-			score += round(200 * input_length ** 1.1)
-			print("   Correct input: ", int(input), " | Round score: ", round_score, " | Total score: ", score)
+			increase_score()
+			print("   Correct input: ", input)
 			
 			if next_input < pattern_length - 1:
 				next_input += 1
 			return true
+		# If input was incorrect, take away a life
 		else:
-			# TODO: Move lives-calc logic to its own function
 			lives -= 1
-			print("   BzzzZzZZ! Lives: ", lives)
+			GameHUD.update_lives(lives)
+			GameHUD.lives_hint_show(-1)
 			return false
 	return false
 
@@ -267,18 +272,39 @@ func calc_recital_time() -> void:
 		recital_time = 7
 
 
+# Add points to the player's score
+func increase_score() -> void:
+	var points: int = round(200 * input_length ** 1.1)
+	round_score += points
+	score += points
+	GameHUD.update_score(score)
+	GameHUD.add_score_hint(points)
+	print("   Points Added: ", points, " | Round score: ", round_score, " | Total score: ", score)
+
+
 # Calculate the player's bonus score
 func calc_bonus_score() -> void:
 	var bonus_points: int = int(pattern_length ** 2 * 100 + (100 * (recital_time - elapsed_time)))
 	if bonus_points > 0:
 		score += bonus_points
+		GameHUD.add_score_hint(bonus_points)
 		print("   Bonus points awarded: ", bonus_points, " | New total score: ", score)
+	GameHUD.update_score(score)
 
 
+# Reward additional lives to the player
 func calc_bonus_lives() -> void:
-	if round_score > 10000:
-		@warning_ignore("integer_division")
-		lives += floor(round_score / 10000)
-		if lives > 9:
+	if round_score > 7500:
+		var b_lives: int = 0
+		#@warning_ignore("integer_division")
+		b_lives = floori(round_score / 7500.0)
+		if lives + b_lives >= 9:
 			lives = 9
-		print("   Bonus lives awarded | Total lives: ", lives, " / 9")
+		else:
+			lives += b_lives
+			GameHUD.lives_hint_show(b_lives)
+
+		
+		# Update the GameHUD
+		GameHUD.update_lives(lives)
+		print("   Bonus lives earned: ", b_lives, " | Total lives: ", lives, " / 9")

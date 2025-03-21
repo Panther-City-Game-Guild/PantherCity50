@@ -15,16 +15,18 @@ func _ready() -> void:
 
 # Called when Input events are detected
 func _input(event: InputEvent) -> void:
-	# If Mouse is hovering the Area and the InputEvent was a LEFT MouseButton
-	if (mouseEntered && event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT):
-	# If left mouse button was released
-		if !event.pressed:
-			light_area()
+	# If Mouse is hovering the Area and the InputEvent is a MouseButton LEFT Press
+	# and the Area is not locked
+	if (mouseEntered && event is InputEventMouseButton && \
+	event.button_index == MOUSE_BUTTON_LEFT && \
+	event.pressed && !is_area_locked):
+		user_clicked_me.emit(int(name.get_slice("_", 1)))
+		dim_area()
+		# Wait a
+		await get_tree().create_timer(0.1).timeout
 		
-		# If left mouse button was pressed and area is not locked
-		if event.pressed && !is_area_locked:
-			user_clicked_me.emit(int(name.get_slice("_", 1)))
-			dim_area()
+		if mouseEntered:
+			light_area()
 
 
 # Toggle the lock on this area

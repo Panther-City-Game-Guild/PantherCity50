@@ -24,6 +24,12 @@ offset_bottom = 50.0
 script = ExtResource("1_36u2n")
 metadata/_edit_group_ = true
 
+[node name="LivesHintTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="ScoreHintTimer" type="Timer" parent="."]
+autostart = true
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
 offset_right = 640.0
@@ -44,9 +50,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -9.0
-offset_right = 72.0
-offset_bottom = 9.0
+offset_top = -12.5
+offset_right = 86.0
+offset_bottom = 13.5
 grow_vertical = 2
 size_flags_horizontal = 8
 theme = SubResource("Theme_e00pi")
@@ -70,10 +76,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -51.0
-offset_top = -11.5
-offset_right = 51.0
-offset_bottom = 11.5
+offset_left = -63.0
+offset_top = -12.5
+offset_right = 63.0
+offset_bottom = 13.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
@@ -91,9 +97,6 @@ theme_override_colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314
 theme_override_constants/outline_size = 4
 text = "00:00"
 
-[node name="Timer" type="Timer" parent="PanelContainer/Rows/Row1/TimeHBox"]
-autostart = true
-
 [node name="ScoreHBox" type="HBoxContainer" parent="PanelContainer/Rows/Row1"]
 layout_mode = 1
 anchors_preset = 6
@@ -101,9 +104,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -139.0
-offset_top = -11.5
-offset_bottom = 11.5
+offset_left = -186.0
+offset_top = -12.5
+offset_bottom = 13.5
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 8
@@ -127,6 +130,7 @@ custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
 [node name="PromptData" type="RichTextLabel" parent="PanelContainer/Rows/Row2"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
@@ -138,4 +142,45 @@ autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="timeout" from="PanelContainer/Rows/Row1/TimeHBox/Timer" to="PanelContainer/Rows/Row1/TimeHBox" method="_on_timer_timeout"]
+[node name="LivesHint" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 60.0
+offset_top = 28.0
+offset_right = 76.0
+offset_bottom = 41.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("8_dxkmp")
+bbcode_enabled = true
+text = "[color=green]+9[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreHint" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 506.0
+offset_top = 28.0
+offset_right = 548.0
+offset_bottom = 41.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("8_dxkmp")
+bbcode_enabled = true
+text = "[color=green]+40000[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="LivesHintTimer" to="." method="_on_lives_hint_timer_timeout"]
+[connection signal="timeout" from="ScoreHintTimer" to="." method="_on_score_hint_timer_timeout"]

@@ -6,6 +6,13 @@ extends Node
 # - GameHUD, HexBoard, and GameClock should be children of the Game controller
 # - This would allow for the possibility of other game board shapes for more dynamic gameplay
 
+### TODO:
+# - Experiment with disabling _input processing for the game while Simon is teaching the pattern
+# - This would allow for less extensive input coding and variable reliance, thus less RAM useage
+
+### TODO:
+# - Consider where/when to save user data for this game
+
 @onready var GameMenu: Panel = $GameMenu
 @onready var Game: Node = $Game
 var is_game_paused: bool = false
@@ -60,7 +67,6 @@ func _return_to_game_selection() -> void:
 
 
 func _pause_game() -> void:
-	# TODO: Refactor to use Game controller's variables
 	if Game.is_game_running:
 		is_game_paused = true
 		GameMenu.toggle_game_menu(true)
@@ -70,7 +76,6 @@ func _pause_game() -> void:
 
 
 func _unpause_game() -> void:
-	# TODO: Refactor to use Game controller's variables
 	if Game.is_game_running:
 		is_game_paused = false
 		GameMenu.toggle_game_menu(false)

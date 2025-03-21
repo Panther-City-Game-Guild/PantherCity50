@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://lbdqb6ycqv8k"]
+
+[ext_resource type="FontFile" uid="uid://dwx06i8t0jm4b" path="res://Simon/Assets/mago3.ttf" id="1_t862v"]
+
+[resource]
+Label/colors/font_color = Color(0, 1, 0, 1)
+Label/colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+Label/constants/outline_size = 3
+Label/fonts/font = ExtResource("1_t862v")
