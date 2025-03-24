@@ -92,8 +92,9 @@ polygon = PackedVector2Array(2.00012, -49, 4.00012, -47, 48.9999, 31.0001, 48.99
 color = Color(0.4, 0.239216, 0, 1)
 polygon = PackedVector2Array(-45.0001, 33.9999, 1.00012, -47, 46.9999, 34.0001)
 
-[node name="Light" type="Polygon2D" parent="BoardSprite"]
+[node name="Light" type="Polygon2D" parent="."]
 show_behind_parent = true
+color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 polygon = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 
 [connection signal="mouse_entered" from="BoardSprite/Area_1" to="BoardSprite/Area_1" method="_on_mouse_entered"]

@@ -1,6 +1,5 @@
 extends Panel
 
-@onready var rBtnVis: bool = false
 @onready var resumeBtn := $Container/MenuContainer/ResumeBtn
 @onready var newBtn := $Container/MenuContainer/NewBtn
 
@@ -19,8 +18,11 @@ func toggle_game_menu(b: bool) -> void:
 func toggle_resume_button(b: bool) -> void:
 	resumeBtn.visible = b
 	if b:
+		newBtn.release_focus()
 		resumeBtn.grab_focus()
-
+	if !b:
+		resumeBtn.release_focus()
+		newBtn.grab_focus()
 
 # Resume Game Button -- Emit signal to resume the already running game
 func _on_resume_btn_gui_input(event: InputEvent) -> void:

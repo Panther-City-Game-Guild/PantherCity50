@@ -1,21 +1,48 @@
 extends Node2D
 
+
 ### Handles to Areas; children
-@onready var Areas: Array[Area2D] = [
-	$BoardSprite/Area_1, $BoardSprite/Area_2, $BoardSprite/Area_3,
-	$BoardSprite/Area_4, $BoardSprite/Area_5, $BoardSprite/Area_6 ]
+@onready var Areas: Array[Area2D] = []
 
 ### Handles to AreaPolygons; grandchildren
-@onready var AreaPolygons: Array[Polygon2D] = [
-	$BoardSprite/Area_1/Polygon2D, $BoardSprite/Area_2/Polygon2D,
-	$BoardSprite/Area_3/Polygon2D, $BoardSprite/Area_4/Polygon2D,
-	$BoardSprite/Area_5/Polygon2D, $BoardSprite/Area_6/Polygon2D ]
+@onready var AreaPolygons: Array[Polygon2D] = []
 
 func _ready() -> void:
-	# Assign the correct colors to the Board's AreaPolygons
-	assign_variables_to_areas()
-	# Connect the Area signals to the Game controller
-	connect_area_signals()
+	global_position = Vector2(get_viewport().get_visible_rect().size / 2)
+	
+	# Find handles to Areas
+	for Area in $BoardSprite.get_children():
+		Areas.append(Area)
+	
+	# Find handles to AreaPolygons
+	for Area in Areas:
+		AreaPolygons.append(Area.get_node("Polygon2D"))
+
+
+### Begin InputEvent Checks
+func _input(event: InputEvent) -> void:
+	# If a game is in progress and the areas are not locked
+	if owner.is_game_running && !owner.are_areas_locked:
+		var i: int = 0
+		# If an Action was just pressed
+		# <1> pressed
+		if event.is_action_pressed("trigger_ability_1"): i = 1
+		# <2> pressed
+		if event.is_action_pressed("trigger_ability_2"): i = 2
+		# <3> pressed
+		if event.is_action_pressed("trigger_ability_3"): i = 3
+		# <4> pressed
+		if event.is_action_pressed("trigger_ability_4"): i = 4
+		# <5> pressed
+		if event.is_action_pressed("trigger_ability_5"): i = 5
+		# <6> pressed
+		if event.is_action_pressed("trigger_ability_6"): i = 6
+		# If one of the above was true, trigger that area
+		if i >= 1 && i <= owner.max_areas:
+			trigger_area(i - 1)
+			Areas[i-1].emit_clicked()
+### End InputEvent Checks
+
 
 # Assign values to Area variables
 func assign_variables_to_areas() -> void:
@@ -31,11 +58,20 @@ func connect_area_signals() -> void:
 	for Area in Areas:
 		Area.connect("user_clicked_me", owner.verify_input)
 
+
+# Triger an Area (dim and then light up)
+# A relay between the Game manager and the Areas
 func trigger_area(i: int) -> void:
 	Areas[i].trigger_area()
 
+
+# Light up an Area
+# A relay between the Game manager and the Areas
 func light_area(i: int) -> void:
 	Areas[i].light_area()
 
+
+# Dim an Area
+# A relay between the Game manager and the Areas
 func dim_area(i: int) -> void:
 	Areas[i].dim_area()

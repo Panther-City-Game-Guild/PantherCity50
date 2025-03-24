@@ -20,21 +20,26 @@ func _input(event: InputEvent) -> void:
 	if (mouseEntered && event is InputEventMouseButton && \
 	event.button_index == MOUSE_BUTTON_LEFT && \
 	event.pressed && !is_area_locked):
-		user_clicked_me.emit(int(name.get_slice("_", 1)))
+		# signal up to the Game controller area was clicked
+		emit_clicked()
+		# Dim the area
 		dim_area()
-		# Wait a
+		# Wait 0.1 seconds and light up if still being hovered
 		await get_tree().create_timer(0.1).timeout
-		
 		if mouseEntered:
 			light_area()
 
+
+# Emit the user_clicked_me signal
+func emit_clicked() -> void:
+	user_clicked_me.emit(int(name.get_slice("_", 1)))
 
 # Toggle the lock on this area
 func toggle_area_lock() -> void:
 	is_area_locked = !is_area_locked
 	if is_area_locked:
 		dim_area()
-	if mouseEntered && !is_area_locked:
+	if !is_area_locked && mouseEntered:
 		light_area()
 
 

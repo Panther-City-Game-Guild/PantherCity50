@@ -7,8 +7,8 @@ extends Node
 # - This would allow for the possibility of other game board shapes for more dynamic gameplay
 
 ### TODO:
-# - Experiment with disabling _input processing for the game while Simon is teaching the pattern
-# - This would allow for less extensive input coding and variable reliance, thus less RAM useage
+# - Experiment with disabling _input processing for the active_board while Simon is teaching the pattern
+# - This would allow for less extensive input coding and variable reliance, thus less RAM useage and processing
 
 ### TODO:
 # - Consider where/when to save user data for this game
@@ -43,16 +43,33 @@ func _ready() -> void:
 
 # Called when input events happen
 func _input(event: InputEvent) -> void:
-	# TODO Include "pause_game" as a way to pause and unpause Simon	
 	if event.is_action_pressed("ui_cancel") || event.is_action_pressed("pause_game"):
+		# Prevent other Nodes from processing this InputEvent
 		get_viewport().set_input_as_handled()
+		
+		# If a Game IS running and the Gamne is NOT paused, pause the game
 		if Game.is_game_running && !is_game_paused:
 			_pause_game()
-			
+			return
+		
+		# If a Game IS running and the Gamne IS paused, unpause the game
 		elif Game.is_game_running && is_game_paused:
 			_unpause_game()
+			return
+		
+		# If a Game is NOT running and the GameMenu is visible, go to GameSelection
+		elif !Game.is_game_running && GameMenu.visible:
+			_return_to_game_selection()
+			return
+		
+		# If a Game is NOT running and the GameMenu is NOT visible, show the GameMenu
+		elif !Game.is_game_running && !GameMenu.visible:
+			GameMenu.toggle_game_menu(true)
+			GameMenu.toggle_resume_button(false)
+			return
 
 
+# Called to tell the Game controller to start a new Game
 func _new_game() -> void:
 	GameMenu.toggle_game_menu(false)
 	GameMenu.toggle_resume_button(true)
@@ -60,12 +77,7 @@ func _new_game() -> void:
 	Game.start_game()
 
 
-func _return_to_game_selection() -> void:
-	if find_parent("GameRoot"):
-		SceneManager.GoToNewSceneString(self, Scenes.GameSelection)
-	else: _exit_app()
-
-
+# Called to Pause a Game
 func _pause_game() -> void:
 	if Game.is_game_running:
 		is_game_paused = true
@@ -75,6 +87,7 @@ func _pause_game() -> void:
 		print("Game paused")
 
 
+# Called to Unpause a Game
 func _unpause_game() -> void:
 	if Game.is_game_running:
 		is_game_paused = false
@@ -84,6 +97,7 @@ func _unpause_game() -> void:
 		print("Game unpaused")
 
 
+# Called to generate a random subject name for the player
 func generate_subject_name() -> String:
 	var alphabet: String = "1ABC2DE3FGH4IJ5KLM6NO7PQR8ST9UVW0XYZ"
 	var strg: String = ""
@@ -93,6 +107,7 @@ func generate_subject_name() -> String:
 	return ("_" + strg)
 
 
+# Called to initialize the prompt_texts array
 func initialize_prompt_texts() -> void:
 	prompt_texts = {
 		"welcome": "Welcome, [i]" + subject_name + "[/i].",
@@ -110,11 +125,20 @@ func initialize_prompt_texts() -> void:
 	prompt_text = prompt_texts["welcome"]
 
 
+# Called to return to the GameSelection scene
+func _return_to_game_selection() -> void:
+	if find_parent("GameRoot"):
+		SceneManager.GoToNewSceneString(self, Scenes.GameSelection)
+	else: _exit_app()
+
+
+# Called to exit the application
 func _exit_app() -> void:
 	get_tree().quit()
 
 
 # Triggered when SimonTitle is being removed from the SceneTree
+# Possibly a good time to save game options if not already done
 # E.g., Triggered when returning to Game Selection
 func _on_tree_exiting() -> void:
 	print(name + " exiting scene tree")

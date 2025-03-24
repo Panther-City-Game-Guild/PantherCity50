@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dtuk3xi0s4h4w"]
+[gd_scene load_steps=6 format=3 uid="uid://dtuk3xi0s4h4w"]
 
 [ext_resource type="Script" uid="uid://dhx7ankg0ylpq" path="res://Simon/Scripts/game_hud.gd" id="1_36u2n"]
-[ext_resource type="Script" uid="uid://h1phj0pgaikn" path="res://Simon/Scripts/time_manager.gd" id="1_j82se"]
 [ext_resource type="FontFile" uid="uid://dwx06i8t0jm4b" path="res://Simon/Assets/mago3.ttf" id="8_dxkmp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_68k5q"]
@@ -16,19 +15,16 @@ default_font_size = 32
 [sub_resource type="Theme" id="Theme_e00pi"]
 
 [node name="GameHUD" type="Control"]
-custom_minimum_size = Vector2(640, 55)
+custom_minimum_size = Vector2(640, 0)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 640.0
-offset_bottom = 50.0
 script = ExtResource("1_36u2n")
-metadata/_edit_group_ = true
 
 [node name="LivesHintTimer" type="Timer" parent="."]
-autostart = true
+one_shot = true
 
-[node name="ScoreHintTimer" type="Timer" parent="."]
-autostart = true
+[node name="ScoreDataColorTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
@@ -83,7 +79,6 @@ offset_bottom = 13.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
-script = ExtResource("1_j82se")
 
 [node name="TimeLbl" type="Label" parent="PanelContainer/Rows/Row1/TimeHBox"]
 layout_mode = 2
@@ -120,7 +115,6 @@ text = "Score:"
 
 [node name="ScoreData" type="Label" parent="PanelContainer/Rows/Row1/ScoreHBox"]
 layout_mode = 2
-size_flags_horizontal = 8
 theme_override_colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 theme_override_constants/outline_size = 4
 text = "00000000"
@@ -144,7 +138,8 @@ vertical_alignment = 1
 
 [node name="LivesHint" type="RichTextLabel" parent="."]
 visible = false
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 offset_left = 60.0
 offset_top = 28.0
 offset_right = 76.0
@@ -155,27 +150,7 @@ theme_override_colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314
 theme_override_constants/outline_size = 3
 theme_override_fonts/normal_font = ExtResource("8_dxkmp")
 bbcode_enabled = true
-text = "[color=green]+9[/color]"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ScoreHint" type="RichTextLabel" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 506.0
-offset_top = 28.0
-offset_right = 548.0
-offset_bottom = 41.0
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme_override_colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
-theme_override_constants/outline_size = 3
-theme_override_fonts/normal_font = ExtResource("8_dxkmp")
-bbcode_enabled = true
-text = "[color=green]+40000[/color]"
+text = "[color=green]+1[/color]"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -183,4 +158,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="timeout" from="LivesHintTimer" to="." method="_on_lives_hint_timer_timeout"]
-[connection signal="timeout" from="ScoreHintTimer" to="." method="_on_score_hint_timer_timeout"]
+[connection signal="timeout" from="ScoreDataColorTimer" to="." method="_on_score_color_timer_timeout"]

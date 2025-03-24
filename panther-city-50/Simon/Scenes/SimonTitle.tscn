@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c0d1p10y15agv" path="res://Simon/Scripts/game_title.gd" id="1_msq48"]
 [ext_resource type="PackedScene" uid="uid://dv5ce46e4gdq7" path="res://Simon/Scenes/GameMenu.tscn" id="3_kcjoo"]
-[ext_resource type="PackedScene" uid="uid://b41vh0chb8yry" path="res://Simon/Scenes/Game.tscn" id="4_npryv"]
+[ext_resource type="PackedScene" uid="uid://cxlw8682jdoku" path="res://Simon/Scenes/Game.tscn" id="4_npryv"]
 [ext_resource type="PackedScene" uid="uid://dll68vj1e6gs1" path="res://Simon/Scenes/ClosedForDev.tscn" id="6_72lpm"]
 
 [node name="Simon" type="Node"]
