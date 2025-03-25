@@ -10,36 +10,46 @@ signal user_clicked_me
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	self.add_to_group("board_areas")
 	dim_area()
 
 
 # Called when Input events are detected
 func _input(event: InputEvent) -> void:
-	# TODO: Move logic here to check for "trigger_ability_x" input actions
-	# TODO: Or move click detection logic to HexBoard***
-	# CHECK FOR MOUSE INPUT
-		# CHECK FOR "mouseEntered" to select the correct area and the event was left mouse button click
-			# Dim area for a time
-				# If mouse still in the area, light the area back up
-	
-	if (event is InputEventMouseButton && event.pressed && event.button_index == MOUSE_BUTTON_LEFT):
-		if mouseEntered && !is_area_locked:
-			user_clicked_me.emit(int(name.get_slice("_", 1)))
-			dim_area()
-			if mouseEntered:
-				await get_tree().create_timer(0.1).timeout
-				light_area()
-
-
-# Toggle the lock on this area
-func toggle_area_lock() -> void:
-	is_area_locked = !is_area_locked
-	if is_area_locked:
+	# If Mouse is hovering the Area and the InputEvent is a MouseButton LEFT Press
+	# and the Area is not locked
+	if (mouseEntered && event is InputEventMouseButton && \
+	event.button_index == MOUSE_BUTTON_LEFT && \
+	event.pressed && !is_area_locked):
+		# signal up to the Game controller area was clicked
+		emit_clicked()
+		# Dim the area
 		dim_area()
-	if mouseEntered && !is_area_locked:
+		# Wait 0.1 seconds and light up if still being hovered
+		await get_tree().create_timer(0.1).timeout
+		if mouseEntered:
+			light_area()
+
+
+# Emit the user_clicked_me signal
+func emit_clicked() -> void:
+	user_clicked_me.emit(int(name.get_slice("_", 1)))
+
+
+# Lock this area
+func lock_area() -> void:
+	is_area_locked = true
+	dim_area()
+
+
+# Unlock this area
+func unlock_area() -> void:
+	is_area_locked = false
+	if mouseEntered:
 		light_area()
 
 
+# Trigger the area
 func trigger_area() -> void:
 	light_area()
 	await get_tree().create_timer(0.1).timeout

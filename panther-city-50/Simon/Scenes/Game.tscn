@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxlw8682jdoku"]
+
+[ext_resource type="Script" uid="uid://dmqfw7yxkfkg4" path="res://Simon/Scripts/game.gd" id="1_7jmmq"]
+[ext_resource type="PackedScene" uid="uid://dtuk3xi0s4h4w" path="res://Simon/Scenes/GameHUD.tscn" id="3_nh1y3"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_7jmmq")
+
+[node name="GameClock" type="Timer" parent="."]
+one_shot = true
+
+[node name="GameHUD" parent="." instance=ExtResource("3_nh1y3")]
+z_index = 5
+offset_bottom = 30.0
+
+[connection signal="timeout" from="GameClock" to="." method="_on_game_clock_timeout"]
