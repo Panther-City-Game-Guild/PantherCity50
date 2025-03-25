@@ -1,6 +1,7 @@
 extends Control
 
 @onready var score_color_timer: Timer = $ScoreDataColorTimer
+@onready var lives_hint_timer: Timer = $LivesHintTimer
 @onready var lives_data: Label = $PanelContainer/Rows/Row1/LivesHBox/LivesData
 @onready var timer_data: Label = $PanelContainer/Rows/Row1/TimeHBox/TimeData
 @onready var score_data: Label = $PanelContainer/Rows/Row1/ScoreHBox/ScoreData
@@ -8,6 +9,7 @@ extends Control
 @onready var lives_hint: RichTextLabel = $LivesHint
 @onready var hint_theme: Resource = preload("res://Simon/Assets/hint_theme.tres")
 var score_hints: Array[Label] = []
+
 
 # Called every render frame
 func _process(_delta: float) -> void:
@@ -33,48 +35,59 @@ func _process(_delta: float) -> void:
 			lives_hint.position += Vector2(0.25, -0.5)
 		
 		# Update the game's current timer
-		update_timer()
+		if !owner.GameClock.is_stopped():
+			update_timer()
+
 
 # Called to update lives counter display
 func update_lives(i: int) -> void:
 	lives_data.text = str(i)
 
+
 # Called to update the score counter display
 func update_score(i: int) -> void:
 	score_data.text = str(i)
 
+
 # Called to update the timer display
 func update_timer() -> void:
 	if owner.GameClock.time_left:
-		var m: int = floori(owner.GameClock.time_left / 60)
-		var s: int = floori(owner.GameClock.time_left - (m * 60))
-		timer_data.text = str(m).pad_zeros(2) + ":" + str(s).pad_zeros(2)
+		timer_data.text = str(owner.GameClock.time_left).pad_decimals(2)
+
+
+# Set the time_data to the Game's recital time
+func set_time_data() -> void:
+	if owner.recital_time:
+		timer_data.text = str(owner.recital_time).pad_decimals(2)
+
 
 # Called to update the prompt
 func update_prompt(txt: String) -> void:
-	$PanelContainer/Rows/Row2/PromptData.text = txt
+	prompt_data.text = txt
+
 
 # Turn on the +/- Lives Hint
 func lives_hint_show(i: int) -> void:
 	if i >= 1:
-		lives_hint.position = $PanelContainer/Rows/Row1/LivesHBox/LivesData.global_position - Vector2(14, -28)
+		lives_hint.position = lives_data.global_position - Vector2(14, -28)
 		lives_hint.text = "[color=green]+" + str(i) + "[/color]"
 	if i < 0:
 		lives_hint.position = Vector2(92, 10)
 		lives_hint.text = "[color=red]-" + str(abs(i)) + "[/color]"
 	lives_hint.visible = true
-	$LivesHintTimer.start(0.75)
+	lives_hint_timer.start(0.75)
+
 
 # Turn on the Score Hint
 func add_lives_hint(i: int) -> void:
 	var hint: Label = Label.new()
 	hint.theme = hint_theme
 	if i >= 1:
-		hint.position = $PanelContainer/Rows/Row1/LivesHBox/LivesData.global_position + Vector2(-14, 28)
+		hint.position = lives_data.global_position + Vector2(-14, 28)
 		hint.text = str(i)
 		hint.add_to_group("life_gain_hints")
 	if i < 0:
-		hint.position = $PanelContainer/Rows/Row1/LivesHBox/LivesData.global_position + Vector2(14, 0)
+		hint.position = lives_data.global_position + Vector2(14, 0)
 		hint.text = str(abs(i))
 		hint.add_theme_color_override("font_color", Color("#FF0000"))
 		hint.add_to_group("life_loss_hints")
@@ -93,6 +106,14 @@ func add_score_hint(i: int) -> void:
 	score_hints.push_back(hint)
 	add_child(hint)
 	hint.add_to_group("score_hints")
+
+
+# Flash the GameHUD TimerData
+func flash_time_data() -> void:
+	timer_data.add_theme_color_override("font_color", Color("#00FF00"))
+	await get_tree().create_timer(0.05).timeout
+	timer_data.remove_theme_color_override("font_color")
+
 
 # Turn off the +/- Lives Hint
 func _on_lives_hint_timer_timeout() -> void:

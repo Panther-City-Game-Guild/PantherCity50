@@ -7,6 +7,7 @@ extends Node2D
 ### Handles to AreaPolygons; grandchildren
 @onready var AreaPolygons: Array[Polygon2D] = []
 
+
 func _ready() -> void:
 	global_position = Vector2(get_viewport().get_visible_rect().size / 2)
 	
@@ -22,7 +23,7 @@ func _ready() -> void:
 ### Begin InputEvent Checks
 func _input(event: InputEvent) -> void:
 	# If a game is in progress and the areas are not locked
-	if owner.is_game_running && !owner.are_areas_locked:
+	if owner.is_game_running:
 		var i: int = 0
 		# If an Action was just pressed
 		# <1> pressed
@@ -63,6 +64,10 @@ func connect_area_signals() -> void:
 # A relay between the Game manager and the Areas
 func trigger_area(i: int) -> void:
 	Areas[i].trigger_area()
+
+
+func flash_areas() -> void:
+	get_tree().call_group("board_areas", "trigger_area")
 
 
 # Light up an Area

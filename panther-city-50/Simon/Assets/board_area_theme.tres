@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dlwg7v6aaqxip"]
+
+[ext_resource type="FontFile" uid="uid://dwx06i8t0jm4b" path="res://Simon/Assets/mago3.ttf" id="1_aaigb"]
+
+[resource]
+default_font_size = 32
+Label/colors/font_color = Color(0.752941, 0.752941, 0.752941, 1)
+Label/colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+Label/constants/outline_size = 6
+Label/fonts/font = ExtResource("1_aaigb")

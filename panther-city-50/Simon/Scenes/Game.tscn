@@ -12,3 +12,5 @@ one_shot = true
 [node name="GameHUD" parent="." instance=ExtResource("3_nh1y3")]
 z_index = 5
 offset_bottom = 30.0
+
+[connection signal="timeout" from="GameClock" to="." method="_on_game_clock_timeout"]

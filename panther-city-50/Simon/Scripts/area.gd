@@ -10,6 +10,7 @@ signal user_clicked_me
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	self.add_to_group("board_areas")
 	dim_area()
 
 
@@ -34,12 +35,17 @@ func _input(event: InputEvent) -> void:
 func emit_clicked() -> void:
 	user_clicked_me.emit(int(name.get_slice("_", 1)))
 
-# Toggle the lock on this area
-func toggle_area_lock() -> void:
-	is_area_locked = !is_area_locked
-	if is_area_locked:
-		dim_area()
-	if !is_area_locked && mouseEntered:
+
+# Lock this area
+func lock_area() -> void:
+	is_area_locked = true
+	dim_area()
+
+
+# Unlock this area
+func unlock_area() -> void:
+	is_area_locked = false
+	if mouseEntered:
 		light_area()
 
 

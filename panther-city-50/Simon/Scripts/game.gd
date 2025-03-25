@@ -17,20 +17,20 @@ extends Node
 @export_category("Pattern Settings")
 @export var teach_time: float = 0.3 # Number of seconds between lighting different Areas during teaching
 @export var display_time: float = 0.3 # Number of seconds to keep an area lit during teaching
-@export var recital_time: float = 3.0 # Number of seconds user has to recite the pattern
-@export var min_recital_time: float = 3.0 # Minimum number of seconds user has to recite pattern
-@export var intermission_time: float = 2.0 # Number of seconds before round begins
+@export var recital_time: float = 4.0 # Number of seconds user has to recite the pattern
+@export var min_recital_time: float = 4.0 # Minimum number of seconds user has to recite pattern
+@export var intermission_time: float = 1.5 # Number of seconds before round begins
 @export var pattern_length: int = 1 # Number of colors in the rand_pattern; default 1
 @export_category("Board Settings")
 @export_enum("Hexagon", "Circle", "Diamond", "Triangle") var selected_board: int = 0
 
 ### Non-Exported Variables
 # Game Child Nodes
-@onready var GameBoards: Array[PackedScene] = [
+@onready var GameBoards: Array[PackedScene] = [ # TODO: Alter these as new boards get implemented
 	preload("res://Simon/Scenes/HexBoard.tscn"),
 	preload("res://Simon/Scenes/HexBoard.tscn"),
 	preload("res://Simon/Scenes/HexBoard.tscn"),
-	preload("res://Simon/Scenes/HexBoard.tscn")]
+	preload("res://Simon/Scenes/HexBoard.tscn") ]
 @onready var GameClock: Timer = $GameClock
 @onready var GameHUD: Control = $GameHUD
 # Other Variables
@@ -57,7 +57,6 @@ var area_triggered: int = -1 # Which area is triggered; 0-5, -1 for none
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# TODO: Make the Game preload GameBoards but not add them to the scene tree until a new game has begun
 	GameHUD.visible = false
 	GameHUD.update_lives(lives)
 	GameHUD.update_score(score)
@@ -86,20 +85,14 @@ func _process(delta: float) -> void:
 		# If the user has not seen the pattern this round, show them
 		if !has_pattern_played:
 			has_pattern_played = true
-			
-			# Start the round
-			if !has_round_started && !GameClock.time_left:
-				print(" Round begins in ", intermission_time, " seconds!")
-				GameClock.start(intermission_time)
-				await GameClock.timeout
-				# When the GameClock times out, start the round
-				has_round_started = true
-			
-			print("Pattern length: ", pattern_length, " | Recital time: ", recital_time)
-			print("   Pattern: ", rand_pattern)
+			print(" Round begins in ", intermission_time, " seconds!")
+			GameHUD.set_time_data()
+			await get_tree().create_timer(intermission_time).timeout
+			print("  Pattern length: ", pattern_length, " | Recital time: ", recital_time)
+			print("  Pattern: ", rand_pattern)
 			
 			# Lock the clickable color areas
-			#toggle_area_locks()
+			lock_areas()
 			active_board.set_process_input(false)
 			
 			# Teach the pattern
@@ -115,12 +108,13 @@ func _process(delta: float) -> void:
 				await get_tree().create_timer(teach_time, false, false, false).timeout
 			
 			# Unlock the clickable color areas and wait for user input
-			await get_tree().create_timer(intermission_time / 2).timeout
-			toggle_area_locks()
+			await get_tree().create_timer(intermission_time).timeout
+			active_board.flash_areas()
+			await get_tree().create_timer(0.1).timeout
+			unlock_areas()
 			active_board.set_process_input(true)
 			waiting_for_input = true
-			
-			
+			GameHUD.flash_time_data()
 			GameClock.start(recital_time)
 		
 		# If the user clicked enough correct colors (round is over)
@@ -183,6 +177,7 @@ func start_game() -> void:
 	
 	# Reset all game parameters
 	reset_game()
+	
 	# Generate a rand_pattern to teach the player
 	make_pattern(pattern_length)
 
@@ -218,6 +213,7 @@ func reset_game() -> void:
 	round_score = 0
 	rand_pattern.clear()
 	input_pattern.clear()
+	GameClock.stop()
 
 
 # Called to reset variables for the game's next round
@@ -230,6 +226,7 @@ func next_round() -> void:
 	next_input = 0
 	elapsed_time = 0
 	round_score = 0
+	GameClock.stop()
 	input_pattern.clear()
 	increase_pattern_length()
 	calc_recital_time()
@@ -248,6 +245,7 @@ func next_level() -> void:
 	level += 1
 	teach_time -= 0.1
 	display_time -= 0.05
+	GameClock.stop()
 	input_pattern.clear()
 	pattern_length = 1
 	make_pattern(pattern_length)
@@ -259,6 +257,7 @@ func game_over(why: String) -> void:
 	is_game_running = false
 	waiting_for_input = false
 	are_areas_locked = true
+	GameClock.stop()
 	if why == "timesup":
 		print("Testing failed: Player ran out of time!")
 		# TODO: Make GameHUD explain testing failed
@@ -291,11 +290,18 @@ func increase_pattern_length() -> void:
 	pattern_length = rand_pattern.size()
 
 
-# Prevent mouse_entered and mouse_exited from changing area colors
-func toggle_area_locks() -> void:
-	are_areas_locked = !are_areas_locked
+# Lock the active_board Areas
+func lock_areas() -> void:
+	are_areas_locked = true
 	for i: int  in active_board.Areas.size():
-		active_board.Areas[i].toggle_area_lock()
+		active_board.Areas[i].lock_area()
+
+
+# Unlock the active_board Areas
+func unlock_areas() -> void:
+	are_areas_locked = false
+	for i: int  in active_board.Areas.size():
+		active_board.Areas[i].unlock_area()
 
 
 # Verify the user input is correct
@@ -307,7 +313,6 @@ func verify_input(input: int) -> bool:
 			input_pattern.append(int(input))
 			input_length = input_pattern.size()
 			increase_score()
-			print("   Correct input: ", input)
 			
 			if next_input < pattern_length - 1:
 				next_input += 1
@@ -323,11 +328,7 @@ func verify_input(input: int) -> bool:
 
 # Calculate time user has to recite pattern
 func calc_recital_time() -> void:
-	#recital_time = round(((teach_time + display_time) * pattern_length) + (teach_time * pattern_length))
-	recital_time = pattern_length
-	# If shorter than minimum recital time, set to minimum
-	if recital_time < min_recital_time:
-		recital_time = min_recital_time
+	recital_time = roundf(min_recital_time + pattern_length ** 0.5)
 
 
 # Add points to the player's score

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://yn1d5or0rw1x"]
+[gd_scene load_steps=6 format=3 uid="uid://yn1d5or0rw1x"]
 
 [ext_resource type="Script" uid="uid://bq4q1cpuub76b" path="res://Simon/Scripts/hex_board.gd" id="1_2ukb6"]
 [ext_resource type="Script" uid="uid://bl83otaxc1p64" path="res://Simon/Scripts/area.gd" id="2_82xq0"]
 [ext_resource type="Texture2D" uid="uid://cqmpw8j1kwuvo" path="res://Simon/Assets/SimonHexBoard.png" id="3_6y4hp"]
 [ext_resource type="Texture2D" uid="uid://bjeo1x1jhh7i1" path="res://Simon/Assets/SimonHexagon-Dim.png" id="5_0dx74"]
+[ext_resource type="Theme" uid="uid://dlwg7v6aaqxip" path="res://Simon/Assets/board_area_theme.tres" id="5_2c8px"]
 
 [node name="HexBoard" type="Node2D"]
 process_mode = 1
@@ -29,6 +30,23 @@ polygon = PackedVector2Array(2, -49, 4, -47, 49, 31, 49, 36, -47, 36, -47, 31, -
 color = Color(0.4, 0, 0, 1)
 polygon = PackedVector2Array(-45, 34, 1, -47, 47, 34)
 
+[node name="Label" type="Label" parent="BoardSprite/Area_1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -13.0
+offset_right = 6.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_2c8px")
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Area_2" type="Area2D" parent="BoardSprite"]
 show_behind_parent = true
 position = Vector2(0, -62)
@@ -42,6 +60,24 @@ polygon = PackedVector2Array(1.00013, -53, 3.00013, -51, 47.9999, 27.0001, 47.99
 color = Color(0.4, 0.4, 0, 1)
 polygon = PackedVector2Array(-46.0001, 29.9999, 0.000129294, -51, 45.9999, 30.0001)
 
+[node name="Label" type="Label" parent="BoardSprite/Area_2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_top = 16.0
+offset_right = 20.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.14159
+theme = ExtResource("5_2c8px")
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Area_3" type="Area2D" parent="BoardSprite"]
 show_behind_parent = true
 position = Vector2(57, -40)
@@ -53,6 +89,23 @@ polygon = PackedVector2Array(0, -49, 2, -47, 47, 31, 47, 36, -49, 36, -49, 31, -
 [node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_3"]
 color = Color(0, 0.4, 0, 1)
 polygon = PackedVector2Array(-47, 34, -1, -47, 45, 34)
+
+[node name="Label" type="Label" parent="BoardSprite/Area_3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -13.0
+offset_right = 7.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_2c8px")
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Area_4" type="Area2D" parent="BoardSprite"]
 show_behind_parent = true
@@ -67,6 +120,24 @@ polygon = PackedVector2Array(0.00012207, -49, 2.00012, -47, 46.9999, 31.0001, 46
 color = Color(0.321569, 0, 0.321569, 1)
 polygon = PackedVector2Array(-47.0001, 33.9999, -0.999882, -47, 44.9999, 34.0001)
 
+[node name="Label" type="Label" parent="BoardSprite/Area_4"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.14159
+theme = ExtResource("5_2c8px")
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Area_5" type="Area2D" parent="BoardSprite"]
 show_behind_parent = true
 position = Vector2(0, 62)
@@ -78,6 +149,23 @@ polygon = PackedVector2Array(1, -53, 3, -51, 48, 27, 48, 32, -48, 32, -48, 27, -
 [node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_5"]
 color = Color(0.0784314, 0.160784, 0.4, 1)
 polygon = PackedVector2Array(-46, 30, 0, -51, 46, 30)
+
+[node name="Label" type="Label" parent="BoardSprite/Area_5"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -13.0
+offset_right = 8.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_2c8px")
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Area_6" type="Area2D" parent="BoardSprite"]
 show_behind_parent = true
@@ -91,6 +179,24 @@ polygon = PackedVector2Array(2.00012, -49, 4.00012, -47, 48.9999, 31.0001, 48.99
 [node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_6"]
 color = Color(0.4, 0.239216, 0, 1)
 polygon = PackedVector2Array(-45.0001, 33.9999, 1.00012, -47, 46.9999, 34.0001)
+
+[node name="Label" type="Label" parent="BoardSprite/Area_6"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.14159
+theme = ExtResource("5_2c8px")
+text = "6"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Light" type="Polygon2D" parent="."]
 show_behind_parent = true
