@@ -6,10 +6,13 @@ enum PlayerState {
 	OnExit
 }
 
+@export var moveSpeed := 0.3
+
 @onready var currentDir: Vector2 = Vector2.DOWN
 @onready var sprite := $AnimatedSprite2D
 @onready var ray := $RayCast2D
 @onready var currentState: PlayerState = PlayerState.Idle
+@onready var moveTimer := 0.0
 
 signal InWater
 
@@ -17,26 +20,41 @@ signal InWater
 func _ready() -> void:
 	pass # Replace with function body.
 
-func _input(event: InputEvent) -> void:
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
 	if currentState == PlayerState.Idle:
-		if event.is_action_pressed("DigitalUp"):
+		if Input.is_action_just_pressed("DigitalUp"):
 			MovePlayer(Vector2.UP, "IdleUp")
-		elif event.is_action_pressed("DigitalRight"):
+		elif Input.is_action_just_pressed("DigitalRight"):
 			MovePlayer(Vector2.RIGHT, "IdleRight")
-		elif event.is_action_pressed("DigitalDown"):
+		elif Input.is_action_just_pressed("DigitalDown"):
 			MovePlayer(Vector2.DOWN, "IdleDown")
-		elif event.is_action_pressed("DigitalLeft"):
+		elif Input.is_action_just_pressed("DigitalLeft"):
 			MovePlayer(Vector2.LEFT, "IdleLeft")
+			
+		if Input.is_action_pressed("DigitalUp") || Input.is_action_pressed("DigitalRight") || Input.is_action_pressed("DigitalDown") || Input.is_action_pressed("DigitalLeft"):
+			moveTimer += delta
+			
+		if Input.is_action_just_released("DigitalUp") || Input.is_action_just_released("DigitalRight") || Input.is_action_just_released("DigitalDown") || Input.is_action_just_released("DigitalLeft"):
+			moveTimer = 0
+			
+		if moveTimer >= moveSpeed:
+			if Input.is_action_pressed("DigitalUp"):
+				MovePlayer(Vector2.UP, "IdleUp")
+			elif Input.is_action_pressed("DigitalRight"):
+				MovePlayer(Vector2.RIGHT, "IdleRight")
+			elif Input.is_action_pressed("DigitalDown"):
+				MovePlayer(Vector2.DOWN, "IdleDown")
+			elif Input.is_action_pressed("DigitalLeft"):
+				MovePlayer(Vector2.LEFT, "IdleLeft")
+			
+			moveTimer = 0
 		
-		if event.is_action_pressed("ActionButton"):
+		if Input.is_action_pressed("ActionButton"):
 			# Detect if "ray" is colliding with an object
 			# - If so, try to interact
 			if ray.is_colliding():
 				InteractWithRayCollider(ray.get_collider())
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
 
 # Called to move the player
 func MovePlayer(dir: Vector2, animation: String) -> void:
