@@ -6,6 +6,8 @@ enum PlayerState {
 	OnExit
 }
 
+@export var moveSpeed := 0.3
+
 @onready var currentDir: Vector2 = Vector2.DOWN
 @onready var sprite := $AnimatedSprite2D
 @onready var ray := $RayCast2D
@@ -36,7 +38,7 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_released("DigitalUp") || Input.is_action_just_released("DigitalRight") || Input.is_action_just_released("DigitalDown") || Input.is_action_just_released("DigitalLeft"):
 			moveTimer = 0
 			
-		if moveTimer >= .3:
+		if moveTimer >= moveSpeed:
 			if Input.is_action_pressed("DigitalUp"):
 				MovePlayer(Vector2.UP, "IdleUp")
 			elif Input.is_action_pressed("DigitalRight"):
