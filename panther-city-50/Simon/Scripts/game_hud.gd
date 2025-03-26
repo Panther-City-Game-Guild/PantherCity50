@@ -13,8 +13,6 @@ var score_hints: Array[Label] = []
 
 # Called every render frame
 func _process(_delta: float) -> void:
-	if owner.is_game_running:
-		# Move Score hints
 		var scorehints: Array[Node] = get_tree().get_nodes_in_group("score_hints")
 		if scorehints:
 			for hint: Label in scorehints:
@@ -64,6 +62,16 @@ func set_time_data() -> void:
 # Called to update the prompt
 func update_prompt(txt: String) -> void:
 	prompt_data.text = txt
+
+
+# Call to show the user a prompt
+func show_prompt() -> void:
+	prompt_data.visible = true
+
+
+# Call to hide the prompt
+func hide_prompt() -> void:
+	prompt_data.visible = false
 
 
 # Turn on the +/- Lives Hint

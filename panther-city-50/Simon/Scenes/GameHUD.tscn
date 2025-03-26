@@ -90,7 +90,7 @@ text = "Time:"
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 theme_override_constants/outline_size = 4
-text = "00:00"
+text = "0.00"
 
 [node name="ScoreHBox" type="HBoxContainer" parent="PanelContainer/Rows/Row1"]
 layout_mode = 1
@@ -130,7 +130,7 @@ size_flags_horizontal = 3
 theme_override_colors/font_outline_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 theme_override_constants/outline_size = 3
 bbcode_enabled = true
-text = "You have been such a [color=#00beef]good[/color] test subject!"
+text = "Placeholder text ;)"
 scroll_active = false
 autowrap_mode = 0
 horizontal_alignment = 1

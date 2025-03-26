@@ -66,8 +66,27 @@ func trigger_area(i: int) -> void:
 	Areas[i].trigger_area()
 
 
+# Called to make all Areas illuminate at once
+# used when the board unlocks for user input
+# used during new Game start
 func flash_areas() -> void:
 	get_tree().call_group("board_areas", "trigger_area")
+	await get_tree().create_timer(0.2).timeout
+
+
+# Called to create a chase effect with the Areas
+# used during new Game start
+func chase_areas(sequence: Array[int] = []) -> void:
+	if sequence:
+		for i in sequence:
+			Areas[i].trigger_area()
+			if i < sequence.size() - 1:
+				await get_tree().create_timer(0.1).timeout
+	
+	else:
+		for Area in Areas:
+			Area.trigger_area()
+			await get_tree().create_timer(0.1).timeout
 
 
 # Light up an Area

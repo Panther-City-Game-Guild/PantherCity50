@@ -84,13 +84,16 @@ func _process(delta: float) -> void:
 		
 		# If the user has not seen the pattern this round, show them
 		if !has_pattern_played:
+			GameHUD.update_prompt("Watch [color=#beef00]carefully[/color]!")
+			GameHUD.show_prompt()
 			has_pattern_played = true
 			print(" Round begins in ", intermission_time, " seconds!")
 			GameHUD.set_time_data()
 			await get_tree().create_timer(intermission_time).timeout
+			GameHUD.hide_prompt()
 			print("  Pattern length: ", pattern_length, " | Recital time: ", recital_time)
 			print("  Pattern: ", rand_pattern)
-			
+			await get_tree().create_timer(intermission_time / 2).timeout
 			# Lock the clickable color areas
 			lock_areas()
 			active_board.set_process_input(false)
@@ -108,13 +111,16 @@ func _process(delta: float) -> void:
 				await get_tree().create_timer(teach_time, false, false, false).timeout
 			
 			# Unlock the clickable color areas and wait for user input
+			GameHUD.update_prompt("It's your turn! [color=orange]Recite the pattern[/color].")
+			GameHUD.show_prompt()
 			await get_tree().create_timer(intermission_time).timeout
+			GameHUD.hide_prompt()
+			await get_tree().create_timer(intermission_time / 2).timeout
 			active_board.flash_areas()
-			await get_tree().create_timer(0.1).timeout
-			unlock_areas()
-			active_board.set_process_input(true)
-			waiting_for_input = true
 			GameHUD.flash_time_data()
+			active_board.set_process_input(true)
+			unlock_areas()
+			waiting_for_input = true
 			GameClock.start(recital_time)
 		
 		# If the user clicked enough correct colors (round is over)
@@ -190,6 +196,11 @@ func start_game() -> void:
 	# Display the GameHUD and Board
 	GameHUD.visible = true
 	active_board.visible = true
+	GameHUD.update_prompt("Welcome, [color=#00beef]player[/color]!")
+	GameHUD.show_prompt()
+	
+	# Play a startup sequence
+	await play_startup()
 	
 	# Start the game
 	print("Starting a new game")
@@ -364,3 +375,16 @@ func calc_bonus_lives() -> void:
 		# Update the GameHUD
 		GameHUD.update_lives(lives)
 		print("   Bonus lives earned: ", b_lives, " | Total lives: ", lives, " / 9")
+
+
+# Play a startup sequence
+func play_startup() -> void:
+	var chase_sequence: Array[int] = []
+	if selected_board == 0: # Order for HexBoard
+		chase_sequence = [ 0, 1, 2, 5, 4, 3 ]
+	
+	await active_board.chase_areas(chase_sequence)
+	await active_board.chase_areas(chase_sequence)
+	
+	await active_board.flash_areas()
+	await active_board.flash_areas()
