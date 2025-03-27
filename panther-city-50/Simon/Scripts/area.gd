@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var color: String = "#141414"
+var color: String = "#141414"
 var dark_pct: float = 0.3
 var is_area_locked: bool = false
 var mouseEntered: bool = false
@@ -26,8 +26,8 @@ func _input(event: InputEvent) -> void:
 		# Dim the area
 		dim_area()
 		# Wait 0.1 seconds and light up if still being hovered
-		await get_tree().create_timer(0.1).timeout
-		if mouseEntered:
+		await get_tree().create_timer(0.1, false, false, false).timeout
+		if mouseEntered && !is_area_locked:
 			light_area()
 
 
@@ -52,10 +52,10 @@ func unlock_area() -> void:
 # Trigger the area
 func trigger_area() -> void:
 	light_area()
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.1, false, false, false).timeout
 	dim_area()
-	if mouseEntered:
-		await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.1, false, false, false).timeout
+	if mouseEntered && !is_area_locked:
 		light_area()
 
 

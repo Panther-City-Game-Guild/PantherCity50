@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cky1uw2nrbma4"]
+[gd_scene load_steps=4 format=3 uid="uid://cky1uw2nrbma4"]
 
 [ext_resource type="Script" uid="uid://c0d1p10y15agv" path="res://Simon/Scripts/game_title.gd" id="1_msq48"]
 [ext_resource type="PackedScene" uid="uid://dv5ce46e4gdq7" path="res://Simon/Scenes/GameMenu.tscn" id="3_kcjoo"]
 [ext_resource type="PackedScene" uid="uid://cxlw8682jdoku" path="res://Simon/Scenes/Game.tscn" id="4_npryv"]
-[ext_resource type="PackedScene" uid="uid://dll68vj1e6gs1" path="res://Simon/Scenes/ClosedForDev.tscn" id="6_72lpm"]
 
 [node name="Simon" type="Node"]
 script = ExtResource("1_msq48")
@@ -25,19 +24,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-
-[node name="Closed" parent="." instance=ExtResource("6_72lpm")]
-visible = false
-z_index = 100
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 2
-size_flags_vertical = 2
 
 [node name="Game" parent="." instance=ExtResource("4_npryv")]
 

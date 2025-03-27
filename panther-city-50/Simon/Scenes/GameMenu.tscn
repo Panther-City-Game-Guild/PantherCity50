@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dv5ce46e4gdq7"]
+[gd_scene load_steps=11 format=3 uid="uid://dv5ce46e4gdq7"]
 
 [ext_resource type="FontFile" uid="uid://dwx06i8t0jm4b" path="res://Simon/Assets/mago3.ttf" id="1_0crqe"]
 [ext_resource type="Script" uid="uid://c6k6w2aoeicw5" path="res://Simon/Scripts/game_menu.gd" id="1_7oi58"]
@@ -12,6 +12,16 @@ default_font = ExtResource("1_0crqe")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufuux"]
 bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_f0vws"]
+font_size = 80
+
+[sub_resource type="LabelSettings" id="LabelSettings_m1f3t"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_pxdf2"]
+font_size = 32
+font_color = Color(0, 0.4, 0, 1)
+
 [node name="GameMenu" type="Panel"]
 process_mode = 3
 offset_right = 640.0
@@ -22,44 +32,66 @@ theme = SubResource("Theme_pxdf2")
 theme_override_styles/panel = SubResource("StyleBoxFlat_ufuux")
 script = ExtResource("1_7oi58")
 
-[node name="Container" type="VBoxContainer" parent="."]
+[node name="Container" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -52.5
-offset_top = -92.5
-offset_right = 52.5
-offset_bottom = 92.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 30
+alignment = 1
 
 [node name="TitleContainer" type="VBoxContainer" parent="Container"]
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="SimonLabel" type="Label" parent="Container/TitleContainer"]
+[node name="NameContainer" type="HBoxContainer" parent="Container/TitleContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Simon"
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Sim" type="Label" parent="Container/TitleContainer/NameContainer"]
+layout_mode = 2
+text = "Sim"
+label_settings = SubResource("LabelSettings_f0vws")
 horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Container/TitleContainer/NameContainer"]
+custom_minimum_size = Vector2(30, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_bottom = 8
+
+[node name="n" type="Label" parent="Container/TitleContainer/NameContainer"]
+layout_mode = 2
+text = "n"
+label_settings = SubResource("LabelSettings_f0vws")
+horizontal_alignment = 1
 
 [node name="CommLabel" type="Label" parent="Container/TitleContainer"]
 layout_mode = 2
-text = "Color Patterns 101
-A Course for Cats"
+text = "Color Patterns 101"
+label_settings = SubResource("LabelSettings_m1f3t")
 horizontal_alignment = 1
+
+[node name="CommLabel2" type="Label" parent="Container/TitleContainer"]
+layout_mode = 2
+text = "A Course for Cats"
+label_settings = SubResource("LabelSettings_pxdf2")
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Container"]
+position = Vector2(284, 160)
 
 [node name="MenuContainer" type="VBoxContainer" parent="Container"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+alignment = 1
 
 [node name="ResumeBtn" type="TextureButton" parent="Container/MenuContainer"]
 visible = false
@@ -99,6 +131,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ScoresBtn" type="TextureButton" parent="Container/MenuContainer"]
+visible = false
 layout_mode = 2
 disabled = true
 texture_normal = ExtResource("2_ehgel")
@@ -114,6 +147,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "High Scores"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsBtn" type="TextureButton" parent="Container/MenuContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_ehgel")
+texture_hover = ExtResource("3_0crqe")
+texture_disabled = ExtResource("5_pxdf2")
+texture_focused = ExtResource("3_0crqe")
+
+[node name="Label" type="Label" parent="Container/MenuContainer/SettingsBtn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
 

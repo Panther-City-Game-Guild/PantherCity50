@@ -1,12 +1,9 @@
 extends Node2D
 
-
-### Handles to Areas; children
-@onready var Areas: Array[Area2D] = []
-
-### Handles to AreaPolygons; grandchildren
-@onready var AreaPolygons: Array[Polygon2D] = []
-
+var Areas: Array[Area2D] = [] # Handles to Areas; children
+var AreaPolygons: Array[Polygon2D] = [] # Handles to AreaPolygons; grandchildren
+var board_type: int = 0 # Hexagon 0, Circle 1, Diamond 2, Triangle 3
+var are_areas_locked: bool = false # Should the areas receive input?
 
 func _ready() -> void:
 	global_position = Vector2(get_viewport().get_visible_rect().size / 2)
@@ -23,7 +20,7 @@ func _ready() -> void:
 ### Begin InputEvent Checks
 func _input(event: InputEvent) -> void:
 	# If a game is in progress and the areas are not locked
-	if owner.is_game_running:
+	if owner.is_game_running && !are_areas_locked:
 		var i: int = 0
 		# If an Action was just pressed
 		# <1> pressed
@@ -47,17 +44,31 @@ func _input(event: InputEvent) -> void:
 
 # Assign values to Area variables
 func assign_variables_to_areas() -> void:
-	# 1 Red, 2 Yellow, 3 Green, 4 Purple, 5 Blue, 6 Orange
+	# 0 Red, 1 Yellow, 2 Green, 3 Purple, 4 Blue, 5 Orange
+	var colors: Array[String] = owner.area_colors.duplicate()
+	if board_type != 0:
+		colors.clear()
+	
+	if board_type == 1: # Circle = Green 2, Red 0, Blue 4, Yellow 1
+		colors = [ owner.area_colors[2], owner.area_colors[0], owner.area_colors[4], owner.area_colors[1] ]
+	
+	elif board_type == 2: # Diamond = Red 0, Blue 4, Yellow 1, Green 2
+		colors = [ owner.area_colors[0], owner.area_colors[4], owner.area_colors[1], owner.area_colors[2] ]
+	
+	elif board_type == 3: # Triangle = Blue 4, Green 2, Red 0
+		colors = [ owner.area_colors[4], owner.area_colors[2], owner.area_colors[0] ]
+	
 	for i: int in AreaPolygons.size():
-		Areas[i].color = owner.area_colors[i]
+		Areas[i].color = colors[i]
 		Areas[i].dark_pct = owner.dark_pct
 		Areas[i].dim_area()
 
 
 # Connect to Area signals
 func connect_area_signals() -> void:
-	for Area in Areas:
-		Area.connect("user_clicked_me", owner.verify_input)
+	if owner.has_method("verify_input"):
+		for Area in Areas:
+			Area.connect("user_clicked_me", owner.verify_input)
 
 
 # Triger an Area (dim and then light up)
@@ -71,22 +82,17 @@ func trigger_area(i: int) -> void:
 # used during new Game start
 func flash_areas() -> void:
 	get_tree().call_group("board_areas", "trigger_area")
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.2, false, false, false).timeout
 
 
 # Called to create a chase effect with the Areas
 # used during new Game start
-func chase_areas(sequence: Array[int] = []) -> void:
-	if sequence:
-		for i in sequence:
-			Areas[i].trigger_area()
-			if i < sequence.size() - 1:
-				await get_tree().create_timer(0.1).timeout
-	
-	else:
-		for Area in Areas:
-			Area.trigger_area()
-			await get_tree().create_timer(0.1).timeout
+func chase_areas(sequence: Array[int]) -> void:
+	var x: int = 0
+	for i in sequence:
+		Areas[i].trigger_area()
+		if x < sequence.size() - 1:
+			await get_tree().create_timer(0.1, false, false, false).timeout
 
 
 # Light up an Area
@@ -99,3 +105,15 @@ func light_area(i: int) -> void:
 # A relay between the Game manager and the Areas
 func dim_area(i: int) -> void:
 	Areas[i].dim_area()
+
+
+# Lock all Areas at one time
+func lock_areas() -> void:
+	are_areas_locked = true
+	get_tree().call_group("board_areas", "lock_area")
+
+
+# Unlock all Areas at one time
+func unlock_areas() -> void:
+	are_areas_locked = false
+	get_tree().call_group("board_areas", "unlock_area")

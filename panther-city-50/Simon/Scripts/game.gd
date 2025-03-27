@@ -1,18 +1,8 @@
+class_name Simon
+
 extends Node
 
-### Exported Variables
-# Color Settings
-@export_category("Color Settings")
-@export var area_colors: Array[String] = [ # Array of color codes for the clickable Areas
-	# Red, Blue, Yellow, Green used in 4-Color Simon
-	# Red, Yellow, Green, Purple, Blue, Orange using 6-Color Simon
-	"#FF0000",	# 1 Red		#660000 DIM
-	"#FFFF00",	# 2 Yellow	#666600 DIM
-	"#00FF00",	# 3 Green	#006600 DIM
-	"#CC00CC",	# 4 Purple	#520052 DIM
-	"#3366FF",	# 5 Blue	#142966 DIM
-	"#FF9900" ]	# 6 Orange	#663D00 DIM
-@export var dark_pct: float = 0.3 # Percent to darken the color
+
 # Timer Durations
 @export_category("Pattern Settings")
 @export var teach_time: float = 0.3 # Number of seconds between lighting different Areas during teaching
@@ -23,19 +13,30 @@ extends Node
 @export var pattern_length: int = 1 # Number of colors in the rand_pattern; default 1
 @export_category("Board Settings")
 @export_enum("Hexagon", "Circle", "Diamond", "Triangle") var selected_board: int = 0
+# Color Settings
 
 ### Non-Exported Variables
 # Game Child Nodes
 @onready var GameBoards: Array[PackedScene] = [ # TODO: Alter these as new boards get implemented
 	preload("res://Simon/Scenes/HexBoard.tscn"),
-	preload("res://Simon/Scenes/HexBoard.tscn"),
+	preload("res://Simon/Scenes/CircleBoard.tscn"),
 	preload("res://Simon/Scenes/HexBoard.tscn"),
 	preload("res://Simon/Scenes/HexBoard.tscn") ]
 @onready var GameClock: Timer = $GameClock
 @onready var GameHUD: Control = $GameHUD
 # Other Variables
+var area_colors: Array[String] = [ # Array of color codes for the clickable Areas
+	# Red, Blue, Yellow, Green used in 4-Color Simon
+	# Red, Yellow, Green, Purple, Blue, Orange using 6-Color Simon
+	"#FF0000",	# 1 Red		#660000 DIM
+	"#FFFF00",	# 2 Yellow	#666600 DIM
+	"#00FF00",	# 3 Green	#006600 DIM
+	"#CC00CC",	# 4 Purple	#520052 DIM
+	"#3366FF",	# 5 Blue	#142966 DIM
+	"#FF9900" ]	# 6 Orange	#663D00 DIM
+var dark_pct: float = 0.3 # Percent to darken the color
 var active_board: Node2D # Which board is currently being used
-var max_areas: int = 6 # How many areas does the active_board have
+var max_areas: int = 0 # How many areas does the active_board have
 var rand_pattern: Array[int] = [] # Store the randomly generated color pattern
 var input_pattern: Array[int] = [] # Store the user's recited pattern
 var input_length: int = 0 # Length of the user's input pattern
@@ -45,6 +46,7 @@ var lives: int = 3 # The player's lives, default 3
 var score: int = 0 # The player's score
 var round_score: int = 0 # The player's score from this round
 var is_game_running: bool = false # Is a game in progress?
+var is_game_paused: bool = false # Is a game paused?
 var waiting_for_input: bool = false # Are we waiting for user input?
 var has_pattern_played: bool = false # Has the user seen the pattern this round?
 var has_round_started: bool = false
@@ -55,16 +57,9 @@ var play_demo: bool = false # Should the Demo play?
 var area_triggered: int = -1 # Which area is triggered; 0-5, -1 for none
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	GameHUD.visible = false
-	GameHUD.update_lives(lives)
-	GameHUD.update_score(score)
-
-
 ### Begin Game Loop
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(delta: float) -> void:	
 	# If a game is in progress . . .
 	if is_game_running && !in_intermission:
 		
@@ -84,19 +79,18 @@ func _process(delta: float) -> void:
 		
 		# If the user has not seen the pattern this round, show them
 		if !has_pattern_played:
+			# Lock the clickable color areas
+			active_board.lock_areas()
 			GameHUD.update_prompt("Watch [color=#beef00]carefully[/color]!")
 			GameHUD.show_prompt()
 			has_pattern_played = true
 			print(" Round begins in ", intermission_time, " seconds!")
 			GameHUD.set_time_data()
-			await get_tree().create_timer(intermission_time).timeout
+			await get_tree().create_timer(intermission_time, false, false, false).timeout
 			GameHUD.hide_prompt()
 			print("  Pattern length: ", pattern_length, " | Recital time: ", recital_time)
 			print("  Pattern: ", rand_pattern)
-			await get_tree().create_timer(intermission_time / 2).timeout
-			# Lock the clickable color areas
-			lock_areas()
-			active_board.set_process_input(false)
+			await get_tree().create_timer(intermission_time / 2, false, false, false).timeout
 			
 			# Teach the pattern
 			for i: int in rand_pattern:
@@ -112,21 +106,19 @@ func _process(delta: float) -> void:
 			
 			# Unlock the clickable color areas and wait for user input
 			GameHUD.update_prompt("It's your turn! [color=orange]Recite the pattern[/color].")
-			GameHUD.show_prompt()
-			await get_tree().create_timer(intermission_time).timeout
-			GameHUD.hide_prompt()
-			await get_tree().create_timer(intermission_time / 2).timeout
-			active_board.flash_areas()
+			GameHUD.show_prompt() # Show the prompt on the GameHUD
+			await get_tree().create_timer(intermission_time * 0.75, false, false, false).timeout
+			GameHUD.update_prompt("[color=green]Start[/color]!")
+			await get_tree().create_timer(intermission_time * 0.75, false, false, false).timeout
+			GameHUD.hide_prompt() # Hide the prompt on the GameHUD
 			GameHUD.flash_time_data()
-			active_board.set_process_input(true)
-			unlock_areas()
+			active_board.unlock_areas()
 			waiting_for_input = true
 			GameClock.start(recital_time)
 		
 		# If the user clicked enough correct colors (round is over)
 		if input_length == pattern_length:
 			waiting_for_input = false
-			print("  Round completed in ", floor(elapsed_time), " / ", recital_time, " seconds!")
 			in_intermission = true
 			calc_bonus_score()
 			calc_bonus_lives()
@@ -153,22 +145,25 @@ func _process(delta: float) -> void:
 
 # Set the active board based on settings (HexBoard by default)
 func set_active_board() -> void:
-	# TODO: Alter these as new boards get implemented
-	if selected_board == 0:
-		active_board = GameBoards[selected_board].instantiate() # Hexagon
+	# Determine the maximum number of interactive areas
+	if selected_board == 0: # Hexagon
 		max_areas = 6
-	if selected_board == 1:
-		active_board = GameBoards[selected_board].instantiate() # Circle
+	elif selected_board == 1: # Circle
 		max_areas = 4
-	if selected_board == 2:
-		active_board = GameBoards[selected_board].instantiate() # Diamond
+	elif selected_board == 2: # Diamond
 		max_areas = 4
-	if selected_board == 3:
-		active_board = GameBoards[selected_board].instantiate() # Triangle
+	elif selected_board == 3: # Triangle
 		max_areas = 3
+	
+	# Instantiate the board
+	if selected_board >= 0 || selected_board <= 3:
+		active_board = GameBoards[selected_board].instantiate()
+	
 	# Add the active_board to the scene tree
 	add_child(active_board)
 	active_board.owner = self
+	active_board.board_type = selected_board
+	
 	# Assign the correct colors to the Board's AreaPolygons
 	active_board.assign_variables_to_areas()
 	# Connect the Area signals to the Game controller
@@ -177,27 +172,30 @@ func set_active_board() -> void:
 
 # Begin a new game
 func start_game() -> void:
-	# If a previous board exists, remove it from the tree
+	# If a previous board exists, remove it from the tree and wipe it from RAM
 	if active_board:
 		remove_child(active_board)
+		active_board = null
 	
 	# Reset all game parameters
 	reset_game()
 	
-	# Generate a rand_pattern to teach the player
-	make_pattern(pattern_length)
-
-	# Calculate time user has to recite pattern
-	calc_recital_time() # Depends on teach_time, display_time, and pattern_length
-	
 	# Use settings to determine which board is needed
 	set_active_board()
 	
+	# Generate a rand_pattern to teach the player
+	make_pattern(pattern_length)
+	
+	# Calculate time user has to recite pattern
+	calc_recital_time() # Depends on teach_time, display_time, and pattern_length
+	
 	# Display the GameHUD and Board
-	GameHUD.visible = true
-	active_board.visible = true
+	GameHUD.update_lives(lives)
+	GameHUD.update_score(score)
 	GameHUD.update_prompt("Welcome, [color=#00beef]player[/color]!")
 	GameHUD.show_prompt()
+	GameHUD.visible = true
+	active_board.visible = true
 	
 	# Play a startup sequence
 	await play_startup()
@@ -277,15 +275,10 @@ func game_over(why: String) -> void:
 		# TODO: Make GameHUD explain player lost all lives
 		# GameHUD.player_died()
 		print("Testing failed: Player lost all lives!")
-	else:
+	elif why == "won":
 		print("Player won!")
 		# TODO: Make GameHUD explain player won the game
 		# GameHUD.game_won()
-
-
-# Called when showing scores between rounds
-func pause_loop() -> void:
-	in_intermission = !in_intermission
 
 
 # Generate a rand_pattern to teach the player
@@ -299,20 +292,6 @@ func make_pattern(length: int) -> void:
 func increase_pattern_length() -> void:
 	rand_pattern.append(randi_range(1, max_areas))
 	pattern_length = rand_pattern.size()
-
-
-# Lock the active_board Areas
-func lock_areas() -> void:
-	are_areas_locked = true
-	for i: int  in active_board.Areas.size():
-		active_board.Areas[i].lock_area()
-
-
-# Unlock the active_board Areas
-func unlock_areas() -> void:
-	are_areas_locked = false
-	for i: int  in active_board.Areas.size():
-		active_board.Areas[i].unlock_area()
 
 
 # Verify the user input is correct
@@ -355,9 +334,10 @@ func increase_score() -> void:
 func calc_bonus_score() -> void:
 	var bonus_points: int = int(pattern_length ** 2 * 100 + (100 * (recital_time - elapsed_time)))
 	if bonus_points > 0:
+		# TODO: Experiment with adding these points to round_score to make gaining lives easier
 		score += bonus_points
 		GameHUD.add_score_hint(bonus_points)
-		print("   Bonus points awarded: ", bonus_points, " | New total score: ", score)
+		print("   Bonus points awarded: ", bonus_points, " | Total score: ", score)
 
 
 # Reward additional lives to the player
@@ -383,8 +363,16 @@ func play_startup() -> void:
 	if selected_board == 0: # Order for HexBoard
 		chase_sequence = [ 0, 1, 2, 5, 4, 3 ]
 	
+	elif selected_board == 1 || selected_board == 2: # Order for Circle/Diamond
+		chase_sequence = [ 0, 1, 3, 2]
+	
+	elif selected_board == 3: # Order for Triangle
+		chase_sequence = [ 0, 2, 1 ]
+	
+	# Display a chase effect twice
 	await active_board.chase_areas(chase_sequence)
 	await active_board.chase_areas(chase_sequence)
 	
+	# Flash all areas twice
 	await active_board.flash_areas()
 	await active_board.flash_areas()

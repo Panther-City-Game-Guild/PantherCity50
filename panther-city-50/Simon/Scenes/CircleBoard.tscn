@@ -1,0 +1,150 @@
+[gd_scene load_steps=5 format=3 uid="uid://dw5ptr1yjr5yr"]
+
+[ext_resource type="Script" uid="uid://bq4q1cpuub76b" path="res://Simon/Scripts/board.gd" id="1_gobkb"]
+[ext_resource type="Texture2D" uid="uid://cbo1cu1qucrtv" path="res://Simon/Assets/SimonCircle.png" id="2_owfy7"]
+[ext_resource type="Script" uid="uid://bl83otaxc1p64" path="res://Simon/Scripts/area.gd" id="4_rx7ny"]
+[ext_resource type="Theme" uid="uid://dlwg7v6aaqxip" path="res://Simon/Assets/board_area_theme.tres" id="5_huw85"]
+
+[node name="CircleBoard" type="Node2D"]
+process_mode = 1
+top_level = true
+script = ExtResource("1_gobkb")
+
+[node name="BoardSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_owfy7")
+
+[node name="Area_1" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(-57, -40)
+script = ExtResource("4_rx7ny")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_1"]
+visible = false
+polygon = PackedVector2Array(53, -68, 53, 36, -51, 36, -50, 22, -46, 6, -43, -2, -36, -16, -27, -29, -12, -44, -2, -51, 15, -60, 23, -63, 39, -67)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_1"]
+color = Color(0, 0.4, 0, 1)
+polygon = PackedVector2Array(-48, 34, -46, 11, -39, -7, -28, -24, -11, -42, 6, -54, 28, -63, 51, -66, 51, 34)
+
+[node name="Label" type="Label" parent="BoardSprite/Area_1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -23.0
+offset_right = 15.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = ExtResource("5_huw85")
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area_2" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(40, -57)
+rotation = 1.5708
+script = ExtResource("4_rx7ny")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_2"]
+polygon = PackedVector2Array(53, -68, 53, 36, -51, 36, -50, 22, -46, 6, -43, -2, -36, -16, -27, -29, -12, -44, -2, -51, 15, -60, 23, -63, 39, -67)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_2"]
+color = Color(0.4, 0, 0, 1)
+polygon = PackedVector2Array(-48, 34, -46, 11, -39, -7, -28, -24, -11, -42, 6, -54, 28, -63, 51, -66, 51, 34)
+
+[node name="Label" type="Label" parent="BoardSprite/Area_2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -3.0
+offset_right = 8.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5708
+size_flags_horizontal = 4
+theme = ExtResource("5_huw85")
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area_3" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(-40, 57)
+rotation = -1.5708
+script = ExtResource("4_rx7ny")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_3"]
+polygon = PackedVector2Array(53, -68, 53, 36, -51, 36, -50, 22, -46, 6, -43, -2, -36, -16, -27, -29, -12, -44, -2, -51, 15, -60, 23, -63, 39, -67)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_3"]
+color = Color(0.4, 0.4, 0, 1)
+polygon = PackedVector2Array(-48, 34, -46, 11, -39, -7, -28, -24, -11, -42, 6, -54, 28, -63, 51, -66, 51, 34)
+
+[node name="Label" type="Label" parent="BoardSprite/Area_3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 24.0
+offset_top = -14.0
+offset_right = 38.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+size_flags_horizontal = 4
+theme = ExtResource("5_huw85")
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area_4" type="Area2D" parent="BoardSprite"]
+show_behind_parent = true
+position = Vector2(57, 40)
+rotation = 3.14159
+script = ExtResource("4_rx7ny")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BoardSprite/Area_4"]
+polygon = PackedVector2Array(53, -68, 53, 36, -51, 36, -50, 22, -46, 6, -43, -2, -36, -16, -27, -29, -12, -44, -2, -51, 15, -60, 23, -63, 39, -67)
+
+[node name="Polygon2D" type="Polygon2D" parent="BoardSprite/Area_4"]
+color = Color(0.0784314, 0.160784, 0.4, 1)
+polygon = PackedVector2Array(-48, 34, -46, 11, -39, -7, -28, -24, -11, -42, 6, -54, 28, -63, 51, -66, 51, 34)
+
+[node name="Label" type="Label" parent="BoardSprite/Area_4"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 14.0
+offset_top = 6.0
+offset_right = 28.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.14159
+size_flags_horizontal = 4
+theme = ExtResource("5_huw85")
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="BoardSprite/Area_1" to="BoardSprite/Area_1" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_1" to="BoardSprite/Area_1" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="BoardSprite/Area_2" to="BoardSprite/Area_2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_2" to="BoardSprite/Area_2" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="BoardSprite/Area_3" to="BoardSprite/Area_3" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_3" to="BoardSprite/Area_3" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="BoardSprite/Area_4" to="BoardSprite/Area_4" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BoardSprite/Area_4" to="BoardSprite/Area_4" method="_on_mouse_exited"]
