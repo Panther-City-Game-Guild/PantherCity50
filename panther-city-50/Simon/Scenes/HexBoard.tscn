@@ -1,13 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://yn1d5or0rw1x"]
 
-[ext_resource type="Script" uid="uid://bq4q1cpuub76b" path="res://Simon/Scripts/hex_board.gd" id="1_2ukb6"]
+[ext_resource type="Script" uid="uid://bq4q1cpuub76b" path="res://Simon/Scripts/board.gd" id="1_2ukb6"]
 [ext_resource type="Script" uid="uid://bl83otaxc1p64" path="res://Simon/Scripts/area.gd" id="2_82xq0"]
 [ext_resource type="Texture2D" uid="uid://cqmpw8j1kwuvo" path="res://Simon/Assets/SimonHexBoard.png" id="3_6y4hp"]
 [ext_resource type="Texture2D" uid="uid://bjeo1x1jhh7i1" path="res://Simon/Assets/SimonHexagon-Dim.png" id="5_0dx74"]
 [ext_resource type="Theme" uid="uid://dlwg7v6aaqxip" path="res://Simon/Assets/board_area_theme.tres" id="5_2c8px"]
 
 [node name="HexBoard" type="Node2D"]
-process_mode = 1
 top_level = true
 script = ExtResource("1_2ukb6")
 

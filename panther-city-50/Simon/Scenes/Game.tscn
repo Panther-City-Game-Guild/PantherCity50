@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dtuk3xi0s4h4w" path="res://Simon/Scenes/GameHUD.tscn" id="3_nh1y3"]
 
 [node name="Game" type="Node"]
+process_mode = 1
 script = ExtResource("1_7jmmq")
 
 [node name="GameClock" type="Timer" parent="."]

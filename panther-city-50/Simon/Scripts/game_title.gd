@@ -25,7 +25,6 @@ var elapsed_time: float = 0
 
 signal new_game
 signal unpause_game
-signal view_scores
 signal back_to_selection
 signal exit
 
@@ -48,12 +47,12 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		
 		# If a Game IS running and the Gamne is NOT paused, pause the game
-		if Game.is_game_running && !is_game_paused:
+		if Game.is_game_running && !Game.is_game_paused:
 			_pause_game()
 			return
 		
 		# If a Game IS running and the Gamne IS paused, unpause the game
-		elif Game.is_game_running && is_game_paused:
+		elif Game.is_game_running && Game.is_game_paused:
 			_unpause_game()
 			return
 		
@@ -80,7 +79,7 @@ func _new_game() -> void:
 # Called to Pause a Game
 func _pause_game() -> void:
 	if Game.is_game_running:
-		is_game_paused = true
+		Game.is_game_paused = true
 		GameMenu.toggle_game_menu(true)
 		GameMenu.toggle_resume_button(true)
 		get_tree().paused = true
@@ -90,10 +89,10 @@ func _pause_game() -> void:
 # Called to Unpause a Game
 func _unpause_game() -> void:
 	if Game.is_game_running:
-		is_game_paused = false
 		GameMenu.toggle_game_menu(false)
 		GameMenu.toggle_resume_button(true)
 		get_tree().paused = false
+		Game.is_game_paused = false
 		print("Game unpaused")
 
 

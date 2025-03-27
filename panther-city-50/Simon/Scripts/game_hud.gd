@@ -13,8 +13,6 @@ var score_hints: Array[Label] = []
 
 # Called every render frame
 func _process(_delta: float) -> void:
-	if owner.is_game_running:
-		# Move Score hints
 		var scorehints: Array[Node] = get_tree().get_nodes_in_group("score_hints")
 		if scorehints:
 			for hint: Label in scorehints:
@@ -66,6 +64,16 @@ func update_prompt(txt: String) -> void:
 	prompt_data.text = txt
 
 
+# Call to show the user a prompt
+func show_prompt() -> void:
+	prompt_data.visible = true
+
+
+# Call to hide the prompt
+func hide_prompt() -> void:
+	prompt_data.visible = false
+
+
 # Turn on the +/- Lives Hint
 func lives_hint_show(i: int) -> void:
 	if i >= 1:
@@ -92,7 +100,7 @@ func add_lives_hint(i: int) -> void:
 		hint.add_theme_color_override("font_color", Color("#FF0000"))
 		hint.add_to_group("life_loss_hints")
 	add_child(hint)
-	get_tree().create_timer(0.75, false).connect("timeout", func() -> void: hint.queue_free())
+	get_tree().create_timer(0.75, false, false, false).connect("timeout", func() -> void: hint.queue_free())
 
 
 func add_score_hint(i: int) -> void:
@@ -111,7 +119,7 @@ func add_score_hint(i: int) -> void:
 # Flash the GameHUD TimerData
 func flash_time_data() -> void:
 	timer_data.add_theme_color_override("font_color", Color("#00FF00"))
-	await get_tree().create_timer(0.05).timeout
+	await get_tree().create_timer(0.05, false, false, false).timeout
 	timer_data.remove_theme_color_override("font_color")
 
 
