@@ -3,16 +3,24 @@ extends CharacterBody2D
 enum PlayerState {
 	Idle,
 	InWater,
-	OnExit
+	OnExit,
+	Sliding
+}
+
+@onready var dirToAnimtionName := {
+	Vector2.UP: "IdleUp",
+	Vector2.RIGHT: "IdleRight",
+	Vector2.DOWN: "IdleDown",
+	Vector2.LEFT: "IdleLeft"
 }
 
 @export var moveSpeed := 0.3
-
 @onready var currentDir: Vector2 = Vector2.DOWN
 @onready var sprite := $AnimatedSprite2D
 @onready var ray := $RayCast2D
 @onready var currentState: PlayerState = PlayerState.Idle
 @onready var moveTimer := 0.0
+@onready var lastMoveDir := Vector2.DOWN
 
 signal InWater
 
@@ -24,13 +32,13 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if currentState == PlayerState.Idle:
 		if Input.is_action_just_pressed("DigitalUp"):
-			MovePlayer(Vector2.UP, "IdleUp")
+			MovePlayer(Vector2.UP)
 		elif Input.is_action_just_pressed("DigitalRight"):
-			MovePlayer(Vector2.RIGHT, "IdleRight")
+			MovePlayer(Vector2.RIGHT)
 		elif Input.is_action_just_pressed("DigitalDown"):
-			MovePlayer(Vector2.DOWN, "IdleDown")
+			MovePlayer(Vector2.DOWN)
 		elif Input.is_action_just_pressed("DigitalLeft"):
-			MovePlayer(Vector2.LEFT, "IdleLeft")
+			MovePlayer(Vector2.LEFT)
 			
 		if Input.is_action_pressed("DigitalUp") || Input.is_action_pressed("DigitalRight") || Input.is_action_pressed("DigitalDown") || Input.is_action_pressed("DigitalLeft"):
 			moveTimer += delta
@@ -40,13 +48,13 @@ func _process(delta: float) -> void:
 			
 		if moveTimer >= moveSpeed:
 			if Input.is_action_pressed("DigitalUp"):
-				MovePlayer(Vector2.UP, "IdleUp")
+				MovePlayer(Vector2.UP)
 			elif Input.is_action_pressed("DigitalRight"):
-				MovePlayer(Vector2.RIGHT, "IdleRight")
+				MovePlayer(Vector2.RIGHT)
 			elif Input.is_action_pressed("DigitalDown"):
-				MovePlayer(Vector2.DOWN, "IdleDown")
+				MovePlayer(Vector2.DOWN)
 			elif Input.is_action_pressed("DigitalLeft"):
-				MovePlayer(Vector2.LEFT, "IdleLeft")
+				MovePlayer(Vector2.LEFT)
 			
 			moveTimer = 0
 		
@@ -55,10 +63,17 @@ func _process(delta: float) -> void:
 			# - If so, try to interact
 			if ray.is_colliding():
 				InteractWithRayCollider(ray.get_collider())
+	elif currentState == PlayerState.Sliding:
+		moveTimer += delta
+		
+		if moveTimer >= moveSpeed:
+			MovePlayer(lastMoveDir)
+			moveTimer = 0
+		
 
 # Called to move the player
-func MovePlayer(dir: Vector2, animation: String) -> void:
-	sprite.play(animation)
+func MovePlayer(dir: Vector2) -> void:
+	sprite.play(dirToAnimtionName[dir])
 	ray.target_position = dir * Globals.ZETileSize
 	ray.force_raycast_update()
 	
@@ -69,6 +84,7 @@ func MovePlayer(dir: Vector2, animation: String) -> void:
 				position += dir * Globals.ZETileSize
 	elif !ray.is_colliding():
 		position += dir * Globals.ZETileSize
+		lastMoveDir = dir
 
 # Called to attempt interaction with various objects when player is facing a collider
 func InteractWithRayCollider(obj: Object) -> void:
@@ -79,9 +95,22 @@ func InteractWithRayCollider(obj: Object) -> void:
 		if obj is ZESwitch:
 			obj.ChangeState()
 
-func _on_water_check_area_entered(_area: Area2D) -> void:
-	# TODO: play drown animaiton
-	currentState = PlayerState.InWater
+func _on_ground_check_area_entered(area: Area2D) -> void:
+	var layer := area.collision_layer
 	
-	# tell the level to restart
-	InWater.emit()
+	if(layer == 2):
+		# TODO: play drown animaiton
+		currentState = PlayerState.InWater
+	
+		# tell the level to restart
+		InWater.emit()
+	elif(layer == 4):
+		if(!ray.is_colliding()):
+			currentState = PlayerState.Sliding
+		else:
+			currentState = PlayerState.Idle
+		
+
+
+func _on_ground_check_area_exited(area: Area2D) -> void:
+	currentState = PlayerState.Idle
