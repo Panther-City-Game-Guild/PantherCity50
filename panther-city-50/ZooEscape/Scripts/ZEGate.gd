@@ -5,7 +5,7 @@ enum state {
 	open
 }
 
-@onready var currentState := state.closed
+@onready var currentState: int = state.closed
 
 func _ready() -> void:
 	$Sprite2D.frame = currentState
